@@ -3,6 +3,7 @@ import Questions from "screens/Blocks/QuizQuestions";
 import Text from "screens/Blocks/Text";
 import EditText from "screens/Blocks/EditText";
 import Audio from "screens/Blocks/Audio";
+import Image from "screens/Blocks/Image";
 
 var indexRoutes = [
   {
@@ -39,6 +40,13 @@ var indexRoutes = [
     exact: true,
     name: "Audio",
     component: Audio,
+    layout: "/admin",
+  },
+  {
+    path: "/blocks/image",
+    exact: true,
+    name: "Image",
+    component: Image,
     layout: "/admin",
   },
 ];

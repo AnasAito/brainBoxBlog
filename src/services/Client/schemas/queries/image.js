@@ -16,9 +16,17 @@ export const IMAGE_GET_MANY = gql`
   query images(
     $where: ImageWhereInput
     $withSelect: Boolean
+    $take: Int
+    $skip: Int
     $orderBy: [ImageWhereInput]
   ) {
-    images(where: $where, withSelect: $withSelect, orderBy: $orderBy) {
+    images(
+      where: $where
+      withSelect: $withSelect
+      take: $take
+      skip: $skip
+      orderBy: $orderBy
+    ) {
       data {
         id
         name
@@ -33,5 +41,5 @@ export const IMAGE_GET_MANY = gql`
 
 export default {
   "image.get.one": IMAGE_GET_ONE,
-  "image.get.many": IMAGE_GET_MANY
+  "image.get.many": IMAGE_GET_MANY,
 };
