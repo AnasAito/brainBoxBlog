@@ -1,0 +1,37 @@
+@tailwind base;
+
+ul {
+  @apply list-disc;
+  @apply ml-5;
+}
+h1 {
+  @apply text-black;
+  @apply text-6xl;
+}
+td {
+  @apply border;
+  @apply px-4;
+  @apply py-2;
+}
+
+th {
+  @apply border;
+  @apply px-4;
+  @apply py-2;
+}
+
+table {
+  @apply table-auto;
+}
+
+.ql-editor {
+  min-height: 300px;
+}
+
+.transform-50 {
+  transform: translate(-50%, -50%);
+}
+
+@tailwind components;
+
+@tailwind utilities;
