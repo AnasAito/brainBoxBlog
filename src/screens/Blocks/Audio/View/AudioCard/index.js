@@ -34,7 +34,7 @@ const Card = ({ payload, subTitle, onEdit, onDelete, notification }) => {
       console.log("success");
       history.push(`/admin/tests/activities/edit/${activityID}`);
     } else {
-      notification.success("Error");
+      notification.error("Error");
       console.log("error");
     }
   };

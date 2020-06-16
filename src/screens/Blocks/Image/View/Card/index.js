@@ -19,10 +19,10 @@ const Card = ({ payload, onEdit, onDelete, notification }) => {
     const result = await createBlock({
       variables: {
         data: {
-          name: payload.title,
-          type: "audio",
+          name: payload.name,
+          type: "image",
           activity: { id: activityID },
-          audio: { id: payload.id },
+          image: { id: payload.id },
         },
       },
     });
@@ -33,7 +33,7 @@ const Card = ({ payload, onEdit, onDelete, notification }) => {
       console.log("success");
       history.push(`/admin/tests/activities/edit/${activityID}`);
     } else {
-      notification.success("Error");
+      notification.error("Error");
       console.log("error");
     }
   };
@@ -62,7 +62,7 @@ const Card = ({ payload, onEdit, onDelete, notification }) => {
       <div className="bg-white rounded-lg shadow-lg">
         {payload.cloudinaryId && (
           <img
-            className="bg-blue-50  w-full rounded-t-lg"
+            className="bg-blue-50 max-w-full rounded-t-lg"
             alt="card"
             src={`https://res.cloudinary.com/geerd/image/upload/q_auto:eco/${payload.cloudinaryId}.jpg`}
           />

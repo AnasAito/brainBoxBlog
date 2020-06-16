@@ -32,9 +32,6 @@ function All(props) {
   const count = get(data, "images.count", []);
   const { clearCache } = useClearCache({ event: "image.get.many" });
 
-  const { mutate: uploadFile } = useMutation({
-    event: "file.upload.one",
-  });
   const { mutate } = useMutation({
     event: "image.create",
     update: () => {
@@ -47,24 +44,19 @@ function All(props) {
       clearCache();
     },
   });
-  const submit = (mutate, uploadFile) => async (file) => {
-    setLoading(true);
-    const fileUpload = await uploadFile({
-      variables: { file },
-    });
-    const path = get(fileUpload, "data.singleUpload");
+  const submit = (mutate) => async (file) => {
     const audio = await mutate({
       variables: {
         data: {
-          title: file.name,
-          path,
+          name: file.name,
         },
+        file,
       },
     });
-    const result = get(audio, "data.createAudio.id");
+    const result = get(audio, "data.createImage.id");
     setLoading(false);
     if (result) {
-      props.notification.error("Audio Block Created");
+      props.notification.error("Image Block Created");
     } else {
       props.notification.error("Error");
     }
@@ -72,7 +64,7 @@ function All(props) {
   const removeTest = async (mutate, id) => {
     mutate({ variables: { where: { id } } })
       .then((res) => {
-        if (get(res, "data.deleteAudio.id")) {
+        if (get(res, "data.deleteImage.id")) {
           props.notification.success("Delete Successful");
         } else {
           props.notification.error("Error");
@@ -85,7 +77,7 @@ function All(props) {
       data={userData}
       count={count}
       loading={loading}
-      handleCreate={submit(mutate, uploadFile)}
+      handleCreate={submit(mutate)}
       handleDelete={(id) => removeTest(deleteTest, id)}
     />
   );

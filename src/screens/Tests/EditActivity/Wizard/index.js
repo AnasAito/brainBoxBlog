@@ -73,10 +73,6 @@ const temp = {
 function BlockWizard({ match, history, template, blocks }) {
   // const [addBlock, setAddBlock] = React.useState(false);
 
-  if (!get(match, "params.id")) {
-    return <Redirect to={"/admin/courses/activities"} />;
-  }
-
   return (
     <div className="grid grid-cols-3 gap-5">
       {get(temp[template], "path", []).map((v, i) => {
@@ -99,7 +95,7 @@ function BlockWizard({ match, history, template, blocks }) {
           const customPath = Object.keys(v)[0];
           console.log(customPath)
           return (
-            <div>
+            <div key={i}>
               <WizardCard
                 handleClick={() =>
                   history.push({

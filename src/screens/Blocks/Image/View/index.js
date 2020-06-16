@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "./AudioCard";
+import Card from "./Card";
 import Upload from "./Upload";
 import Pagination from "shared/components/Pagination";
 // import AddButton from "shared/components/AddButton";

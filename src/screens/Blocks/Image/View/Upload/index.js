@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 // import Item from "./item";
 import Button from "components/ButtonWithLoader";
-import AudioPlayer from "shared/components/AudioPlayer";
 
 export default function View({ handleSave, loading }) {
   // console.log(bar);
@@ -9,12 +8,15 @@ export default function View({ handleSave, loading }) {
   const fileInput = useRef(null);
   console.log(file);
   return (
-    <div className="max-w-lg flex  justify-center px-6 pt-5 pb-6 border-4 border-gray-300 border-dashed rounded-md">
+    <div className="max-w-lg flex  justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
       {file ? (
-        <div className="flex flex-col w-full">
-          <AudioPlayer src={URL.createObjectURL(file)} id="preview" />
-
-          <div className="self-center border-t border-gray-100 pt-3">
+        <div className="relative w-1/2">
+          <img
+            src={URL.createObjectURL(file)}
+            alt="preview"
+            className="w-full h-auto"
+          />
+          <div className="absolute transform-50 top-1/2 left-1/2 flex">
             <Button
               onClick={() => handleSave(file)}
               loading={loading}
@@ -51,17 +53,17 @@ export default function View({ handleSave, loading }) {
               onClick={() => fileInput.current.click()}
               className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition duration-150 ease-in-out"
             >
-              Choose Audio File
+              Choose Image
             </button>
             <input
               type="file"
-              accept="audio/*"
+              accept="image/*"
               onChange={(e) => setFile(e.target.files[0])}
               hidden
               ref={fileInput}
             />
           </p>
-          <p className="mt-1 text-xs text-gray-500">MP3, M4A, up to 10MB</p>
+          <p className="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
         </div>
       )}
     </div>
