@@ -5,7 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import withNotification from "services/Notification";
 import List from "./View";
 function All(props) {
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
   function useQueryParams() {
     return new URLSearchParams(useLocation().search);
   }
