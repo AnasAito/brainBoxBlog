@@ -1,7 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 import { useLocation, useHistory } from "react-router-dom";
-import withNotification from "services/Notification"
+import withNotification from "services/Notification";
 import AudioPlayer from "shared/components/AudioPlayer";
 import { useMutation, useQuery } from "services/Client";
 const Card = ({ payload, subTitle, onEdit, onDelete, notification }) => {
@@ -67,20 +67,22 @@ const Card = ({ payload, subTitle, onEdit, onDelete, notification }) => {
             <p className=" text-lg leading-9 text-gray-900 font-semibold truncate">
               {payload.title}
             </p>
-            <div
-              className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
-              alt=""
-              onClick={() => submitBlock(createBlock, attachBlock)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                className="h-6 w-6 cursor-pointer text-green-700 hover:text-green-500"
-                fill="currentColor"
+            {!!attachBlock && (
+              <div
+                className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
+                alt=""
+                onClick={() => submitBlock(createBlock, attachBlock)}
               >
-                <path d="M9.26 13a2 2 0 0 1 .01-2.01A3 3 0 0 0 9 5H5a3 3 0 0 0 0 6h.08a6.06 6.06 0 0 0 0 2H5A5 5 0 0 1 5 3h4a5 5 0 0 1 .26 10zm1.48-6a2 2 0 0 1-.01 2.01A3 3 0 0 0 11 15h4a3 3 0 0 0 0-6h-.08a6.06 6.06 0 0 0 0-2H15a5 5 0 0 1 0 10h-4a5 5 0 0 1-.26-10z" />
-              </svg>
-            </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  className="h-6 w-6 cursor-pointer text-green-700 hover:text-green-500"
+                  fill="currentColor"
+                >
+                  <path d="M9.26 13a2 2 0 0 1 .01-2.01A3 3 0 0 0 9 5H5a3 3 0 0 0 0 6h.08a6.06 6.06 0 0 0 0 2H5A5 5 0 0 1 5 3h4a5 5 0 0 1 .26 10zm1.48-6a2 2 0 0 1-.01 2.01A3 3 0 0 0 11 15h4a3 3 0 0 0 0-6h-.08a6.06 6.06 0 0 0 0-2H15a5 5 0 0 1 0 10h-4a5 5 0 0 1-.26-10z" />
+                </svg>
+              </div>
+            )}
           </div>
           <div className="flex flex-row justify-between ">
             <p className="text-base leading-5 font-medium text-gray-500 truncate">

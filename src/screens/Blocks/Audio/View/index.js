@@ -5,7 +5,13 @@ import Pagination from "shared/components/Pagination";
 // import AddButton from "shared/components/AddButton";
 import { useHistory } from "react-router-dom";
 
-export default function ListView({ data, count, handleCreate, handleDelete }) {
+export default function ListView({
+  data,
+  count,
+  handleCreate,
+  handleDelete,
+  loading,
+}) {
   let history = useHistory();
   return (
     <div className="flex flex-col">
@@ -23,7 +29,7 @@ export default function ListView({ data, count, handleCreate, handleDelete }) {
               onDelete={() => handleDelete(test.id)}
             />
           ))}
-          <Upload />
+          <Upload handleSave={handleCreate} loading={loading} />
         </div>
         <Pagination pageCount={count} />
       </div>

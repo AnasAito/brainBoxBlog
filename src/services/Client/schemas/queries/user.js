@@ -7,6 +7,7 @@ export const USER_GET_MANY = gql`
     $withSelect: Boolean
     $where: UserWhereInput
     $like: UserWhereInput
+    $orderBy: [UserWhereInput]
   ) {
     users(
       take: $take
@@ -14,6 +15,7 @@ export const USER_GET_MANY = gql`
       withSelect: $withSelect
       where: $where
       like: $like
+      orderBy: $orderBy
     ) {
       data {
         id
@@ -70,5 +72,5 @@ export default {
   "user.get.many": USER_GET_MANY,
   "user.get.one": USER_GET_ONE,
   "user.get.count": USER_GET_COUNT,
-  "user.report": USER_REPORT
+  "user.report": USER_REPORT,
 };

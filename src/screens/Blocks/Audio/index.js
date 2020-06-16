@@ -5,6 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import withNotification from "services/Notification";
 import List from "./View";
 function All(props) {
+  const [loading, setLoading] = React.useState(true);
   function useQueryParams() {
     return new URLSearchParams(useLocation().search);
   }
@@ -31,6 +32,9 @@ function All(props) {
   const count = get(data, "audios.count", []);
   const { clearCache } = useClearCache({ event: "audio.get.many" });
 
+  const { mutate: uploadFile } = useMutation({
+    event: "file.upload.one",
+  });
   const { mutate } = useMutation({
     event: "audio.create",
     update: () => {
@@ -43,14 +47,24 @@ function All(props) {
       clearCache();
     },
   });
-  const submit = async (mutate) => {
-    const result = await mutate({
-      variables: { data: { title: "", content: "" } },
+  const submit = (mutate, uploadFile) => async (file) => {
+    setLoading(true);
+    const fileUpload = await uploadFile({
+      variables: { file },
     });
-    const testId = get(result, "data.createAudio.id");
-    console.log(result);
-    if (testId) {
-      history.push({ pathname: `text/${testId}`, search: "?new=true" });
+    const path = get(fileUpload, "data.singleUpload");
+    const audio = await mutate({
+      variables: {
+        data: {
+          title: file.name,
+          path,
+        },
+      },
+    });
+    const result = get(audio, "data.createAudio.id");
+    setLoading(false);
+    if (result) {
+      props.notification.error("Audio Block Created");
     } else {
       props.notification.error("Error");
     }
@@ -70,7 +84,8 @@ function All(props) {
     <List
       data={userData}
       count={count}
-      handleCreate={() => submit(mutate)}
+      loading={loading}
+      handleCreate={submit(mutate, uploadFile)}
       handleDelete={(id) => removeTest(deleteTest, id)}
     />
   );

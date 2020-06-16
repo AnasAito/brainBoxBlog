@@ -4,7 +4,6 @@ import Table from "shared/components/Table";
 
 import { useQueryPaginated } from "services/Client";
 export default function All() {
-
   const columns = React.useMemo(
     () => [
       {
@@ -36,6 +35,7 @@ export default function All() {
     event: "user.get.many",
     variables: {
       withSelect: true,
+      orderBy: { createdAt: "desc" },
     },
   });
   const userData = get(data, "users.data", []);

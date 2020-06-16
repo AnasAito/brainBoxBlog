@@ -7,6 +7,7 @@ export default function View({ handleSave, loading }) {
   // console.log(bar);
   const [file, setFile] = useState(null);
   const fileInput = useRef(null);
+  console.log(file);
   return (
     <div className="max-w-lg flex  justify-center px-6 pt-5 pb-6 border-4 border-gray-300 border-dashed rounded-md">
       {file ? (

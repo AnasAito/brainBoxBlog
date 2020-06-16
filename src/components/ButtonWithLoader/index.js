@@ -1,16 +1,16 @@
 import React from "react";
-import ClipLoader from "react-spinners/ClipLoader";
+import ClipLoader from "react-spinners/BounceLoader";
 export default function index({ loading, children, ...rest }) {
   return (
-    <span class="inline-flex rounded-md shadow-sm">
+    <span className="inline-flex rounded-md shadow-sm">
       <button
         type="button"
         {...rest}
       >
         {children}
         {loading ? (
-          <div class="mt-1 ml-3  ">
-            <ClipLoader size={20} color={"#fff"} />
+          <div className="ml-3">
+            <ClipLoader size={14} color={"#fff"} className="mb-1" />
           </div>
         ) : (
           <></>

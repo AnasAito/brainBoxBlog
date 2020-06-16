@@ -1,6 +1,7 @@
 import AllUsers from "screens/Users/All";
 import UploadUsers from "screens/Users/Upload";
 import CreateUser from "screens/Users/Create";
+import Groups from "screens/Users/Groups";
 
 var indexRoutes = [
   {
@@ -22,6 +23,13 @@ var indexRoutes = [
     exact: true,
     name: "Create User",
     component: CreateUser,
+    layout: "/admin",
+  },
+  {
+    path: "/users/groups",
+    exact: true,
+    name: "Groups",
+    component: Groups,
     layout: "/admin",
   }
 ];
