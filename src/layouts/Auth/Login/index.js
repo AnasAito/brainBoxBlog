@@ -54,7 +54,7 @@ function LoginPage({ store, history }) {
       Global.set("user.id", userId);
       Global.set("user.email", email);
       Global.set("user.firstName", firstName);
-      history.push("/home/dashboard");
+      history.push("/admin/dashboard");
     }
   };
 
