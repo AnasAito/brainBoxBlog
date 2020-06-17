@@ -35,6 +35,7 @@ export default function All() {
     event: "user.get.many",
     variables: {
       withSelect: true,
+      where: { type: "student" },
       orderBy: { createdAt: "desc" },
     },
   });

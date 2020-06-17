@@ -1,6 +1,6 @@
 import React from "react";
 import Nav from "./Nav";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect} from "react-router-dom";
 import useLayoutReducer from "./useLayoutReducer";
 import routes from "routes";
 
@@ -31,6 +31,7 @@ export default function Layout({ header }) {
                   component={route.component}
                 />
               ))}
+              <Redirect to="/admin/dashboard" />
             </Switch>
             {/* <!-- /End replace --> */}
           </div>

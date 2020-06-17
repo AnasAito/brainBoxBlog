@@ -68,6 +68,9 @@ function All({ notification }) {
         groupIds: array()
           .min(1, "please choose one group at least")
           .required("error"),
+        users: array()
+          .min(1, "user list empty")
+          .required("error"),
       })}
     >
       {({

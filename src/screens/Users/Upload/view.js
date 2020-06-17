@@ -9,11 +9,19 @@ export default function View({ formik, groups, handlers, onCancel }) {
     errors,
   } = formik;
   const { change, blur, onUpload } = handlers;
-  console.log(users);
+
   return (
     <div className="grid grid-cols-3 gap-4">
       <div className="max-w-lg flex flex-col justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-        <Upload handleFile={(value) => change("file", value)} file={file} />
+        <Upload
+          handleFile={(value) => change("file", value)}
+          file={file}
+          description="XLSX, XLS up to 5MB"
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        />
+        {errors.users && (
+          <span className="text-red-500">{errors.users}</span>
+        )}
         <FieldArray
           name="groupIds"
           render={(arrayHelpers) => (
@@ -94,7 +102,7 @@ export default function View({ formik, groups, handlers, onCancel }) {
         </div>
       </div>
       <div className="grid col-span-2">
-        <Table data={users} pageCount={users.length}/>
+        <Table data={users} pageCount={users.length} />
       </div>
     </div>
   );
