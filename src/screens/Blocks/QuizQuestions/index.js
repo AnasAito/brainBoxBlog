@@ -12,7 +12,10 @@ function reducer(state, action) {
     case "navigate":
       return {
         ...state,
-        index: state.index + action.payload.direction,
+        index:
+          state.index + action.payload.direction > 0
+            ? state.index + action.payload.direction
+            : 0,
       };
     case "reset-navigate":
       return {
@@ -68,7 +71,7 @@ function Quiz() {
     variables: {
       where: { quiz: { id } },
       withSelect: true,
-      orderBy: { order: "asc" },
+      orderBy: { createdAt: "asc" },
     },
   });
 
@@ -101,7 +104,7 @@ function Quiz() {
         variables: {
           where: { quiz: { id } },
           withSelect: true,
-          orderBy: { order: "asc" },
+          orderBy: { createdAt: "asc" },
         },
         data: newData1,
       };
@@ -129,7 +132,22 @@ function Quiz() {
   const { mutate: updateQuestionOption } = useMutation({
     event: "questionOption.update",
   });
-  const { mutate: deleteQuestion } = useMutation({ event: "question.delete" });
+  const { mutate: deleteQuestion } = useMutation({
+    event: "question.delete",
+    update: ({ data: newData }) => {
+      const newData1 = removeData(data, newData.deleteQuestion);
+      dispatch({ type: "navigate", payload: { direction: -1 } });
+      return {
+        event: "question.get.many",
+        variables: {
+          where: { quiz: { id } },
+          withSelect: true,
+          orderBy: { createdAt: "asc" },
+        },
+        data: newData1,
+      };
+    },
+  });
   const { mutate: deleteQuestionOption } = useMutation({
     event: "questionOption.delete",
     update: ({ data: newData }) => {
@@ -232,7 +250,7 @@ function Quiz() {
     // setFiles([]);
     dispatch({ type: "loading" });
   };
-  console.log(question);
+
   return (
     <>
       <View

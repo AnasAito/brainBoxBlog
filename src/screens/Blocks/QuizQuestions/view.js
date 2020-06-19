@@ -24,6 +24,7 @@ export default function View(props) {
     handleDeleteQuestionOption,
     handleAddImage,
     handleUpdateQuiz,
+    handleDeleteQuestion
   } = mutations;
   const questionImage = get(question, "image.cloudinaryId");
   return (
@@ -70,6 +71,7 @@ export default function View(props) {
               question={question}
               index={index}
               onSave={handleUpdateQuestion}
+              onDelete={handleDeleteQuestion}
             />
           </div>
           <div className="self-center">
