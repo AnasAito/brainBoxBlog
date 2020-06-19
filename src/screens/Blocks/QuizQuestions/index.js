@@ -1,10 +1,10 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useReducer } from "react";
 import { useQuery, useMutation } from "services/Client";
 import get from "lodash/get";
 import { useParams } from "react-router-dom";
 import removeData from "shared/helpers/removeData";
 import concatData from "shared/helpers/concatData";
-import useKeyPress from "./helpers/useKeyPress";
+// import useKeyPress from "./helpers/useKeyPress";
 import View from "./view";
 
 function reducer(state, action) {
@@ -40,19 +40,19 @@ function Quiz() {
     loading: false,
   });
   const { id } = useParams();
-  const leftPress = useKeyPress("ArrowLeft");
-  const rightPress = useKeyPress("ArrowRight");
-  useEffect(() => {
-    if (leftPress) {
-      dispatch({ type: "navigate", payload: { direction: -1 } });
-    }
-  }, [leftPress]);
+  // const leftPress = useKeyPress("ArrowLeft");
+  // const rightPress = useKeyPress("ArrowRight");
+  // useEffect(() => {
+  //   if (leftPress) {
+  //     dispatch({ type: "navigate", payload: { direction: -1 } });
+  //   }
+  // }, [leftPress]);
 
-  useEffect(() => {
-    if (rightPress) {
-      dispatch({ type: "navigate", payload: { direction: 1 } });
-    }
-  }, [rightPress]);
+  // useEffect(() => {
+  //   if (rightPress) {
+  //     dispatch({ type: "navigate", payload: { direction: 1 } });
+  //   }
+  // }, [rightPress]);
 
   const { data: quizData } = useQuery({
     event: "quiz.get.one",
@@ -62,7 +62,6 @@ function Quiz() {
   });
 
   const title = get(quizData, "quiz.title");
-  console.log(title);
 
   const { data } = useQuery({
     event: "question.get.many",
