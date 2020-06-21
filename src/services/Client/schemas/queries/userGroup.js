@@ -36,6 +36,7 @@ export const USER_GROUP_GET_MANY = gql`
         }
         group {
           id
+          name
         }
       }
     }

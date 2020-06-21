@@ -1,9 +1,12 @@
 import React from "react";
 import get from "lodash/get";
 import Table from "shared/components/Table";
+import { useHistory } from "react-router-dom";
 
 import { useQueryPaginated } from "services/Client";
 export default function All() {
+  let history = useHistory();
+
   const columns = React.useMemo(
     () => [
       {
@@ -21,14 +24,19 @@ export default function All() {
       },
       {
         Header: "Actions",
-        Cell: (props) => (
-          <button href="#" className="text-indigo-600 hover:text-indigo-900">
-            Edit
-          </button>
-        ),
+        Cell: (props) => {
+          return (
+            <button
+              onClick={() => history.push(`/admin/users/all/${props.row.original.id}`)}
+              className="text-indigo-600 hover:text-indigo-900"
+            >
+              Edit
+            </button>
+          );
+        },
       },
     ],
-    []
+    [history]
   );
 
   const { data, loading, pageSize } = useQueryPaginated({

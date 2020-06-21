@@ -9,6 +9,15 @@ export const GROUP_CREATE = gql`
   }
 `;
 
+export const GROUP_UPDATE = gql`
+  mutation updateGroup($where: GroupWhereInput, $data: GroupWhereInput) {
+    updateGroup(where: $where, data: $data) {
+      id
+      name
+    }
+  }
+`;
+
 export const GROUP_DELETE = gql`
   mutation deleteGroup($where: GroupWhereInput) {
     deleteGroup(where: $where) {
@@ -20,5 +29,6 @@ export const GROUP_DELETE = gql`
 
 export default {
   "group.create": GROUP_CREATE,
-  "group.delete": GROUP_DELETE
+  "group.update": GROUP_UPDATE,
+  "group.delete": GROUP_DELETE,
 };

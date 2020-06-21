@@ -3,14 +3,15 @@ import Autosuggest from "shared/components/Autosuggest";
 import { FieldArray } from "formik";
 
 import Input from "shared/components/Input";
-export default function View({ groups, formik, handlers }) {
+
+export default function View({ groups, userGroups, formik, handlers }) {
   const {
     values: { firstName, lastName, email, group, groupIds },
     errors,
     touched,
   } = formik;
   const { change, blur } = handlers;
-  console.log(errors);
+  console.log(groupIds)
   return (
     <>
       <div>
@@ -19,7 +20,7 @@ export default function View({ groups, formik, handlers }) {
             Personal Information
           </h3>
           <p className="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
-            Use a permanent address where you can receive mail.
+            You can edit user information, add groups, reset tests.
           </p>
         </div>
         <div className="mt-6 sm:mt-5">
@@ -120,7 +121,7 @@ export default function View({ groups, formik, handlers }) {
                     <div className="max-w-lg rounded-md shadow-sm sm:max-w-xs">
                       <Autosuggest
                         data={groups}
-                        getOptionLabel={option => option.name}
+                        getOptionLabel={(option) => option.name}
                         onSuggestionSelected={(e, { suggestion }) => {
                           arrayHelpers.push({
                             id: suggestion.id,
@@ -136,12 +137,12 @@ export default function View({ groups, formik, handlers }) {
                         }}
                       />
                     </div>{" "}
-                    <div className="flex flex-row  mt-1">
+                    <div className="flex flex-wrap">
                       {groupIds &&
                         groupIds.map((groupsId, index) => (
                           <span
                             key={groupsId.id}
-                            className="inline-flex mr-1 items-center px-3 py-0.5 rounded-full text-sm font-medium leading-5 bg-indigo-100 text-indigo-800"
+                            className="inline-flex mr-1 mt-1 items-center px-3 py-0.5 rounded-full text-sm font-medium leading-5 bg-indigo-100 text-indigo-800"
                           >
                             {groupsId.name}
                             <button
@@ -165,9 +166,14 @@ export default function View({ groups, formik, handlers }) {
                             </button>
                           </span>
                         ))}
-                      {errors.groupIds && (
-                        <span className="text-red-500">{errors.groupIds}</span>
-                      )}
+                      {userGroups.map((group) => (
+                        <span
+                          key={group.id}
+                          className="inline-flex mr-1 mt-1 items-center px-3 py-0.5 rounded-full text-sm font-medium leading-5 bg-green-100 text-green-800"
+                        >
+                          {group.name}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 )}

@@ -29,6 +29,7 @@ export default function View({ formik, groups, handlers, onCancel }) {
               <div className="mt-2">
                 <Autosuggest
                   data={groups}
+                  getOptionLabel={option => option.name}
                   onSuggestionSelected={(e, { suggestion }) => {
                     arrayHelpers.push({
                       id: suggestion.id,

@@ -4,7 +4,9 @@ import placementTest from "./placementTest";
 import userPlacementTest from "./userPlacementTest";
 import file from "./file";
 import user from "./user";
-import group from "./group"
+import userGroup from "./userGroup";
+import group from "./group";
+import groupPlacementTest from "./groupPlacementTest";
 import feedback from "./feedback";
 import section from "./section";
 import activity from "./activity";
@@ -21,7 +23,9 @@ export default {
   ...placementTest,
   ...userPlacementTest,
   ...user,
+  ...userGroup,
   ...group,
+  ...groupPlacementTest,
   ...userActivity,
   ...file,
   ...section,

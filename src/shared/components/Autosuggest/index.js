@@ -18,12 +18,22 @@ import withStore from "services/Store";
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
 // input value for every given suggestion.
-const getSuggestionValue = (suggestion) => suggestion.name;
+const getSuggestionValue = (suggestion, getOptionLabel) => {
+  return getOptionLabel(suggestion);
+};
 
 // Use your imagination to render suggestions.
-const renderSuggestion = (suggestion) => <div>{suggestion.name}</div>;
+const renderSuggestion = (suggestion, getOptionLabel) => (
+  <div>{getOptionLabel(suggestion)}</div>
+);
 
-function MyAutosuggest({ store, data, onSuggestionSelected, ...rest }) {
+function MyAutosuggest({
+  store,
+  data,
+  onSuggestionSelected,
+  getOptionLabel,
+  ...rest
+}) {
   // Autosuggest will call this function every time you need to update suggestions.
   // You already implemented this logic above, so just use it.
   //   const onSuggestionsFetchRequested = ({ value }) => {
@@ -52,14 +62,18 @@ function MyAutosuggest({ store, data, onSuggestionSelected, ...rest }) {
       suggestions={data}
       {...rest}
       onSuggestionsFetchRequested={(e) => {
-        console.log(e);
+        // console.log(e);
       }}
       onSuggestionsClearRequested={() => {
         store.set("searchLike", "");
       }}
       onSuggestionSelected={onSuggestionSelected}
-      getSuggestionValue={getSuggestionValue}
-      renderSuggestion={renderSuggestion}
+      getSuggestionValue={(suggestion) =>
+        getSuggestionValue(suggestion, getOptionLabel)
+      }
+      renderSuggestion={(suggestion) =>
+        renderSuggestion(suggestion, getOptionLabel)
+      }
       inputProps={{ ...rest }}
       theme={{
         suggestionsContainer: "mt-1 -mx-5",

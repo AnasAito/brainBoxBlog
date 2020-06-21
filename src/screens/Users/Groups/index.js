@@ -1,6 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 import { object, string } from "yup";
+import { useHistory } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { useMutation, useClearCache } from "services/Client";
 import withNotification from "services/Notification";
@@ -10,6 +11,7 @@ import View from "./view";
 
 import { useQueryPaginated } from "services/Client";
 function All({ notification }) {
+  let history = useHistory();
   const columns = React.useMemo(
     () => [
       {
@@ -18,14 +20,19 @@ function All({ notification }) {
       },
       {
         Header: "Actions",
-        Cell: (props) => (
-          <button href="#" className="text-indigo-600 hover:text-indigo-900">
-            Edit
-          </button>
-        ),
+        Cell: (props) => {
+          return (
+            <button
+              onClick={() => history.push(`/admin/users/groups/edit/${props.row.original.id}`)}
+              className="text-indigo-600 hover:text-indigo-900"
+            >
+              Edit
+            </button>
+          );
+        },
       },
     ],
-    []
+    [history]
   );
 
   const { data, loading, pageSize } = useQueryPaginated({

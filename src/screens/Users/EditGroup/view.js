@@ -1,16 +1,24 @@
 import React from "react";
 import Autosuggest from "shared/components/Autosuggest";
 import { FieldArray } from "formik";
+import DatePicker from "react-datepicker";
 
 import Input from "shared/components/Input";
-export default function View({ groups, formik, handlers }) {
+export default function View({
+  dates,
+  handleDate,
+  groups,
+  groupPlacementTests,
+  formik,
+  handlers,
+}) {
   const {
-    values: { firstName, lastName, email, group, groupIds },
+    values: { name, group, testIds },
     errors,
     touched,
   } = formik;
   const { change, blur } = handlers;
-  console.log(errors);
+  console.log(testIds);
   return (
     <>
       <div>
@@ -28,80 +36,26 @@ export default function View({ groups, formik, handlers }) {
               htmlFor="first_name"
               className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2"
             >
-              First name
+              Name
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <div className="max-w-lg relative rounded-md shadow-sm sm:max-w-xs">
                 <Input
-                  id="firstName"
+                  id="name"
                   type="text"
-                  name="firstName"
+                  name="name"
                   handleChange={change}
                   onBlur={blur}
-                  inputValue={firstName}
+                  inputValue={name}
                   inputState={
-                    touched.firstName
-                      ? errors.firstName
-                        ? errors.firstName
+                    touched.name
+                      ? errors.name
+                        ? errors.name
                         : "success"
                       : null
                   }
                 />
               </div>
-            </div>
-          </div>
-
-          <div className="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-            <label
-              htmlFor="last_name"
-              className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2"
-            >
-              Last name
-            </label>
-            <div className="mt-1 sm:mt-0 sm:col-span-2">
-              <div className="max-w-lg relative rounded-md shadow-sm sm:max-w-xs">
-                <Input
-                  id="lastName"
-                  type="text"
-                  name="lastName"
-                  handleChange={change}
-                  onBlur={blur}
-                  inputValue={lastName}
-                  inputState={
-                    touched.lastName
-                      ? errors.lastName
-                        ? errors.lastName
-                        : "success"
-                      : null
-                  }
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2"
-            >
-              Email address
-            </label>
-            <div className="max-w-lg relative rounded-md shadow-sm sm:max-w-xs">
-              <Input
-                id="email"
-                type="text"
-                name="email"
-                handleChange={change}
-                onBlur={blur}
-                inputValue={email}
-                inputState={
-                  touched.email
-                    ? errors.email
-                      ? errors.email
-                      : "success"
-                    : null
-                }
-              />
             </div>
           </div>
 
@@ -110,40 +64,42 @@ export default function View({ groups, formik, handlers }) {
               htmlFor="group"
               className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2"
             >
-              Groups
+              Attach Test
             </label>
-            <div className="mt-1 sm:mt-0 sm:col-span-2">
+            <div className="mt-1 sm:mt-0 sm:col-span-1">
               <FieldArray
-                name="groupIds"
+                name="testIds"
                 render={(arrayHelpers) => (
                   <div>
-                    <div className="max-w-lg rounded-md shadow-sm sm:max-w-xs">
+                    <div className="max-w-lg rounded-md sm:max-w-xs ">
                       <Autosuggest
                         data={groups}
-                        getOptionLabel={option => option.name}
+                        getOptionLabel={(option) => option.title}
                         onSuggestionSelected={(e, { suggestion }) => {
                           arrayHelpers.push({
                             id: suggestion.id,
-                            name: suggestion.name,
+                            title: suggestion.title,
+                            startDate: dates.startDate.toISOString(),
+                            endDate: dates.endDate.toISOString(),
                           });
                           change("group")("");
                         }}
                         {...{
-                          placeholder: "Search a group...",
+                          placeholder: "Search a test...",
                           value: group,
                           onChange: (event, { newValue }) =>
                             change("group")(newValue),
                         }}
                       />
                     </div>{" "}
-                    <div className="flex flex-row  mt-1">
-                      {groupIds &&
-                        groupIds.map((groupsId, index) => (
+                    <div className="flex flex-wrap">
+                      {testIds &&
+                        testIds.map((groupsId, index) => (
                           <span
                             key={groupsId.id}
-                            className="inline-flex mr-1 items-center px-3 py-0.5 rounded-full text-sm font-medium leading-5 bg-indigo-100 text-indigo-800"
+                            className="inline-flex mr-1 mt-1 items-center px-3 py-0.5 rounded-full text-sm font-medium leading-5 bg-indigo-100 text-indigo-800"
                           >
-                            {groupsId.name}
+                            {groupsId.title}
                             <button
                               onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
                               type="button"
@@ -165,12 +121,39 @@ export default function View({ groups, formik, handlers }) {
                             </button>
                           </span>
                         ))}
-                      {errors.groupIds && (
-                        <span className="text-red-500">{errors.groupIds}</span>
-                      )}
+                      {groupPlacementTests.map((groupPt) => (
+                        <span
+                          key={groupPt.id}
+                          className="inline-flex mr-1 mt-1 items-center px-3 py-0.5 rounded-full text-sm font-medium leading-5 bg-green-100 text-green-800"
+                        >
+                          {groupPt.placementTest.title}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 )}
+              />
+            </div>
+            <div>
+              <DatePicker
+                className="border-2 border-gray-100 rounded-lg p-2 mr-1"
+                selected={dates.startDate}
+                onChange={(date) => handleDate(date, "startDate")}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                timeCaption="time"
+                dateFormat="MMMM d, yyyy h:mm aa"
+              />
+              <DatePicker
+                className="border-2 border-gray-100 rounded-lg p-2"
+                selected={dates.endDate}
+                onChange={(date) => handleDate(date, "endDate")}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                timeCaption="time"
+                dateFormat="MMMM d, yyyy h:mm aa"
               />
             </div>
           </div>
