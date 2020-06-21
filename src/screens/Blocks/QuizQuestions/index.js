@@ -175,17 +175,21 @@ function Quiz() {
   };
 
   const handleUpdateQuestion = (mutate) => async (id, data) => {
-    const result = await mutate({
-      variables: { where: { id }, data },
-    });
-    console.log(result);
+    if (id) {
+      const result = await mutate({
+        variables: { where: { id }, data },
+      });
+      console.log(result);
+    }
   };
 
   const handleUpdateQuestionOption = (mutate) => async (id, data) => {
-    const result = await mutate({
-      variables: { where: { id }, data },
-    });
-    console.log(result);
+    if (id) {
+      const result = await mutate({
+        variables: { where: { id }, data },
+      });
+      console.log(result);
+    }
   };
 
   const handleCreateQuestion = (mutate) => async () => {
@@ -217,17 +221,21 @@ function Quiz() {
   };
 
   const handleDeleteQuestion = (mutate) => async (id) => {
-    const result = await mutate({
-      variables: { where: { id } },
-    });
-    console.log(result);
+    if (id) {
+      const result = await mutate({
+        variables: { where: { id } },
+      });
+      console.log(result);
+    }
   };
 
   const handleDeleteQuestionOption = (mutate) => async (id) => {
-    const result = await mutate({
-      variables: { where: { id } },
-    });
-    console.log(result);
+    if (id) {
+      const result = await mutate({
+        variables: { where: { id } },
+      });
+      console.log(result);
+    }
   };
 
   const { mutate: createImage } = useMutation({ event: "image.create" });
