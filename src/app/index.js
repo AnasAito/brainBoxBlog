@@ -1,3 +1,4 @@
+// hello from ui-dev branch by ANASIO
 import React, { Fragment, Suspense, lazy } from "react";
 
 import { addHocs } from "shared/helpers/Addhocs";
@@ -26,7 +27,7 @@ const App = () => {
           <Route path="/auth" component={Auth} />
           <Route path="/admin" component={Admin} />
           <Route path="/logout" component={Logout} />
-          <Redirect from="/" to="/admin" exact/>
+          <Redirect from="/" to="/admin" exact />
 
           {/* <Route component={NotFound} /> */}
         </Switch>
