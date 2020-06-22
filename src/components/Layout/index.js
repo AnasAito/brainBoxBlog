@@ -1,14 +1,12 @@
 import React from "react";
 import Nav from "./Nav";
-import useLayoutReducer from "./useLayoutReducer"
+import useLayoutReducer from "./useLayoutReducer";
 
 export default function Layout({ header }) {
-
   const { state, dispatch } = useLayoutReducer();
 
-
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white   ">
       <nav className="bg-white border-b border-gray-200">
         <Nav data={state} handler={dispatch} />
       </nav>

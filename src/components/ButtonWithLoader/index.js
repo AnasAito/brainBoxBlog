@@ -2,11 +2,8 @@ import React from "react";
 import ClipLoader from "react-spinners/BounceLoader";
 export default function index({ loading, children, ...rest }) {
   return (
-    <span className="inline-flex rounded-md shadow-sm">
-      <button
-        type="button"
-        {...rest}
-      >
+    <span className="inline-flex rounded-md shadow-sm  ">
+      <button type="button" {...rest}>
         {children}
         {loading ? (
           <div className="ml-3">

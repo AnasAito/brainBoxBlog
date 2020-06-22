@@ -14,7 +14,7 @@ const Card = ({ payload, type, onEdit, onDelete, notification }) => {
   const { data: activity } = useQuery({
     event: "activity.get.one",
     variables: { where: { id: attachBlock }, withSelect: true },
-    skip: !attachBlock,
+    skip: !attachBlock
   });
   const submitBlock = async (createBlock, activityID) => {
     const result = await createBlock({
@@ -23,9 +23,9 @@ const Card = ({ payload, type, onEdit, onDelete, notification }) => {
           name: payload.title,
           type,
           activity: { id: activityID },
-          [type]: { id: payload.id },
-        },
-      },
+          [type]: { id: payload.id }
+        }
+      }
     });
     console.log(result);
     const blockId = get(result, "data.createBlock.id");
@@ -45,18 +45,18 @@ const Card = ({ payload, type, onEdit, onDelete, notification }) => {
         activity: {
           ...activity.activity,
           blocks: [...activity.activity.blocks, data.createBlock],
-          __typename: "Activity",
-        },
+          __typename: "Activity"
+        }
       };
       return {
         event: "activity.get.one",
         variables: {
           where: { id: attachBlock },
-          withSelect: true,
+          withSelect: true
         },
-        data: newData,
+        data: newData
       };
-    },
+    }
   });
   return (
     <div>
@@ -71,21 +71,22 @@ const Card = ({ payload, type, onEdit, onDelete, notification }) => {
             <p className=" text-lg leading-9 font-semibold text-gray-900 truncate">
               {payload.title}
             </p>
-            {!!attachBlock && <div
-              className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
-              alt=""
-              onClick={() => submitBlock(createBlock, attachBlock)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                className="h-6 w-6 cursor-pointer text-green-700 hover:text-green-500"
-                fill="currentColor"
+            {!!attachBlock && (
+              <div
+                className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
+                alt=""
+                onClick={() => submitBlock(createBlock, attachBlock)}
               >
-                <path d="M9.26 13a2 2 0 0 1 .01-2.01A3 3 0 0 0 9 5H5a3 3 0 0 0 0 6h.08a6.06 6.06 0 0 0 0 2H5A5 5 0 0 1 5 3h4a5 5 0 0 1 .26 10zm1.48-6a2 2 0 0 1-.01 2.01A3 3 0 0 0 11 15h4a3 3 0 0 0 0-6h-.08a6.06 6.06 0 0 0 0-2H15a5 5 0 0 1 0 10h-4a5 5 0 0 1-.26-10z" />
-              </svg>
-            </div>}
-
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  className="h-6 w-6 cursor-pointer text-green-700 hover:text-green-500"
+                  fill="currentColor"
+                >
+                  <path d="M9.26 13a2 2 0 0 1 .01-2.01A3 3 0 0 0 9 5H5a3 3 0 0 0 0 6h.08a6.06 6.06 0 0 0 0 2H5A5 5 0 0 1 5 3h4a5 5 0 0 1 .26 10zm1.48-6a2 2 0 0 1-.01 2.01A3 3 0 0 0 11 15h4a3 3 0 0 0 0-6h-.08a6.06 6.06 0 0 0 0-2H15a5 5 0 0 1 0 10h-4a5 5 0 0 1-.26-10z" />
+                </svg>
+              </div>
+            )}
           </div>
           <div className="flex flex-row justify-end ">
             <div

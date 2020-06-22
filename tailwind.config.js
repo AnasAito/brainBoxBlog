@@ -7,13 +7,7 @@ for (i = 0; i < 12; i++) {
 }
 
 module.exports = {
-  // purge: {
-  //   enabled: true,
-  //   content: ["./src/**/*.js"],
-  //   options: {
-  //     whitelist: [...widthException],
-  //   },
-  // },
+  purge: [],
   theme: {
     extend: {
       fontFamily: {
