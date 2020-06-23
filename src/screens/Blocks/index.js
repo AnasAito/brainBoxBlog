@@ -2,30 +2,28 @@ import React from "react";
 import { NavLink, Route, Switch, Redirect } from "react-router-dom";
 import routes from "./routes";
 export default function Dashboard() {
-  
   return (
-    <div>
-      <div className="hidden sm:block">
-        <div className="border-b border-gray-200">
-          <nav className="-mb-px flex">
-            {routes.map((route) => {
-              return !route.invisible && (
-                <NavLink
-                  key={route.name}
-                  to={route.layout + route.path}
-                  activeClassName="border-indigo-500 text-indigo-600 focus:text-indigo-800 focus:border-indigo-700 hover:border-indigo-300"
-                  className="w-1/4 py-4 px-1 text-center border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300"
-                >
-                  {route.name}
-                </NavLink>
-              );
-            })}
-          </nav>
-        </div>
-      </div>
-      <div className="pt-10">
+    <div className="flex flex-row justify-center  ">
+      <nav className=" flex flex-col m-4 flex w-1/12    ">
+        {routes.map(route => {
+          return (
+            !route.invisible && (
+              <NavLink
+                key={route.name}
+                to={route.layout + route.path}
+                activeClassName=" rounded-md border bg-indigo-500 text-white   shadow-blue-2xl    "
+                className=" my-5  w-20 h-20   text-center  text-xl font-black flex justify-center items-center"
+              >
+                {route.name}
+              </NavLink>
+            )
+          );
+        })}
+      </nav>
+
+      <div className="w-11/12">
         <Switch>
-          {routes.map((route) => (
+          {routes.map(route => (
             <Route
               exact={route.exact}
               key={route.name}
