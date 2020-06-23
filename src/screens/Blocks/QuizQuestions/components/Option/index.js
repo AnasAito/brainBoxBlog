@@ -9,7 +9,7 @@ export default function Option({ option, onSave, onDelete }) {
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState("");
 
-  const handleBlur = (e) => {
+  const handleBlur = e => {
     // handle saving here
     // close edit mode
     onSave(option.id, { label: value });
@@ -22,7 +22,7 @@ export default function Option({ option, onSave, onDelete }) {
 
   return (
     <div
-      className="flex items-center hover:shadow-lg ml-2 mr-2 mb-3 px-2"
+      className="flex items-center justify-between hover:shadow-lg ml-2 mr-2 mb-3 px-2"
       key={option.id}
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
@@ -44,17 +44,17 @@ export default function Option({ option, onSave, onDelete }) {
             <Field
               autoFocus
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={e => setValue(e.target.value)}
               onBlur={handleBlur}
             />
           ) : option.hasMath ? (
-            <TeX >{`${option.label}`}</TeX>
+            <TeX>{`${option.label}`}</TeX>
           ) : (
             <p className="font-medium text-md">{option.label} </p>
           )}
         </div>
       </div>
-      {showControls && (
+      {true && (
         <div className="flex items-end">
           <div
             className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
