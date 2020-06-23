@@ -9,7 +9,7 @@ export default function View({ handleSave, loading }) {
   const fileInput = useRef(null);
   console.log(file);
   return (
-    <div className="max-w-lg flex  justify-center px-6 pt-5 pb-6 border-4 border-gray-300 border-dashed rounded-md">
+    <div className="max-w-lg flex  justify-center items-center px-6 pt-5 pb-6 border border-gray-300  rounded-sm">
       {file ? (
         <div className="flex flex-col w-full">
           <AudioPlayer src={URL.createObjectURL(file)} id="preview" />
@@ -56,7 +56,7 @@ export default function View({ handleSave, loading }) {
             <input
               type="file"
               accept="audio/*"
-              onChange={(e) => setFile(e.target.files[0])}
+              onChange={e => setFile(e.target.files[0])}
               hidden
               ref={fileInput}
             />
