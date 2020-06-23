@@ -13,7 +13,7 @@ const Card = ({ payload, onEdit, onDelete, notification }) => {
   const { data: activity } = useQuery({
     event: "activity.get.one",
     variables: { where: { id: attachBlock }, withSelect: true },
-    skip: !attachBlock,
+    skip: !attachBlock
   });
   const submitBlock = async (createBlock, activityID) => {
     const result = await createBlock({
@@ -22,9 +22,9 @@ const Card = ({ payload, onEdit, onDelete, notification }) => {
           name: payload.name,
           type: "image",
           activity: { id: activityID },
-          image: { id: payload.id },
-        },
-      },
+          image: { id: payload.id }
+        }
+      }
     });
     console.log(result);
     const blockId = get(result, "data.createBlock.id");
@@ -44,25 +44,25 @@ const Card = ({ payload, onEdit, onDelete, notification }) => {
         activity: {
           ...activity.activity,
           blocks: [...activity.activity.blocks, data.createBlock],
-          __typename: "Activity",
-        },
+          __typename: "Activity"
+        }
       };
       return {
         event: "activity.get.one",
         variables: {
           where: { id: attachBlock },
-          withSelect: true,
+          withSelect: true
         },
-        data: newData,
+        data: newData
       };
-    },
+    }
   });
   return (
     <div>
       <div className="bg-white rounded-lg shadow-lg">
         {payload.cloudinaryId && (
           <img
-            className="bg-blue-50 max-w-full rounded-t-lg"
+            className="bg-white object-scale-down h-48 w-full   rounded-t-lg"
             alt="card"
             src={`https://res.cloudinary.com/geerd/image/upload/q_auto:eco/${payload.cloudinaryId}.jpg`}
           />
