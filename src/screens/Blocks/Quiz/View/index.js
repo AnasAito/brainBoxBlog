@@ -10,15 +10,15 @@ export default function ListView({ data, count, handleCreate, handleDelete }) {
   return (
     <div className="flex flex-col">
       <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-        <div className="grid grid-cols-4 gap-5">
-          {data.map((test) => (
+        <div className="grid grid-cols-3 gap-5">
+          {data.map(test => (
             <Card
               payload={test}
               type="quiz"
               key={test.id}
               onEdit={() =>
                 history.push({
-                  pathname: `quiz/${test.id}`,
+                  pathname: `quiz/${test.id}`
                 })
               }
               onDelete={() => handleDelete(test.id)}
