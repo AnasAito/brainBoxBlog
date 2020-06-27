@@ -11,7 +11,7 @@ import Router from "./services/Router";
 import Apollo from "./services/Apollo";
 import Security from "./services/Security";
 import Logout from "./services/Logout";
-
+import Beta from "screens/Beta/index";
 import { Route, Switch, Redirect } from "react-router";
 
 const Auth = lazy(() => import("layouts/Auth"));
@@ -27,6 +27,7 @@ const App = () => {
           <Route path="/auth" component={Auth} />
           <Route path="/admin" component={Admin} />
           <Route path="/logout" component={Logout} />
+          <Route path="/beta" component={Beta} />
           <Redirect from="/" to="/admin" exact />
 
           {/* <Route component={NotFound} /> */}
