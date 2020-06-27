@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
 import Popper from "popper.js";
 
-const PopoverMenu = ({ menuItems, buttonContent, menuPlacement }) => {
+const PopoverMenu = ({
+  menuItems,
+  buttonContent,
+  menuPlacement,
+  buttonStyle
+}) => {
   const [popoverShow, setPopoverShow] = React.useState(false);
   const btnRef = React.createRef();
   const popoverRef = React.createRef();
@@ -17,12 +22,10 @@ const PopoverMenu = ({ menuItems, buttonContent, menuPlacement }) => {
   };
   return (
     <>
-      <div className="flex flex-wrap ">
-        <div className="w-full text-center">
+      <div className="flex flex-wrap items-center ">
+        <div className="w-full text-center  ">
           <button
-            className={
-              "bg-white text-white  rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-            }
+            className={`bg-white text-white  outline-none focus:outline-none mr-1 mb-1 ${buttonStyle}`}
             type="button"
             style={{ transition: "all .15s ease" }}
             onClick={() => {
@@ -44,7 +47,7 @@ const PopoverMenu = ({ menuItems, buttonContent, menuPlacement }) => {
                 "bg-white text-gray-600 opacity-75 font-semibold    uppercase "
               }
             >
-              <div class="  mt-2 w-56  shadow-lg">
+              <div class="  mt-2 min-w-full  shadow-lg">
                 <div
                   class=" bg-white shadow-xs"
                   role="menu"

@@ -42,6 +42,7 @@ const Card = ({ title, subTitle, onEdit, onDelete, onAdd }) => {
         >
           <PopoverMenu
             menuPlacement="right"
+            buttonStyle="rounded shadow"
             menuItems={[
               {
                 title: "Edit",
