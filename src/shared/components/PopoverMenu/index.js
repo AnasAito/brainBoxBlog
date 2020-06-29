@@ -26,7 +26,7 @@ const PopoverMenu = ({
       <div className="flex flex-wrap items-center ">
         <div className="w-full text-center  ">
           <button
-            className={`bg-white text-white  outline-none focus:outline-none mr-1 mb-1 ${buttonStyle}`}
+            className={` text-white  outline-none focus:outline-none mr-1 mb-1 ${buttonStyle}`}
             type="button"
             style={{ transition: "all .15s ease" }}
             onClick={() => {

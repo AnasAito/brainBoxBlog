@@ -224,7 +224,7 @@ export default function AddButoon() {
           x="0px"
           y="0px"
           viewBox="0 0 496 496"
-          className="h-20 w-20    self-center transition duration-500 ease-in-out text-gray-500 cursor-pointer hover:text-gray-700 "
+          className="h-20 w-20  bg-transparent   self-center transition duration-500 ease-in-out text-gray-500 cursor-pointer hover:text-gray-700 "
           fill="currentColor"
         >
           <g>
