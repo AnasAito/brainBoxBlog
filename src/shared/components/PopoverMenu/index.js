@@ -2,11 +2,12 @@ import React, { useEffect } from "react";
 import Popper from "popper.js";
 
 const PopoverMenu = ({
-  menuItems,
+  menuSections,
   buttonContent,
   menuPlacement,
   buttonStyle
 }) => {
+  // const menuItems = menuItems.items
   const [popoverShow, setPopoverShow] = React.useState(false);
   const btnRef = React.createRef();
   const popoverRef = React.createRef();
@@ -38,40 +39,40 @@ const PopoverMenu = ({
           <div
             className={
               (popoverShow ? "" : "hidden ") +
-              " bg-white rounded-md   block z-50 "
+              " bg-white   block z-50  shadow-xl border rounded  "
             }
             ref={popoverRef}
           >
             <div
               className={
-                "bg-white text-gray-600 opacity-75 font-semibold    uppercase "
+                "bg-white text-gray-600  opacity-75 font-semibold overflow-auto h-56  w-72     uppercase "
               }
             >
-              <div class="  mt-2 min-w-full  shadow-lg">
-                <div
-                  class=" bg-white shadow-xs"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="options-menu"
-                >
-                  {menuItems.map(item => (
-                    <>
-                      {" "}
-                      <div class="py-1">
-                        <a
-                          href="#"
-                          class="group flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
-                          role="menuitem"
-                          onClick={item.onClick}
-                        >
-                          {item.icon}
-                          {item.title}
-                        </a>
-                      </div>
-                      <div class="border-t border-gray-100"></div>
-                    </>
-                  ))}
-                </div>
+              <div class="  mt-2 min-w-full   ">
+                {menuSections.map(element => (
+                  <div class=" bg-white  ">
+                    <p className="bg-white text-left text-black ml-5  pt-4 normal-case text-gray-500 font-normal  ">
+                      {element.sectionTitle}
+                    </p>
+                    <div class="border-t border-gray-100 " />
+                    {element.sectionItems.map(item => (
+                      <>
+                        {" "}
+                        <div class="py-1">
+                          <a
+                            href="#"
+                            class="group flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                            role="menuitem"
+                            onClick={item.onClick}
+                          >
+                            {item.icon}
+                            {item.title}
+                          </a>
+                        </div>
+                      </>
+                    ))}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
