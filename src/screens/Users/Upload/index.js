@@ -39,7 +39,7 @@ function All({ notification }) {
     const users = values.users.map((user) => ({
       firstName: user.firstName || null,
       lastName: user.lastName || null,
-      email: user.email || null,
+      email: user.email.toLowerCase() || null,
       type: "student",
     }));
 
