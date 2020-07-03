@@ -12,18 +12,19 @@ export default function All() {
     event: "activity.get.one",
     variables: {
       where: {
-        id,
+        id
       },
-      withSelect: true,
+      withSelect: true
     },
-    skip: !id,
+    skip: !id
   });
+  //default value if activity is empty
   const activity = get(data, "activity", {
     name: "",
     order: 0,
     template: "template1",
     type: "",
-    blocks: [],
+    blocks: []
   });
 
   const submit = async (mutate, values) => {
@@ -34,14 +35,14 @@ export default function All() {
           name: values.title,
           order: values.order,
           template: values.template,
-          type: values.type,
-        },
-      },
+          type: values.type
+        }
+      }
     });
     history.goBack();
   };
   const { mutate } = useMutation({
-    event: "activity.update",
+    event: "activity.update"
   });
   const formik = useFormik({
     enableReinitialize: true,
@@ -49,14 +50,16 @@ export default function All() {
       title: activity.name,
       order: activity.order,
       template: activity.template,
-      type: activity.type,
+      type: activity.type
     },
     validationSchema: object({
-      title: string().min(5, "error").required("error"),
+      title: string()
+        .min(5, "error")
+        .required("error")
     }),
-    onSubmit: (values) => {
+    onSubmit: values => {
       submit(mutate, values);
-    },
+    }
   });
 
   return (
@@ -65,12 +68,12 @@ export default function All() {
       formik={{
         values: { ...formik.values },
         errors: { ...formik.errors },
-        touched: { ...formik.touched },
+        touched: { ...formik.touched }
       }}
       handlers={{
         submit: formik.handleSubmit,
         change: formik.handleChange,
-        blur: formik.handleBlur,
+        blur: formik.handleBlur
       }}
       onCancel={history.goBack}
     />

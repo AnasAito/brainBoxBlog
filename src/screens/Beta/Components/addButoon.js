@@ -1,6 +1,6 @@
 import React from "react";
 import PopoverMenu from "shared/components/PopoverMenu";
-export default function AddButoon() {
+export default function AddButoon({ setAttach }) {
   return (
     <PopoverMenu
       menuPlacement="right"
@@ -34,7 +34,7 @@ export default function AddButoon() {
                   />
                 </svg>
               )
-              // onClick: onEdit
+              // onClick: () => setAttach(true)
             },
             {
               title: (
@@ -70,8 +70,8 @@ export default function AddButoon() {
 	c-2.761,0-5,2.239-5,5v10c0,2.761,2.239,5,5,5h90c2.761,0,5-2.239,5-5v-10c0-2.761-2.239-5-5-5H147.012z"
                   />
                 </svg>
-              )
-              //onClick: onDelete
+              ),
+              onClick: () => setAttach(true)
             },
             {
               title: (

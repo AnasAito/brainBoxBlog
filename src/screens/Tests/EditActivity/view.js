@@ -1,11 +1,11 @@
 import React from "react";
 import Input from "shared/components/Input";
-import Wizard from "./Wizard"
+import Wizard from "./Wizard";
 export default function View({ formik, blocks, handlers, onCancel }) {
   const {
     values: { title, order, template },
     errors,
-    touched,
+    touched
   } = formik;
   const { submit, change, blur } = handlers;
 
@@ -16,9 +16,10 @@ export default function View({ formik, blocks, handlers, onCancel }) {
     template4: { name: "Audio + Image + Quiz", type: "quiz" },
     template5: { name: "Text + Record", type: "speaking" },
     template6: { name: "Text + Writing", type: "writing" },
-    mathQuizTemplate: { name: "Math Quiz", type: "quiz" },
+    mathQuizTemplate: { name: "Math Quiz", type: "quiz" }
   };
-
+  console.log("console template ");
+  console.log(template);
   return (
     <form autoComplete="off" onSubmit={submit}>
       <div>
@@ -93,7 +94,7 @@ export default function View({ formik, blocks, handlers, onCancel }) {
               <select
                 id="template"
                 name="template"
-                onChange={(e) => {
+                onChange={e => {
                   change("template")(e);
                   change("type")(activityTemplates[e.target.value].type);
                 }}
@@ -117,7 +118,7 @@ export default function View({ formik, blocks, handlers, onCancel }) {
             Blocks
           </label>
           <div className="mt-1 sm:mt-0 sm:col-span-2">
-            <Wizard template={template} blocks={blocks}/>
+            <Wizard template={template} blocks={blocks} />
           </div>
         </div>
       </div>
