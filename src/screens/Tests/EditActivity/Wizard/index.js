@@ -76,8 +76,6 @@ function BlockWizard({ match, history, template, blocks }) {
   return (
     <div className="grid grid-cols-3 gap-5">
       {get(temp[template], "path", []).map((v, i) => {
-        console.log("v");
-        console.log(v);
         const pth = Object.keys(v)[0];
         if (blocks.map(v => v.type).includes(pth)) {
           const idx = findIndex(blocks, function(o) {

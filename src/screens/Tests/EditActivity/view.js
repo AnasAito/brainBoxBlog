@@ -18,8 +18,7 @@ export default function View({ formik, blocks, handlers, onCancel }) {
     template6: { name: "Text + Writing", type: "writing" },
     mathQuizTemplate: { name: "Math Quiz", type: "quiz" }
   };
-  console.log("console template ");
-  console.log(template);
+
   return (
     <form autoComplete="off" onSubmit={submit}>
       <div>

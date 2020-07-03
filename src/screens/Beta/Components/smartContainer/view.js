@@ -1,7 +1,8 @@
 import React from "react";
 import AddButton from "../addButoon";
 import Quiz from "../blocks/Quiz";
-export default function View({ attach, setAttach }) {
+import BlockView from "./blockView";
+export default function View({ attach, setAttach, blockData }) {
   return (
     <div
       class={` border-gray-200 rounded-lg  ${
@@ -9,7 +10,11 @@ export default function View({ attach, setAttach }) {
       } `}
     >
       <div className=" h-full w-full flex justify-center  hover:bg-gray-100 ">
-        {!attach ? <AddButton setAttach={setAttach} /> : <Quiz />}
+        {!attach ? (
+          <AddButton setAttach={setAttach} />
+        ) : (
+          <BlockView blockData={blockData} />
+        )}
       </div>
     </div>
   );
