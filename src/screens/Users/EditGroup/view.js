@@ -64,6 +64,28 @@ export default function View({
             >
               Attach Test
             </label>
+            <div>
+              <DatePicker
+                className="border-2 border-gray-100 rounded-lg p-2 mr-1"
+                selected={dates.startDate}
+                onChange={(date) => handleDate(date, "startDate")}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                timeCaption="time"
+                dateFormat="MMMM d, yyyy h:mm aa"
+              />
+              <DatePicker
+                className="border-2 border-gray-100 rounded-lg p-2"
+                selected={dates.endDate}
+                onChange={(date) => handleDate(date, "endDate")}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                timeCaption="time"
+                dateFormat="MMMM d, yyyy h:mm aa"
+              />
+            </div>
             <div className="mt-1 sm:mt-0 sm:col-span-1">
               <FieldArray
                 name="testIds"
@@ -148,28 +170,7 @@ export default function View({
                 }
               />
             </div>
-            <div>
-              <DatePicker
-                className="border-2 border-gray-100 rounded-lg p-2 mr-1"
-                selected={dates.startDate}
-                onChange={(date) => handleDate(date, "startDate")}
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={15}
-                timeCaption="time"
-                dateFormat="MMMM d, yyyy h:mm aa"
-              />
-              <DatePicker
-                className="border-2 border-gray-100 rounded-lg p-2"
-                selected={dates.endDate}
-                onChange={(date) => handleDate(date, "endDate")}
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={15}
-                timeCaption="time"
-                dateFormat="MMMM d, yyyy h:mm aa"
-              />
-            </div>
+            
           </div>
         </div>
       </div>
