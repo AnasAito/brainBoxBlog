@@ -72,7 +72,16 @@ function All({ notification }) {
     event: "group.placement.test.create",
   });
 
-  const submit = async (mutate, createGroupPlacementTest, values) => {
+  const { mutate: updateGroupPlacementTest } = useMutation({
+    event: "group.placement.test.update",
+  });
+
+  const submit = async (
+    mutate,
+    createGroupPlacementTest,
+    updateGroupPlacementTest,
+    values
+  ) => {
     const results = await mutate({
       variables: {
         where: { id },
@@ -80,6 +89,17 @@ function All({ notification }) {
           name: values.name,
         },
       },
+    });
+
+    await forEachAsync(values.updateIds, async (o) => {
+      const variables = {
+        where: { id: o.id },
+        data: {
+          enabled: o.enabled,
+        },
+      };
+
+      return updateGroupPlacementTest({ variables: variables });
     });
 
     await forEachAsync(values.testIds, async (o) => {
@@ -91,6 +111,7 @@ function All({ notification }) {
           group: {
             id,
           },
+          enabled: false,
           begin: o.startDate,
           end: o.endDate,
           notes: "",
@@ -101,7 +122,7 @@ function All({ notification }) {
     });
 
     get(results, "data.updateGroup.id")
-      ? notification.success("Group Update")
+      ? notification.success("Group Updated")
       : notification.error("Error");
 
     history.goBack();
@@ -114,8 +135,16 @@ function All({ notification }) {
         name: group.name,
         group: "",
         testIds: [],
+        updateIds: groupPlacementTests,
       }}
-      onSubmit={(values) => submit(mutate, createGroupPlacementTest, values)}
+      onSubmit={(values) =>
+        submit(
+          mutate,
+          createGroupPlacementTest,
+          updateGroupPlacementTest,
+          values
+        )
+      }
       validationSchema={object({
         name: string().min(5, "error").required("error"),
       })}

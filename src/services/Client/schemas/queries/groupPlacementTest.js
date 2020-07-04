@@ -7,6 +7,7 @@ export const GROUP_PLACEMENT_TEST_GET_ONE = gql`
   ) {
     groupPlacementTest(where: $where, withSelect: $withSelect) {
       id
+      enabled
       group {
         id
         name
@@ -34,6 +35,7 @@ export const GROUP_PLACEMENT_TEST_GET_MANY = gql`
       count
       data {
         id
+        enabled
         group {
           id
           name

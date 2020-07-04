@@ -8,17 +8,15 @@ export default function View({
   dates,
   handleDate,
   groups,
-  groupPlacementTests,
   formik,
   handlers,
 }) {
   const {
-    values: { name, group, testIds },
+    values: { name, group, testIds, updateIds },
     errors,
     touched,
   } = formik;
   const { change, blur } = handlers;
-  console.log(testIds);
   return (
     <>
       <div>
@@ -121,17 +119,33 @@ export default function View({
                             </button>
                           </span>
                         ))}
-                      {groupPlacementTests.map((groupPt) => (
-                        <span
-                          key={groupPt.id}
-                          className="inline-flex mr-1 mt-1 items-center px-3 py-0.5 rounded-full text-sm font-medium leading-5 bg-green-100 text-green-800"
-                        >
-                          {groupPt.placementTest.title}
-                        </span>
-                      ))}
                     </div>
                   </div>
                 )}
+              />
+              <FieldArray
+                name="updateIds"
+                render={(arrayHelpers) =>
+                  updateIds.map((groupPt, i) => (
+                    <span
+                      key={groupPt.id}
+                      onClick={() => {
+                        const { enabled, ...rest } = groupPt;
+                        return arrayHelpers.replace(i, {
+                          enabled: !groupPt.enabled,
+                          ...rest,
+                        });
+                      }}
+                      className={`cursor-pointer inline-flex mr-1 mt-1 items-center px-3 py-0.5 rounded-full text-sm font-medium leading-5 ${
+                        groupPt.enabled
+                          ? "bg-green-100 text-green-800"
+                          : "bg-red-100 text-red-800"
+                      }`}
+                    >
+                      {groupPt.placementTest.title}
+                    </span>
+                  ))
+                }
               />
             </div>
             <div>
