@@ -79,8 +79,8 @@ export default function View({
                           arrayHelpers.push({
                             id: suggestion.id,
                             title: suggestion.title,
-                            startDate: dates.startDate.toISOString(),
-                            endDate: dates.endDate.toISOString(),
+                            startDate: dates.startDate,
+                            endDate: dates.endDate,
                           });
                           change("group")("");
                         }}

@@ -11,7 +11,7 @@ import View from "./view";
 import "react-datepicker/dist/react-datepicker.css";
 
 function All({ notification }) {
-  let history = useHistory()
+  let history = useHistory();
   const [state, setState] = useState({
     startDate: new Date(),
     endDate: new Date(),
@@ -91,6 +91,9 @@ function All({ notification }) {
           group: {
             id,
           },
+          begin: o.startDate,
+          end: o.endDate,
+          notes: "",
         },
       };
 
@@ -101,7 +104,7 @@ function All({ notification }) {
       ? notification.success("Group Update")
       : notification.error("Error");
 
-    history.goBack()
+    history.goBack();
   };
 
   return (
