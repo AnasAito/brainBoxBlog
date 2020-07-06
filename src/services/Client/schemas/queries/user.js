@@ -7,6 +7,7 @@ export const USER_GET_MANY = gql`
     $withSelect: Boolean
     $where: UserWhereInput
     $like: UserWhereInput
+    $gt: UserWhereInput
     $orderBy: [UserWhereInput]
   ) {
     users(
@@ -15,6 +16,7 @@ export const USER_GET_MANY = gql`
       withSelect: $withSelect
       where: $where
       like: $like
+      gt: $gt
       orderBy: $orderBy
     ) {
       data {
@@ -52,8 +54,8 @@ export const USER_GET_ONE = gql`
 `;
 
 export const USER_GET_COUNT = gql`
-  query users($where: UserWhereInput) {
-    users(where: $where) {
+  query users($where: UserWhereInput, $gt: UserWhereInput) {
+    users(where: $where, gt: $gt) {
       count
     }
   }

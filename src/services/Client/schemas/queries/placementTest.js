@@ -45,6 +45,17 @@ export const PLACEMENT_TEST_GET_MANY = gql`
   }
 `;
 
+export const PLACEMENT_TEST_COUNT = gql`
+  query placementTests(
+    $where: PlacementTestWhereInput
+    $gt: PlacementTestWhereInput
+  ) {
+    placementTests(where: $where, gt: $gt) {
+      count
+    }
+  }
+`;
+
 export const PLACEMENT_TEST_REPORT = gql`
   query placementTestReport(
     $where: UserPlacementTestWhereInput
@@ -57,6 +68,7 @@ export const PLACEMENT_TEST_REPORT = gql`
 
 export default {
   "test.get.one": PLACEMENT_TEST_GET_ONE,
+  "test.count": PLACEMENT_TEST_COUNT,
   "test.get.many": PLACEMENT_TEST_GET_MANY,
-  "test.report": PLACEMENT_TEST_REPORT
+  "test.report": PLACEMENT_TEST_REPORT,
 };
