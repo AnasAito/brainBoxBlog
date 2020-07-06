@@ -70,7 +70,7 @@ export default function Dashboard() {
           <div class="px-4 py-5 sm:p-6">
             <dl>
               <dt class="text-base leading-6 font-normal text-gray-900">
-                Total Test Taken
+                Total Tests Taken
               </dt>
               <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
                 <div class="flex items-baseline text-2xl leading-8 font-semibold text-indigo-600">
@@ -104,7 +104,7 @@ export default function Dashboard() {
           <div class="px-4 py-5 sm:p-6">
             <dl>
               <dt class="text-base leading-6 font-normal text-gray-900">
-                Total Test Created
+                Total Tests Created
               </dt>
               <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
                 <div class="flex items-baseline text-2xl leading-8 font-semibold text-indigo-600">
