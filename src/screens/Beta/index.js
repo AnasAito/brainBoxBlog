@@ -4,18 +4,47 @@ import SearchBar from "shared/components/SearchBar/index";
 
 import Carousel from "./Components/carousel";
 import Previewer from "./Components/previewer";
-
-let template = { name: "block31", map: { 0: "block1_Id", 1: "", 2: "" } };
-let blocks = [{ id: "block1_Id", type: "quiz" }];
-
-export default function Dashboard() {
+import { useQuery, useMutation } from "services/Client";
+import { useParams, useHistory } from "react-router-dom";
+import get from "lodash/get";
+let template = { name: "block31", map: { 0: "block1", 1: "", 2: "" } };
+let blocks = [{ id: "block1", type: "quiz" }];
+// given inputs activity.id : "ckbuul42f000j01etawlwer4v"
+export default function Editor({ id = "ckcbzzyai000v01cvbvbffcpp" }) {
   // init with template.name or first template on carousel if template = null
   // need template object
   // maper will be used to render block or add button
+  // to do
+  // - query activity template and blocks by activity.id  : done
+  // -
+
+  const { data } = useQuery({
+    event: "activity.get.one",
+    variables: {
+      where: {
+        id
+      },
+      withSelect: true
+    },
+    skip: !id
+  });
+  //default value if activity is empty
+
+  const activity = get(data, "activity", {
+    name: "",
+    order: 0,
+    template: "template1",
+    type: "",
+    layout: {},
+    blocks: []
+  });
   useEffect(() => {
     setOption(template.name);
   }, []);
+
   const [option, setOption] = useState("block31");
+  // console.log(Object.values(JSON.parse(activity.layout)));
+  console.log(Object.values(activity.layout));
   return (
     <div className="m-10">
       <div className="hidden sm:block pt-10">
@@ -32,7 +61,13 @@ export default function Dashboard() {
           <Carousel setOption={setOption} option={option} />
         </div>
         <div className="flex w-10/12 ">
-          <Previewer option={option} maper={template.map} blocks={blocks} />
+          <Previewer
+            option={option}
+            //  maper={Object.values(JSON.parse(activity.layout))}
+            blocks={activity.blocks}
+            maper={activity.layout}
+            activityId={id}
+          />
         </div>
       </div>
     </div>

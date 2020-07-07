@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import get from "lodash/get";
 import { useLocation, useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "services/Client";
@@ -8,15 +8,25 @@ const Card = ({ payload, type, onEdit, onDelete, notification }) => {
   function useQueryURL() {
     return new URLSearchParams(useLocation().search);
   }
+  const [layout, setLayout] = useState({});
   const query = useQueryURL();
   const attachBlock = query.get("attach");
+  // get block view order
+  const order = query.get("order");
+  //
   let history = useHistory();
   const { data: activity } = useQuery({
     event: "activity.get.one",
     variables: { where: { id: attachBlock }, withSelect: true },
     skip: !attachBlock
   });
+
   const submitBlock = async (createBlock, activityID) => {
+    // updat layout
+    const prevLayout = get(activity, "activity.layout", {});
+    console.log("layout");
+    console.log(prevLayout);
+
     const result = await createBlock({
       variables: {
         data: {
@@ -27,17 +37,34 @@ const Card = ({ payload, type, onEdit, onDelete, notification }) => {
         }
       }
     });
+
     console.log(result);
     const blockId = get(result, "data.createBlock.id");
     if (blockId) {
+      const activityUpdated = await updateLayout({
+        variables: {
+          where: { id: attachBlock },
+          data: {
+            layout: {
+              ...prevLayout,
+              [order]: blockId
+            }
+          }
+        }
+      });
       notification.success("Block successfully attached to activity");
       console.log("success");
-      history.push(`/admin/tests/activities/edit/${activityID}`);
+      // history.push(`/admin/tests/activities/edit/${activityID}`);
+      history.push(`/admin/beta`);
     } else {
       notification.success("Error");
       console.log("error");
     }
   };
+  // add m template
+  const { mutate: updateLayout } = useMutation({
+    event: "activity.update"
+  });
   const { mutate: createBlock } = useMutation({
     event: "block.create",
     update: ({ data }) => {
@@ -45,6 +72,7 @@ const Card = ({ payload, type, onEdit, onDelete, notification }) => {
         activity: {
           ...activity.activity,
           blocks: [...activity.activity.blocks, data.createBlock],
+
           __typename: "Activity"
         }
       };

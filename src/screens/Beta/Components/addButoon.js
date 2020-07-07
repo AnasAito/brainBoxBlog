@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import PopoverMenu from "shared/components/PopoverMenu";
-export default function AddButoon({ setAttach }) {
+import { useHistory, useParams } from "react-router-dom";
+
+export default function AddButoon({ activityId, history, order }) {
+  //let history = useHistory();
+  //const { id } = useParams();
+  const [test, settest] = useState("");
   return (
     <PopoverMenu
       menuPlacement="right"
@@ -33,8 +38,12 @@ export default function AddButoon({ setAttach }) {
                     clip-rule="evenodd"
                   />
                 </svg>
-              )
-              // onClick: () => setAttach(true)
+              ),
+              onClick: () =>
+                history.push({
+                  pathname: `/admin/blocks/quiz`,
+                  search: `&attach=${activityId}&order=${order}&page=0&pageSize=7`
+                })
             },
             {
               title: (
@@ -71,7 +80,11 @@ export default function AddButoon({ setAttach }) {
                   />
                 </svg>
               ),
-              onClick: () => setAttach(true)
+              onClick: () =>
+                history.push({
+                  pathname: `/admin/blocks/quiz`,
+                  search: `&attach=${activityId}&order=${order}&page=0&pageSize=7`
+                })
             },
             {
               title: (
@@ -146,8 +159,12 @@ export default function AddButoon({ setAttach }) {
                     </g>
                   </g>
                 </svg>
-              )
-              // onClick: onEdit
+              ),
+              onClick: () =>
+                history.push({
+                  pathname: `/admin/blocks/image`,
+                  search: `&attach=${activityId}&order=${order}&page=0&pageSize=7`
+                })
             }
           ]
         },

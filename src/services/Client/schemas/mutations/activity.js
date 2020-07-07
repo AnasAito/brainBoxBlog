@@ -9,6 +9,7 @@ export const ACTIVITY_CREATE = gql`
         template
         type
         order
+        layout
         blocks {
        name
        type
@@ -29,6 +30,7 @@ export const ACTIVITY_UPDATE = gql`
         template
         type
         order
+        layout
         blocks {
        name
        type
@@ -49,6 +51,7 @@ export const ACTIVITY_DELETE = gql`
       template
       type
       order
+      layout
       blocks {
        name
        type
@@ -64,5 +67,5 @@ export const ACTIVITY_DELETE = gql`
 export default {
   "activity.create": ACTIVITY_CREATE,
   "activity.update": ACTIVITY_UPDATE,
-  "activity.delete": ACTIVITY_DELETE,
+  "activity.delete": ACTIVITY_DELETE
 };

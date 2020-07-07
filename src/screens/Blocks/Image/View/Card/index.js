@@ -9,6 +9,7 @@ const Card = ({ payload, onEdit, onDelete, notification }) => {
   }
   const query = useQueryURL();
   const attachBlock = query.get("attach");
+  const order = query.get("order");
   let history = useHistory();
   const { data: activity } = useQuery({
     event: "activity.get.one",
@@ -16,6 +17,7 @@ const Card = ({ payload, onEdit, onDelete, notification }) => {
     skip: !attachBlock
   });
   const submitBlock = async (createBlock, activityID) => {
+    const prevLayout = get(activity, "activity.layout", {});
     const result = await createBlock({
       variables: {
         data: {
@@ -30,13 +32,28 @@ const Card = ({ payload, onEdit, onDelete, notification }) => {
     const blockId = get(result, "data.createBlock.id");
     if (blockId) {
       notification.success("Block successfully attached to activity");
+      const activityUpdated = await updateLayout({
+        variables: {
+          where: { id: attachBlock },
+          data: {
+            layout: {
+              ...prevLayout,
+              [order]: blockId
+            }
+          }
+        }
+      });
+      notification.success("Layout successfully updated");
       console.log("success");
-      history.push(`/admin/tests/activities/edit/${activityID}`);
+      history.push(`/admin/beta`);
     } else {
       notification.error("Error");
       console.log("error");
     }
   };
+  const { mutate: updateLayout } = useMutation({
+    event: "activity.update"
+  });
   const { mutate: createBlock } = useMutation({
     event: "block.create",
     update: ({ data }) => {

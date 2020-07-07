@@ -93,6 +93,7 @@ function BlockWizard({ match, history, template, blocks }) {
         } else {
           const name = Object.values(v)[0];
           const customPath = Object.keys(v)[0];
+          console.log("custom path");
           console.log(customPath);
           return (
             <div key={i}>

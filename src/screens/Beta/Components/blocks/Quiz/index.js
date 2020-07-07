@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import View from "./view";
 import data from "./data";
 //import Timer from "./components/timer";
-function Quiz({ onAnswer, answers = {} }) {
+function Quiz({ quiz, onAnswer, answers = {} }) {
   const [index, setIndex] = useState(0);
   const [cor, setcor] = useState(false);
 
@@ -18,8 +18,8 @@ function Quiz({ onAnswer, answers = {} }) {
     return "loading";
   }*/
   }
-  const questions = data.questions;
-  console.log(data);
+  const questions = quiz.questions;
+  //console.log(data);
   const question = questions[index];
   const length = questions.length;
   const reset = () => {

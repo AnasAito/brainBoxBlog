@@ -9,10 +9,11 @@ export const ACTIVITY_GET_ONE = gql`
       template
       type
       order
+      layout
       blocks {
-       id
-       name
-       type
+        id
+        name
+        type
       }
     }
   }

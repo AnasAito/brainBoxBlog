@@ -1,5 +1,14 @@
 import gql from "graphql-tag";
-import { quiz, image, text, audio, speech, fillblank, dnd, scrambledSentence } from "./fragments";
+import {
+  quiz,
+  image,
+  text,
+  audio,
+  speech,
+  fillblank,
+  dnd,
+  scrambledSentence
+} from "./fragments";
 
 export const BLOCK_GET_MANY = gql`
   query blocks(
@@ -36,10 +45,6 @@ export const BLOCK_GET_ONE = gql`
       ${image}
       ${text}
       ${audio}
-      ${speech}
-      ${fillblank}
-      ${dnd}
-      ${scrambledSentence}
     }
   }
 `;
