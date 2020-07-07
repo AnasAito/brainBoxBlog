@@ -2,6 +2,7 @@ import Dashboard from "screens/Dashboard";
 import Users from "screens/Users";
 import Tests from "screens/Tests";
 import Blocks from "screens/Blocks";
+import Grade from "screens/Grade";
 
 var indexRoutes = [
   {
@@ -23,6 +24,7 @@ var indexRoutes = [
     layout: "/admin",
   },
   { path: "/blocks", name: "Blocks", component: Blocks, layout: "/admin" },
+  { path: "/grade", name: "Grade", component: Grade, layout: "/admin" },
 ];
 
 export default indexRoutes;

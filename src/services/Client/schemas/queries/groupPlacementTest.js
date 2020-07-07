@@ -44,6 +44,9 @@ export const GROUP_PLACEMENT_TEST_GET_MANY = gql`
           id
           title
           instructions
+          sectionContainer {
+            id
+          }
         }
       }
     }
@@ -52,5 +55,5 @@ export const GROUP_PLACEMENT_TEST_GET_MANY = gql`
 
 export default {
   "group.placement.test.get.one": GROUP_PLACEMENT_TEST_GET_ONE,
-  "group.placement.test.get.many": GROUP_PLACEMENT_TEST_GET_MANY
+  "group.placement.test.get.many": GROUP_PLACEMENT_TEST_GET_MANY,
 };

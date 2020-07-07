@@ -23,19 +23,28 @@ export const USER_PLACEMENT_TEST_GET_MANY = gql`
   query userPlacementTests(
     $where: UserPlacementTestWhereInput
     $withSelect: Boolean
+    $take: Int
+    $skip: Int
     $orderBy: [UserPlacementTestWhereInput]
   ) {
     userPlacementTests(
       where: $where
       withSelect: $withSelect
+      take: $take
+      skip: $skip
       orderBy: $orderBy
     ) {
+      count
       data {
         id
         completed
         progression
+        score
         user {
           id
+          firstName
+          lastName
+          email
         }
         placementTest {
           id
