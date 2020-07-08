@@ -24,8 +24,8 @@ const temp = {
   },
   template6: {
     name: "Writing",
-    nb: 1,
-    path: [{ text: "Text Instructions" }],
+    nb: 2,
+    path: [{ text: "Text Instructions" }, { image: "Image" }],
   },
   template2: {
     name: "Text + Image + Quiz",
@@ -93,7 +93,7 @@ function BlockWizard({ match, history, template, blocks }) {
         } else {
           const name = Object.values(v)[0];
           const customPath = Object.keys(v)[0];
-          console.log(customPath)
+          console.log(customPath);
           return (
             <div key={i}>
               <WizardCard
