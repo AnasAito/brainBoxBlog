@@ -34,8 +34,8 @@ const temp = {
   },
   template3: {
     name: "Text + Upload",
-    nb: 1,
-    path: [{ text: "Text" }],
+    nb: 2,
+    path: [{ text: "Text" }, { image: "Image" }],
   },
 
   template4: {
