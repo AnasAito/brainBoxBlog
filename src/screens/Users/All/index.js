@@ -1,40 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import get from "lodash/get";
 import Table from "shared/components/Table";
 import { useHistory } from "react-router-dom";
 
 import { useQueryPaginated } from "services/Client";
 export default function All() {
+  // const [skip,setSkip]=useState()
+  const [firstNameFilter, setFirstNameFilter] = useState("%%");
+  const [lastNameFilter, setlastNameFilter] = useState("%%");
+  const [emailFilter, setEmailFilter] = useState("%%");
   let history = useHistory();
 
   const columns = React.useMemo(
     () => [
       {
         Header: "First Name",
-        accessor: "firstName",
+        accessor: "firstName"
       },
       {
         Header: "Last Name",
-        accessor: "lastName",
+        accessor: "lastName"
       },
 
       {
         Header: "Email",
-        accessor: "email",
+        accessor: "email"
       },
       {
         Header: "Actions",
-        Cell: (props) => {
+        Cell: props => {
           return (
             <button
-              onClick={() => history.push(`/admin/users/all/${props.row.original.id}`)}
+              onClick={() =>
+                history.push(`/admin/users/all/${props.row.original.id}`)
+              }
               className="text-indigo-600 hover:text-indigo-900"
             >
               Edit
             </button>
           );
-        },
-      },
+        }
+      }
     ],
     [history]
   );
@@ -42,10 +48,16 @@ export default function All() {
   const { data, loading, pageSize } = useQueryPaginated({
     event: "user.get.many",
     variables: {
+      //skip:skip,
       withSelect: true,
       where: { type: "student" },
       orderBy: { createdAt: "desc" },
-    },
+      like: {
+        firstName: firstNameFilter,
+        lastName: lastNameFilter,
+        email: emailFilter
+      }
+    }
   });
   const userData = get(data, "users.data", []);
   const count = get(data, "users.count", []) / pageSize;
@@ -59,6 +71,13 @@ export default function All() {
             data={userData}
             loading={loading}
             pageCount={count}
+            setFirstNameFilter={setFirstNameFilter}
+            setlastNameFilter={setlastNameFilter}
+            setters={{
+              header_firstName: setFirstNameFilter,
+              header_lastName: setlastNameFilter,
+              header_email: setEmailFilter
+            }}
           />
         </div>
       </div>

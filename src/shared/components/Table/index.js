@@ -1,17 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useTable, usePagination } from "react-table";
 import { useHistory, useLocation } from "react-router-dom";
 import withStore from "services/Store";
 
-function Table({ store, columns, data, pageCount: controlledPageCount }) {
+function Table({
+  store,
+  columns,
+  data,
+  pageCount: controlledPageCount,
+  setFirstNameFilter,
+  setlastNameFilter,
+  setters
+}) {
+  const [inputNames, setInputNames] = useState([]);
   // Use the state and functions returned from useTable to build your UI
   function useQueryParams() {
     return new URLSearchParams(useLocation().search);
   }
   const query = useQueryParams();
-  const pageIndex1 = parseInt(query.get("page")) || 0 ;
+  const pageIndex1 = parseInt(query.get("page")) || 0;
 
-  const { 
+  const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
@@ -22,14 +31,14 @@ function Table({ store, columns, data, pageCount: controlledPageCount }) {
     canNextPage,
     nextPage,
     previousPage,
-    state: { pageIndex, pageSize },
+    state: { pageIndex, pageSize }
   } = useTable(
     {
       columns,
       data,
       manualPagination: true, // Tell the usePagination
       initialState: { pageIndex: pageIndex1 }, // Pass our hoisted table state
-      pageCount: Math.ceil(controlledPageCount),
+      pageCount: Math.ceil(controlledPageCount)
     },
     usePagination
   );
@@ -38,7 +47,7 @@ function Table({ store, columns, data, pageCount: controlledPageCount }) {
   // Render the UI for your table
   useEffect(() => {
     history.push({
-      search: `?page=${pageIndex}&pageSize=${pageSize}`,
+      search: `?page=${pageIndex}&pageSize=${pageSize}`
     });
   }, [pageIndex, history, pageSize]);
 
@@ -46,14 +55,44 @@ function Table({ store, columns, data, pageCount: controlledPageCount }) {
     <>
       <table className="min-w-full" {...getTableProps()}>
         <thead>
-          {headerGroups.map((headerGroup) => (
+          {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
+              {headerGroup.headers.map(column => (
                 <th
                   className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                   {...column.getHeaderProps()}
+                  onClick={() =>
+                    setInputNames(inputNames => [
+                      ...inputNames,
+                      column.getHeaderProps().key
+                    ])
+                  }
                 >
-                  {column.render("Header")}
+                  {inputNames.includes(column.getHeaderProps().key) ? (
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                      <input
+                        id={column.getHeaderProps().key}
+                        class="form-input block w-full sm:text-sm sm:leading-5"
+                        placeholder={column.render("Header")}
+                        onChange={e => {
+                          setters[column.getHeaderProps().key](
+                            `%${e.target.value}%`
+                          );
+                          //console.log(column.getHeaderProps().key);
+                          if (e.target.value === "") {
+                            // setInputName(false);
+                            let temp = inputNames.filter(
+                              inputName =>
+                                !(inputName === column.getHeaderProps().key)
+                            );
+                            setInputNames(temp);
+                          }
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <p> {column.render("Header")}</p>
+                  )}
                 </th>
               ))}
             </tr>
@@ -64,7 +103,7 @@ function Table({ store, columns, data, pageCount: controlledPageCount }) {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
+                {row.cells.map(cell => {
                   return (
                     <td
                       className="px-6 py-4 whitespace-no-wrap text-sm border-b border-gray-200"
@@ -101,7 +140,7 @@ function Table({ store, columns, data, pageCount: controlledPageCount }) {
         <div>
           <select
             value={pageSize}
-            onChange={(e) => setPageSize(parseInt(e.target.value))}
+            onChange={e => setPageSize(parseInt(e.target.value))}
             aria-label="Selected tab"
             className="form-select block w-full"
           >
@@ -115,21 +154,17 @@ function Table({ store, columns, data, pageCount: controlledPageCount }) {
         <div className="flex justify-between sm:justify-end">
           <button
             onClick={() => previousPage()}
-            className={`relative inline-flex ${
-              !canPreviousPage && "cursor-not-allowed"
-            } items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white ${
-              canPreviousPage && "hover:text-gray-500"
-            } focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150`}
+            className={`relative inline-flex ${!canPreviousPage &&
+              "cursor-not-allowed"} items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white ${canPreviousPage &&
+              "hover:text-gray-500"} focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150`}
           >
             Previous
           </button>
           <button
             onClick={() => nextPage()}
-            className={`ml-3 relative inline-flex ${
-              !canNextPage && "cursor-not-allowed"
-            } disabled:cursor-not-allowed items-center px-4 py-2 disabled:cursor-pointer border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white ${
-              canNextPage && "hover:text-gray-500"
-            } focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150`}
+            className={`ml-3 relative inline-flex ${!canNextPage &&
+              "cursor-not-allowed"} disabled:cursor-not-allowed items-center px-4 py-2 disabled:cursor-pointer border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white ${canNextPage &&
+              "hover:text-gray-500"} focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150`}
           >
             Next
           </button>
