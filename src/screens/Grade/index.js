@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import get from "lodash/get";
 import { object, string } from "yup";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
-import { useMutation, useClearCache, useQuery, useQueryPaginated } from "services/Client";
+import {
+  useMutation,
+  useClearCache,
+  useQuery,
+  useQueryPaginated,
+} from "services/Client";
 import withNotification from "services/Notification";
 
 import Table from "shared/components/Table";
+import Modal from "./Modal";
 import View from "./view";
 
 function All({ notification }) {
-  let history = useHistory();
+  const [show, setShow] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [score, setScore] = useState(0);
   const {
     data: { searchLike },
   } = useQuery({ event: "searchLike" });
@@ -41,6 +49,25 @@ function All({ notification }) {
       : notification.error("Error");
   };
 
+  const handleGradeSingle = (mutate, values) => async (score) => {
+    const results = await mutate({
+      variables: {
+        where: {
+          id: values.testId,
+        },
+        score: parseInt(score),
+        user: {
+          id: userId,
+        },
+        activity: { id: values.activityId },
+      },
+    });
+
+    get(results, "data.gradePlacementTest") === "OK"
+      ? notification.success("Grade Saved")
+      : notification.error("Error");
+  };
+
   const formik = useFormik({
     initialValues: {
       groupName: "",
@@ -65,6 +92,7 @@ function All({ notification }) {
     sectionContainerId,
     sectionId,
     activityId,
+    activityType,
   } = formik.values;
 
   const { data: placementTestsData } = useQuery({
@@ -148,20 +176,20 @@ function All({ notification }) {
         Cell: (props) => {
           return (
             <button
-              onClick={() =>
-                history.push(
-                  `/admin/users/groups/edit/${props.row.original.id}`
-                )
-              }
+              onClick={() => {
+                setUserId(props.row.original.user.id);
+                setScore(get(props.row.original, `score[${activityId}]`, 0));
+                setShow(true);
+              }}
               className="text-indigo-600 hover:text-indigo-900"
             >
-              Edit
+              More
             </button>
           );
         },
       },
     ],
-    [history, activityId]
+    [activityId]
   );
 
   const { data, loading, pageSize } = useQueryPaginated({
@@ -191,6 +219,21 @@ function All({ notification }) {
     },
   });
 
+  const { data: userActivityData } = useQuery({
+    event: "user.activity.get.one",
+    variables: {
+      where: { user: { id: userId }, activity: { id: activityId } },
+    },
+    skip: userId === "" && activityId === "",
+  });
+
+  const getPayload = (data, type) => {
+    if (type === "speaking") {
+      return get(data, "userActivity.answers.recordPath", "");
+    }
+  };
+
+  const payload = getPayload(userActivityData, activityType);
   return (
     <div className="grid grid-cols-4 gap-4">
       <View
@@ -223,6 +266,18 @@ function All({ notification }) {
           </div>
         </div>
       </div>
+      <Modal
+        show={show}
+        modalText="Grade"
+        modalTitle="Grade"
+        payload={payload}
+        type="success"
+        buttonText="Save"
+        score={score}
+        setScore={setScore}
+        onSubmit={handleGradeSingle(mutate, formik.values)}
+        onClose={() => setShow(false)}
+      />
     </div>
   );
 }
