@@ -175,21 +175,29 @@ function All({ notification }) {
         Header: "Actions",
         Cell: (props) => {
           return (
-            <button
-              onClick={() => {
-                setUserId(props.row.original.user.id);
-                setScore(get(props.row.original, `score[${activityId}]`, 0));
-                setShow(true);
-              }}
-              className="text-indigo-600 hover:text-indigo-900"
-            >
-              More
-            </button>
+            <>
+              {activityType === "quiz" || activityType === "" ? (
+                <span>No Action</span>
+              ) : (
+                <button
+                  onClick={() => {
+                    setUserId(props.row.original.user.id);
+                    setScore(
+                      get(props.row.original, `score[${activityId}]`, 0)
+                    );
+                    setShow(true);
+                  }}
+                  className="text-indigo-600 hover:text-indigo-900"
+                >
+                  More
+                </button>
+              )}
+            </>
           );
         },
       },
     ],
-    [activityId]
+    [activityId, activityType]
   );
 
   const { data, loading, pageSize } = useQueryPaginated({
