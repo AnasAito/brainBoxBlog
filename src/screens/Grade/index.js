@@ -10,8 +10,10 @@ import {
   useQueryPaginated,
 } from "services/Client";
 import withNotification from "services/Notification";
+import ReactHtmlParser from "react-html-parser";
 
 import Table from "shared/components/Table";
+import AudioPlayer from "./AudioPreview";
 import Modal from "./Modal";
 import View from "./view";
 
@@ -239,9 +241,14 @@ function All({ notification }) {
     if (type === "speaking") {
       return get(data, "userActivity.answers.recordPath", "");
     }
+    if (type === "writing") {
+      return get(data, "userActivity.answers.text", "");
+    }
+    return "";
   };
 
   const payload = getPayload(userActivityData, activityType);
+  console.log(payload);
   return (
     <div className="grid grid-cols-4 gap-4">
       <View
@@ -276,9 +283,14 @@ function All({ notification }) {
       </div>
       <Modal
         show={show}
-        modalText="Grade"
         modalTitle="Grade"
-        payload={payload}
+        body={
+          activityType === "speaking" ? (
+            <AudioPlayer src={payload} />
+          ) : (
+            <div>{ReactHtmlParser(payload)}</div>
+          )
+        }
         type="success"
         buttonText="Save"
         score={score}

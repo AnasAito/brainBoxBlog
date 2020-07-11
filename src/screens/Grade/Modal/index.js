@@ -1,5 +1,4 @@
 import React from "react";
-import AudioPlayer from "../AudioPreview";
 import Input from "shared/components/Input";
 
 const typeMapper = {
@@ -34,7 +33,7 @@ export default function Modal({
   show,
   score,
   setScore,
-  payload,
+  body,
   modalTitle,
   onSubmit,
   onClose,
@@ -46,10 +45,10 @@ export default function Modal({
       {show ? (
         <>
           {" "}
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+          <div className="justify-center p-10 items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="relative w-auto my-6 mx-auto max-h-full overflow-auto max-w-3xl">
               <div
-                className="bg-white  rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full sm:p-6"
+                className="bg-white rounded-lg px-4 pt-5 pb-4 shadow-xl transform transition-all sm:max-w-lg sm:w-full sm:p-6"
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="modal-headline"
@@ -78,14 +77,14 @@ export default function Modal({
 
                   <div className="mt-2 items-center">
                     {/* <p className="text-sm leading-5 text-gray-500">{modalText}</p> */}
-                    <AudioPlayer src={payload} />
+                    {body}
                     {/* <audio controls>
                         <source src={payload} />
                         Your browser does not support the audio element.
                       </audio> */}
 
                     <div className="relative rounded-md shadow-sm mt-1">
-                      <span>Score: </span>
+                      <span className="text-sm text-gray-500">Score: </span>
                       <Input
                         id="title"
                         type="number"
