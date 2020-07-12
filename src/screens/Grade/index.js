@@ -21,6 +21,9 @@ function All({ notification }) {
   const [show, setShow] = useState(false);
   const [userId, setUserId] = useState("");
   const [score, setScore] = useState(0);
+  const [firstNameFilter, setFirstNameFilter] = useState("%%");
+  const [lastNameFilter, setlastNameFilter] = useState("%%");
+  const [emailFilter, setEmailFilter] = useState("%%");
   const {
     data: { searchLike },
   } = useQuery({ event: "searchLike" });
@@ -211,6 +214,13 @@ function All({ notification }) {
         placementTest: { id: testId },
         usergroup: { group: { id: groupId } },
       },
+      like: {
+        user: {
+          firstName: firstNameFilter,
+          lastName: lastNameFilter,
+          email: emailFilter,
+        },
+      },
       orderBy: { createdAt: "desc" },
     },
     skip: testId === "" || groupId === "",
@@ -248,7 +258,7 @@ function All({ notification }) {
   };
 
   const payload = getPayload(userActivityData, activityType);
-  console.log(payload);
+  console.log(firstNameFilter);
   return (
     <div className="grid grid-cols-4 gap-4">
       <View
@@ -277,6 +287,11 @@ function All({ notification }) {
               data={userData}
               loading={loading}
               pageCount={count}
+              setters={{
+                "header_user.firstName": setFirstNameFilter,
+                "header_user.lastName": setlastNameFilter,
+                "header_user.email": setEmailFilter,
+              }}
             />
           </div>
         </div>

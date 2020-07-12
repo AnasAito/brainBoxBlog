@@ -1,22 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useTable, usePagination } from "react-table";
 import { useHistory, useLocation } from "react-router-dom";
+
 import withStore from "services/Store";
 
-function Table({ store, columns, data, pageCount: controlledPageCount }) {
+function Table({ columns, data, pageCount: controlledPageCount, setters }) {
+  const [inputNames, setInputNames] = useState([]);
   // Use the state and functions returned from useTable to build your UI
   function useQueryParams() {
     return new URLSearchParams(useLocation().search);
   }
   const query = useQueryParams();
-  const pageIndex1 = parseInt(query.get("page")) || 0 ;
+  const pageIndex1 = parseInt(query.get("page")) || 0;
 
-  const { 
+  const node = React.useRef();
+
+  const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     page,
     prepareRow,
+    gotoPage,
     setPageSize,
     canPreviousPage,
     canNextPage,
@@ -42,8 +47,24 @@ function Table({ store, columns, data, pageCount: controlledPageCount }) {
     });
   }, [pageIndex, history, pageSize]);
 
+  React.useEffect(() => {
+    // add when mounted
+    const handleClick = (e) => {
+      if (!node.current.contains(e.target)) {
+        setInputNames([]);
+        Object.values(setters).map((f) => f("%%"));
+        return;
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    // return function to be called when unmounted
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  });
+
   return (
-    <>
+    <div ref={node}>
       <table className="min-w-full" {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -52,8 +73,39 @@ function Table({ store, columns, data, pageCount: controlledPageCount }) {
                 <th
                   className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                   {...column.getHeaderProps()}
+                  onClick={() => {
+                    setInputNames((inputNames) => [
+                      ...inputNames,
+                      column.getHeaderProps().key,
+                    ]);
+                    gotoPage(0);
+                  }}
                 >
-                  {column.render("Header")}
+                  {inputNames.includes(column.getHeaderProps().key) ? (
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                      <input
+                        id={column.getHeaderProps().key}
+                        class="form-input block w-full sm:text-sm sm:leading-5"
+                        placeholder={column.render("Header")}
+                        onChange={(e) => {
+                          setters[column.getHeaderProps().key](
+                            `%${e.target.value}%`
+                          );
+                          //console.log(column.getHeaderProps().key);
+                          // if (e.target.value === "") {
+                          //   // setInputName(false);
+                          //   let temp = inputNames.filter(
+                          //     (inputName) =>
+                          //       !(inputName === column.getHeaderProps().key)
+                          //   );
+                          //   setInputNames(temp);
+                          // }
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <p> {column.render("Header")}</p>
+                  )}
                 </th>
               ))}
             </tr>
@@ -135,7 +187,7 @@ function Table({ store, columns, data, pageCount: controlledPageCount }) {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

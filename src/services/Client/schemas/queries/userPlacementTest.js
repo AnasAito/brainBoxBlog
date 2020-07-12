@@ -25,6 +25,7 @@ export const USER_PLACEMENT_TEST_GET_MANY = gql`
     $withSelect: Boolean
     $take: Int
     $skip: Int
+    $like: UserPlacementTestWhereInput
     $orderBy: [UserPlacementTestWhereInput]
   ) {
     userPlacementTests(
@@ -32,6 +33,7 @@ export const USER_PLACEMENT_TEST_GET_MANY = gql`
       withSelect: $withSelect
       take: $take
       skip: $skip
+      like: $like
       orderBy: $orderBy
     ) {
       count

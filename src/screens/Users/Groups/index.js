@@ -11,6 +11,7 @@ import View from "./view";
 
 import { useQueryPaginated } from "services/Client";
 function All({ notification }) {
+  const [nameFilter, setNameFilter] = React.useState("%%");
   let history = useHistory();
   const columns = React.useMemo(
     () => [
@@ -40,6 +41,9 @@ function All({ notification }) {
     variables: {
       withSelect: true,
       orderBy: { createdAt: "desc" },
+      like: {
+        name: nameFilter
+      }
     },
   });
   const userData = get(data, "groups.data", []);
@@ -65,7 +69,7 @@ function All({ notification }) {
       ? notification.success("Group Created")
       : notification.error("Error");
   };
-
+  console.log(nameFilter)
   return (
     <div className="grid grid-cols-3 gap-4">
       <Formik
@@ -102,6 +106,9 @@ function All({ notification }) {
               data={userData}
               loading={loading}
               pageCount={count}
+              setters={{
+                header_name: setNameFilter,
+              }}
             />
           </div>
         </div>
