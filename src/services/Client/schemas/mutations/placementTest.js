@@ -61,9 +61,16 @@ export const PLACEMENT_TEST_GRADE = gql`
   }
 `;
 
+export const PLACEMENT_TEST_REPORT = gql`
+  mutation placementTestReport($where: UserPlacementTestWhereInput) {
+    placementTestReport(where: $where)
+  }
+`;
+
 export default {
   "test.create": PLACEMENT_TEST_CREATE,
   "test.update": PLACEMENT_TEST_UPDATE,
   "test.delete": PLACEMENT_TEST_DELETE,
-  "test.grade": PLACEMENT_TEST_GRADE
+  "test.grade": PLACEMENT_TEST_GRADE,
+  "test.report": PLACEMENT_TEST_REPORT,
 };
