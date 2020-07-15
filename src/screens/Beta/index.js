@@ -10,7 +10,7 @@ import get from "lodash/get";
 let template = { name: "block31", map: { 0: "block1", 1: "", 2: "" } };
 let blocks = [{ id: "block1", type: "quiz" }];
 // given inputs activity.id : "ckbuul42f000j01etawlwer4v"
-export default function Editor({ id = "ckcbzzyai000v01cvbvbffcpp" }) {
+export default function Editor({ id = "ckcc0tl5g001001cvdbzj38x2" }) {
   // init with template.name or first template on carousel if template = null
   // need template object
   // maper will be used to render block or add button

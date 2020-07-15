@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, Route, Switch, Redirect } from "react-router-dom";
 import routes from "./routes";
+import SearchBar from "shared/components/SearchBar/index";
 export default function Dashboard() {
   return (
     <div className="flex flex-row justify-center  ">
@@ -21,7 +22,16 @@ export default function Dashboard() {
         })}
       </nav>
 
-      <div className="w-11/12">
+      <div className="w-11/12 ">
+        <div className="hidden sm:block pt-10 py-10">
+          <div className="flex flex-row justify-between">
+            <h2 className="text-3xl font-black">Blocks</h2>
+
+            <SearchBar />
+          </div>
+
+          <div class="border-t border-gray-200"></div>
+        </div>
         <Switch>
           {routes.map(route => (
             <Route
