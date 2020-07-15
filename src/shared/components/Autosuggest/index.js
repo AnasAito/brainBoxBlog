@@ -55,6 +55,9 @@ function MyAutosuggest({
 
   useEffect(() => {
     store.set("searchLike", rest.value);
+    return () => {
+      store.set("searchLike", "");
+    };
   }, [store, rest.value]);
 
   return (
