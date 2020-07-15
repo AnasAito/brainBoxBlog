@@ -2,12 +2,18 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { useQuery } from "services/Client";
 import SearchBar from "shared/components/SearchBox";
+import withStore from "services/Store";
 import routes from "./routes";
 
-export default function Dashboard() {
+function Dashboard({ store }) {
   const {
     data: { testViewTitle },
   } = useQuery({ event: "testViewTitle" });
+
+  React.useEffect(() => {
+    store.set("searchLike", "");
+    store.set("testViewTitle", "Tests")
+  }, [store]);
   return (
     <div>
       <div className="hidden sm:block">
@@ -35,3 +41,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+export default withStore(Dashboard);
