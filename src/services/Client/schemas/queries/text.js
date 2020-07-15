@@ -17,12 +17,14 @@ export const TEXT_GET_MANY = gql`
     $skip: Int
     $where: TextWhereInput
     $withSelect: Boolean
+    $like: TextWhereInput
     $orderBy: [TextWhereInput]
   ) {
     texts(
       where: $where
       withSelect: $withSelect
       orderBy: $orderBy
+      like: $like
       take: $take
       skip: $skip
     ) {

@@ -6,12 +6,14 @@ export const QUIZ_GET_MANY = gql`
     $skip: Int
     $where: QuizWhereInput
     $withSelect: Boolean
+    $like: QuizWhereInput
     $orderBy: [QuizWhereInput]
   ) {
     quizzes(
       where: $where
       withSelect: $withSelect
       orderBy: $orderBy
+      like: $like
       skip: $skip
       take: $take
     ) {
@@ -40,5 +42,5 @@ export const QUIZ_GET_ONE = gql`
 `;
 export default {
   "quiz.get.one": QUIZ_GET_ONE,
-  "quiz.get.many": QUIZ_GET_MANY
+  "quiz.get.many": QUIZ_GET_MANY,
 };

@@ -5,6 +5,7 @@ export const AUDIO_GET_MANY = gql`
     $where: AudioWhereInput
     $withSelect: Boolean
     $orderBy: [AudioWhereInput]
+    $like: AudioWhereInput
     $take: Int
     $skip: Int
   ) {
@@ -12,6 +13,7 @@ export const AUDIO_GET_MANY = gql`
       where: $where
       withSelect: $withSelect
       orderBy: $orderBy
+      like: $like
       take: $take
       skip: $skip
     ) {

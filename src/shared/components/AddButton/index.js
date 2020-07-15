@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function AddButton({handleClick}) {
+export default function AddButton({ handleClick }) {
   return (
-    <div className="rounded-lg border-dashed border-gray-300 border-4 h-25 min-h-full flex justify-center items-center">
+    <div className="rounded-sm hover:bg-gray-300  border-gray-300 border  min-h-full  flex justify-center items-center">
       <svg
         onClick={handleClick}
         version="1.1"
@@ -11,7 +11,7 @@ export default function AddButton({handleClick}) {
         x="0px"
         y="0px"
         viewBox="0 0 496 496"
-        className="h-20 w-20 text-gray-500 cursor-pointer hover:text-gray-700"
+        className="h-10 w-10 text-gray-500 cursor-pointer hover:text-gray-700"
         fill="currentColor"
       >
         <g>

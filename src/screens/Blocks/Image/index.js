@@ -1,6 +1,6 @@
 import React from "react";
 import get from "lodash/get";
-import { useQueryPaginated, useMutation, useClearCache } from "services/Client";
+import { useQueryPaginated, useQuery, useMutation, useClearCache } from "services/Client";
 import { useHistory, useLocation } from "react-router-dom";
 import withNotification from "services/Notification";
 import List from "./View";
@@ -20,11 +20,18 @@ function All(props) {
     }
   }, [page, pageSize, history]);
 
+  const {
+    data: { searchLike },
+  } = useQuery({ event: "searchLike" });
+
   const { data } = useQueryPaginated({
     event: "image.get.many",
     variables: {
       withSelect: true,
       orderBy: { createdAt: "desc" },
+      like: {
+        name: `%${searchLike}%`,
+      },
     },
   });
 

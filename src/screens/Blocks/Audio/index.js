@@ -1,6 +1,6 @@
 import React from "react";
 import get from "lodash/get";
-import { useQueryPaginated, useMutation, useClearCache } from "services/Client";
+import { useQueryPaginated, useQuery, useMutation, useClearCache } from "services/Client";
 import { useHistory, useLocation } from "react-router-dom";
 import withNotification from "services/Notification";
 import List from "./View";
@@ -14,6 +14,11 @@ function All(props) {
   const pageSize = query.get("pageSize");
   let history = useHistory();
 
+  const {
+    data: { searchLike },
+  } = useQuery({ event: "searchLike" });
+
+
   React.useEffect(() => {
     if (!page || !pageSize) {
       history.push({ search: "&page=0&pageSize=7" });
@@ -25,6 +30,9 @@ function All(props) {
     variables: {
       withSelect: true,
       orderBy: { createdAt: "desc" },
+      like: {
+        title: `%${searchLike}%`,
+      },
     },
   });
 

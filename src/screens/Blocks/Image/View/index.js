@@ -3,7 +3,7 @@ import Card from "./Card";
 import Upload from "./Upload";
 import Pagination from "shared/components/Pagination";
 // import AddButton from "shared/components/AddButton";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 export default function ListView({
   data,
@@ -12,7 +12,7 @@ export default function ListView({
   handleDelete,
   loading,
 }) {
-  let history = useHistory();
+  // let history = useHistory();
   return (
     <div className="flex flex-col">
       <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -21,11 +21,6 @@ export default function ListView({
             <Card
               key={test.id}
               payload={test}
-              onEdit={() =>
-                history.push({
-                  pathname: `text/${test.id}`,
-                })
-              }
               onDelete={() => handleDelete(test.id)}
             />
           ))}

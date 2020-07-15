@@ -19,12 +19,14 @@ export const IMAGE_GET_MANY = gql`
     $take: Int
     $skip: Int
     $orderBy: [ImageWhereInput]
+    $like: ImageWhereInput
   ) {
     images(
       where: $where
       withSelect: $withSelect
       take: $take
       skip: $skip
+      like: $like
       orderBy: $orderBy
     ) {
       data {
