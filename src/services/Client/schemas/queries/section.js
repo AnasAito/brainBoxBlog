@@ -16,8 +16,14 @@ export const SECTION_GET_MANY = gql`
     $where: SectionWhereInput
     $withSelect: Boolean
     $orderBy: [SectionWhereInput]
+    $like: SectionWhereInput
   ) {
-    sections(where: $where, withSelect: $withSelect, orderBy: $orderBy) {
+    sections(
+      where: $where
+      withSelect: $withSelect
+      orderBy: $orderBy
+      like: $like
+    ) {
       count
       data {
         id
@@ -31,5 +37,5 @@ export const SECTION_GET_MANY = gql`
 
 export default {
   "section.get.one": SECTION_GET_ONE,
-  "section.get.many": SECTION_GET_MANY
+  "section.get.many": SECTION_GET_MANY,
 };

@@ -33,6 +33,7 @@ const data = {
   pageSize: 10,
   pageIndex: 0,
   searchLike: "",
+  testViewTitle:"Tests",
   paginatedViews: [],
 };
 

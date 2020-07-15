@@ -42,6 +42,7 @@ export const USER_PLACEMENT_TEST_GET_MANY = gql`
         completed
         progression
         score
+        comments
         user {
           id
           firstName

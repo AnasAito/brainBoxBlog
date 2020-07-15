@@ -50,6 +50,8 @@ export default function All() {
     },
   });
 
+  console.log(formik.values.instructions)
+
   return (
     <View
       formik={{

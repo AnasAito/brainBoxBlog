@@ -1,15 +1,26 @@
 import React from "react";
 import get from "lodash/get";
-import { useQueryPaginated, useMutation, useClearCache } from "services/Client";
+import {
+  useQueryPaginated,
+  useQuery,
+  useMutation,
+  useClearCache,
+} from "services/Client";
 import { useHistory } from "react-router-dom";
 import withNotification from "services/Notification";
 import List from "./View";
 function All(props) {
+  const {
+    data: { searchLike },
+  } = useQuery({ event: "searchLike" });
   const { data } = useQueryPaginated({
     event: "test.get.many",
     variables: {
       withSelect: true,
       orderBy: { createdAt: "desc" },
+      like: {
+        title: `%${searchLike}%`,
+      },
     },
   });
 

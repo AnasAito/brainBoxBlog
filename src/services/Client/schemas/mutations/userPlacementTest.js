@@ -9,8 +9,13 @@ export const USER_PLACEMENT_TEST_UPDATE = gql`
       id
       completed
       progression
+      score
+      comments
       user {
         id
+        firstName
+        lastName
+        email
       }
       placementTest {
         id
@@ -20,5 +25,5 @@ export const USER_PLACEMENT_TEST_UPDATE = gql`
 `;
 
 export default {
-  "user.placement.test.update": USER_PLACEMENT_TEST_UPDATE
+  "user.placement.test.update": USER_PLACEMENT_TEST_UPDATE,
 };

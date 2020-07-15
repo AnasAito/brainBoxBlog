@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import get from "lodash/get";
 import { useQuery, useMutation } from "services/Client";
 import { useHistory, useLocation } from "react-router-dom";
 import withNotification from "services/Notification";
+import withStore from "services/Store";
 import removeData from "shared/helpers/removeData";
 import concatData from "shared/helpers/concatData";
 
 import List from "./View";
-function All(props) {
+function All({ notification, store }) {
   function useQueryParams() {
     return new URLSearchParams(useLocation().search);
   }
   const query = useQueryParams();
   const sectionId = query.get("section");
+
+  const { data: sectionTitle } = useQuery({
+    event: "section.get.one",
+    variables: { where: { id: sectionId } },
+  });
+
+  const testTitle = get(sectionTitle, "section.name", "");
+
+  useEffect(() => {
+    store.set("testViewTitle", testTitle);
+  }, [testTitle, store]);
+
+  
   const { data } = useQuery({
     event: "activity.get.many",
     variables: {
@@ -67,9 +81,9 @@ function All(props) {
     mutate({ variables: { where: { id } } })
       .then((res) => {
         if (get(res, "data.deleteSection.id")) {
-          props.notification.success("Delete Successful");
+          notification.success("Delete Successful");
         } else {
-          props.notification.error("Error");
+          notification.error("Error");
         }
       })
       .catch((e) => {});
@@ -83,4 +97,4 @@ function All(props) {
   );
 }
 
-export default withNotification(All);
+export default withNotification(withStore(All));

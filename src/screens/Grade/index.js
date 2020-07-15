@@ -11,6 +11,8 @@ import {
 } from "services/Client";
 import withNotification from "services/Notification";
 import ReactHtmlParser from "react-html-parser";
+import ReactQuill from "react-quill";
+import Input from "shared/components/Input";
 
 import Table from "shared/components/Table";
 import AudioPlayer from "./AudioPreview";
@@ -19,8 +21,10 @@ import View from "./view";
 
 function All({ notification }) {
   const [show, setShow] = useState(false);
+  const [showComment, setShowComment] = useState(false);
   const [userId, setUserId] = useState("");
   const [score, setScore] = useState(0);
+  const [comment, setComment] = useState("");
   const [firstNameFilter, setFirstNameFilter] = useState("%%");
   const [lastNameFilter, setlastNameFilter] = useState("%%");
   const [emailFilter, setEmailFilter] = useState("%%");
@@ -54,7 +58,7 @@ function All({ notification }) {
       : notification.error("Error");
   };
 
-  const handleGradeSingle = (mutate, values) => async (score) => {
+  const handleGradeSingle = async (mutate, score, values) => {
     const results = await mutate({
       variables: {
         where: {
@@ -73,6 +77,26 @@ function All({ notification }) {
       : notification.error("Error");
   };
 
+  const handleUpdateComment = async (mutate, values) => {
+    const results = await mutate({
+      variables: {
+        where: {
+          user: {
+            id: userId,
+          },
+          placementTest: { id: values.testId },
+        },
+        data: {
+          comments: comment,
+        },
+      },
+    });
+
+    get(results, "data.updateUserPlacementTest")
+      ? notification.success("Comment Saved")
+      : notification.error("Error");
+  };
+
   const formik = useFormik({
     initialValues: {
       groupName: "",
@@ -82,6 +106,7 @@ function All({ notification }) {
       sectionId: "",
       activityId: "",
       activityType: "",
+      comment: "",
     },
     validationSchema: object({
       activityType: string().matches("quiz").required("error"),
@@ -182,20 +207,42 @@ function All({ notification }) {
           return (
             <>
               {activityType === "quiz" || activityType === "" ? (
-                <span>No Action</span>
-              ) : (
                 <button
+                  className="text-blue-600 hover:text-blue-900"
                   onClick={() => {
+                    setShowComment(true);
                     setUserId(props.row.original.user.id);
-                    setScore(
-                      get(props.row.original, `score[${activityId}]`, 0)
-                    );
-                    setShow(true);
+                    setComment(get(props.row.original, "comments", ""));
                   }}
-                  className="text-indigo-600 hover:text-indigo-900"
                 >
-                  More
+                  Comment
                 </button>
+              ) : (
+                <>
+                  <button
+                    className="text-blue-600 hover:text-blue-900"
+                    onClick={() => {
+                      setShowComment(true);
+                      setUserId(props.row.original.user.id);
+                      setComment(get(props.row.original, "comments", ""));
+                    }}
+                  >
+                    Comment
+                  </button>
+                  <span className="mx-2">/</span>
+                  <button
+                    onClick={() => {
+                      setUserId(props.row.original.user.id);
+                      setScore(
+                        get(props.row.original, `score[${activityId}]`, 0)
+                      );
+                      setShow(true);
+                    }}
+                    className="text-blue-600 hover:text-blue-900"
+                  >
+                    Grade
+                  </button>
+                </>
               )}
             </>
           );
@@ -239,6 +286,13 @@ function All({ notification }) {
     },
   });
 
+  const { mutate: updateUserPlacementTest } = useMutation({
+    event: "user.placement.test.update",
+    update: () => {
+      clearCache();
+    },
+  });
+
   const { data: userActivityData } = useQuery({
     event: "user.activity.get.one",
     variables: {
@@ -258,7 +312,6 @@ function All({ notification }) {
   };
 
   const payload = getPayload(userActivityData, activityType);
-  console.log(firstNameFilter);
   return (
     <div className="grid grid-cols-4 gap-4">
       <View
@@ -300,18 +353,49 @@ function All({ notification }) {
         show={show}
         modalTitle="Grade"
         body={
-          activityType === "speaking" ? (
-            <AudioPlayer src={payload} />
-          ) : (
-            <div>{ReactHtmlParser(payload)}</div>
-          )
+          <div className="mt-2 items-center">
+            {activityType === "speaking" ? (
+              <AudioPlayer src={payload} />
+            ) : (
+              <div>{ReactHtmlParser(payload)}</div>
+            )}
+            <div className="relative rounded-md shadow-sm mt-1">
+              <span className="text-sm text-gray-500">Score: </span>
+              <Input
+                id="title"
+                type="number"
+                name="title"
+                placeholder="score"
+                handleChange={(e) => setScore(e.target.value)}
+                inputValue={score}
+              />
+            </div>
+          </div>
         }
         type="success"
         buttonText="Save"
-        score={score}
-        setScore={setScore}
-        onSubmit={handleGradeSingle(mutate, formik.values)}
+        onSubmit={() => handleGradeSingle(mutate, score, formik.values)}
         onClose={() => setShow(false)}
+      />
+      <Modal
+        show={showComment}
+        modalTitle="Comment"
+        body={
+          <div className="mt-2 items-center">
+            <ReactQuill
+              theme="snow"
+              value={comment}
+              onChange={setComment}
+              name="comment"
+            />
+          </div>
+        }
+        type="success"
+        buttonText="Save"
+        onSubmit={() =>
+          handleUpdateComment(updateUserPlacementTest, formik.values)
+        }
+        onClose={() => setShowComment(false)}
       />
     </div>
   );

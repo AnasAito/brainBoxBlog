@@ -167,6 +167,13 @@ export const SEARCH_LIKE = gql`
   }
 `;
 
+
+export const TEST_VIEW_TITLE = gql`
+  {
+    testViewTitle @client
+  }
+`;
+
 export const PAGINATED_VIEWS = gql`
   {
     paginatedViews @client {
@@ -178,12 +185,13 @@ export const PAGINATED_VIEWS = gql`
 
 export default {
   paginatedViews: PAGINATED_VIEWS,
+  testViewTitle: TEST_VIEW_TITLE,
   searchLike: SEARCH_LIKE,
   pageSize: PAGE_SIZE,
   pageIndex: PAGE_INDEX,
   timeout: TIMEOUT,
   initialTime: INITIAL_TIME,
-  currentPlacementTest:CURRENT_PLACEMENT_TEST,
+  currentPlacementTest: CURRENT_PLACEMENT_TEST,
   currentLevel: CURRENT_LEVEL,
   currentUnit: CURRENT_UNIT,
   currentActivityName: CURRENT_ACTIVITY_NAME,
@@ -199,7 +207,7 @@ export default {
   alert: ALERT,
   userEnabled: USER_ENABLED,
   loading: LOADING,
-  blocksLoading:BLOCKS_LOADING,
+  blocksLoading: BLOCKS_LOADING,
   courseId: COURSE_ID,
-  unitId: UNIT_ID
+  unitId: UNIT_ID,
 };

@@ -10,9 +10,9 @@ export const ACTIVITY_GET_ONE = gql`
       type
       order
       blocks {
-       id
-       name
-       type
+        id
+        name
+        type
       }
     }
   }
@@ -23,8 +23,9 @@ export const ACTIVITY_GET_MANY = gql`
     $where: ActivityWhereInput
     $withSelect: Boolean
     $orderBy: [ActivityWhereInput]
+    $like: ActivityWhereInput
   ) {
-    activities(where: $where, withSelect: $withSelect, orderBy: $orderBy) {
+    activities(where: $where, withSelect: $withSelect, orderBy: $orderBy, like:$like) {
       count
       data {
         id
@@ -47,5 +48,5 @@ export const ACTIVITY_GET_MANY = gql`
 
 export default {
   "activity.get.one": ACTIVITY_GET_ONE,
-  "activity.get.many": ACTIVITY_GET_MANY
+  "activity.get.many": ACTIVITY_GET_MANY,
 };

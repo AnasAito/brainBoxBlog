@@ -10,11 +10,13 @@ import Router from "./services/Router";
 import Apollo from "./services/Apollo";
 import Security from "./services/Security";
 import Logout from "./services/Logout";
+import "react-quill/dist/quill.snow.css";
 
 import { Route, Switch, Redirect } from "react-router";
 
 const Auth = lazy(() => import("layouts/Auth"));
 const Admin = lazy(() => import("layouts/Admin"));
+
 
 const App = () => {
   return (

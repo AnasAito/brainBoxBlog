@@ -1,5 +1,4 @@
 import React from "react";
-import Input from "shared/components/Input";
 
 const typeMapper = {
   error: {
@@ -74,27 +73,7 @@ export default function Modal({
                       {modalTitle}
                     </h3>
                   </div>
-
-                  <div className="mt-2 items-center">
-                    {/* <p className="text-sm leading-5 text-gray-500">{modalText}</p> */}
-                    {body}
-                    {/* <audio controls>
-                        <source src={payload} />
-                        Your browser does not support the audio element.
-                      </audio> */}
-
-                    <div className="relative rounded-md shadow-sm mt-1">
-                      <span className="text-sm text-gray-500">Score: </span>
-                      <Input
-                        id="title"
-                        type="number"
-                        name="title"
-                        placeholder="score"
-                        handleChange={(e) => setScore(e.target.value)}
-                        inputValue={score}
-                      />
-                    </div>
-                  </div>
+                  {body}
                   {/* <div className="sm:grid sm:grid-cols-4 sm:gap-4 sm:items-start sm:pt-5">
                     <label
                       htmlFor="first_name"
@@ -121,7 +100,7 @@ export default function Modal({
                       type="button"
                       className={`inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 ${typeMapper[type].buttonBg} text-base leading-6 font-medium text-white shadow-sm focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5`}
                       onClick={() => {
-                        onSubmit(score);
+                        onSubmit();
                         onClose();
                       }}
                     >

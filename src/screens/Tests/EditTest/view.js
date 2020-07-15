@@ -1,7 +1,6 @@
 import React from "react";
 import Input from "shared/components/Input";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 export default function View({ formik, handlers, onCancel }) {
   const {
     values: { title, instructions },
