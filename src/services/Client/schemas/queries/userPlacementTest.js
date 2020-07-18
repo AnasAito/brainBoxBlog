@@ -24,17 +24,32 @@ export const USER_PLACEMENT_TEST_GET_MANY = gql`
     $where: UserPlacementTestWhereInput
     $withSelect: Boolean
     $orderBy: [UserPlacementTestWhereInput]
+    $lt: UserPlacementTestWhereInput
+    $gt: UserPlacementTestWhereInput
   ) {
-    userPlacementTests(where: $where, withSelect: $withSelect, orderBy: $orderBy) {
+    userPlacementTests(
+      where: $where
+      withSelect: $withSelect
+      orderBy: $orderBy
+      lt: $lt
+      gt: $gt
+    ) {
       data {
         id
         completed
         progression
+        usergroup {
+          group {
+            name
+          }
+        }
+
         user {
           id
         }
         placementTest {
           id
+          title
         }
       }
     }
@@ -43,5 +58,5 @@ export const USER_PLACEMENT_TEST_GET_MANY = gql`
 
 export default {
   "user.placement.test.get.one": USER_PLACEMENT_TEST_GET_ONE,
-  "user.placement.test.get.many": USER_PLACEMENT_TEST_GET_MANY,
+  "user.placement.test.get.many": USER_PLACEMENT_TEST_GET_MANY
 };

@@ -1,8 +1,8 @@
 import course from "./course";
 import userGroup from "./userGroup";
-import groupPlacementTest from "./groupPlacementTest"
-import placementTest from "./placementTest"
-import userPlacementTest from "./userPlacementTest"
+import groupPlacementTest from "./groupPlacementTest";
+import placementTest from "./placementTest";
+import userPlacementTest from "./userPlacementTest";
 import client from "./client";
 import quiz from "./quiz";
 import group from "./group";
@@ -18,6 +18,7 @@ import question from "./question";
 import questionOption from "./questionOption";
 import progression from "./progression";
 import dnd from "./dnd";
+import chart from "./chart";
 export default {
   ...course,
   ...userGroup,
@@ -38,5 +39,6 @@ export default {
   ...text,
   ...user,
   ...progression,
-  ...dnd
+  ...dnd,
+  ...chart
 };
