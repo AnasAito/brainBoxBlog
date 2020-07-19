@@ -29,7 +29,7 @@ function All({ notification }) {
 
   const submit = async (mutate, values) => {
     setLoading(true);
-    const results = await mutate({
+    await mutate({
       variables: {
         where: {
           placementTest: { id: values.testId },
@@ -37,44 +37,10 @@ function All({ notification }) {
         },
       },
     });
-    const file = get(results, "data.placementTestReport");
-    const response = await axios
-      .request({
-        method: "get",
-        responseType: "blob",
-        url: "https://us-central1-lofty-hall-246216.cloudfunctions.net/downloadZip",
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    if (response) {
-      const downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
-
-      const link = document.createElement("a");
-
-      link.href = downloadUrl;
-
-      link.setAttribute("download", "downloadzip"); //any other extension
-
-      document.body.appendChild(link);
-
-      link.click();
-
-      link.remove();
-
-      console.log("Download Finished");
-    } else {
-      console.log("Download Error");
-    }
-    if (file) {
-      notification.success("Report successfully generated");
-      window.open(file);
-    } else {
-      notification.error(
-        "There appears to be a problem, please contact your administrator"
-      );
-    }
+    // const file = get(results, "data.placementTestReport");
+    window.open(
+      "https://us-central1-lofty-hall-246216.cloudfunctions.net/downloadZip"
+    );
     setLoading(false);
   };
 
