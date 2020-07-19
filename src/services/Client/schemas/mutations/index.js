@@ -17,6 +17,7 @@ import text from "./text";
 import audio from "./audio";
 import image from "./image";
 import block from "./block";
+import report from "./report";
 export default {
   ...login,
   ...feedback,
@@ -37,4 +38,5 @@ export default {
   ...audio,
   ...image,
   ...block,
+  ...report
 };

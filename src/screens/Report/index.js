@@ -1,118 +1,47 @@
 import React from "react";
-import get from "lodash/get";
-import { object, string } from "yup";
-// import { useHistory } from "react-router-dom";
-import { useFormik } from "formik";
-import { useMutation, useClearCache, useQuery } from "services/Client";
-import withNotification from "services/Notification";
-import View from "./view";
-
-function All({ notification }) {
-  const {
-    data: { searchLike },
-  } = useQuery({ event: "searchLike" });
-
-  const [loading, setLoading] = React.useState(false);
-
-  const { data: groupsData } = useQuery({
-    event: "group.get.many",
-    variables: {
-      like: {
-        name: `%${searchLike}%`,
-      },
-    },
-    skip: searchLike === "",
-  });
-  const groups = get(groupsData, "groups.data", []);
-
-  const submit = async (mutate, values) => {
-    setLoading(true);
-    const results = await mutate({
-      variables: {
-        where: {
-          placementTest: { id: values.testId },
-          usergroup: { group: { id: values.groupId } },
-        },
-      },
-    });
-    const file = get(results, "data.placementTestReport");
-    if (file) {
-      notification.success("Report successfully generated");
-      window.open(file);
-    } else {
-      notification.error(
-        "There appears to be a problem, please contact your administrator"
-      );
-    }
-    setLoading(false);
-  };
-
-  const formik = useFormik({
-    initialValues: {
-      groupName: "",
-      groupId: "",
-      testId: "",
-    },
-    validationSchema: object({
-      testId: string().required("error"),
-    }),
-    onSubmit: (values) => {
-      submit(mutate, values);
-    },
-  });
-
-  const { groupId } = formik.values;
-
-  const { data: placementTestsData } = useQuery({
-    event: "group.placement.test.get.many",
-    variables: {
-      where: {
-        group: { id: groupId },
-      },
-      withSelect: true,
-    },
-    skip: groupId === "",
-  });
-
-  const tests = get(placementTestsData, "groupPlacementTests.data", []).map(
-    (v) => ({
-      value: v.placementTest.id,
-      label: v.placementTest.title,
-      sectionContainer: v.placementTest.sectionContainer.id,
-    })
-  );
-
-  const { clearCache } = useClearCache({
-    event: "user.placement.test.get.many",
-  });
-
-  const { mutate } = useMutation({
-    event: "test.report",
-    update: () => {
-      clearCache();
-    },
-  });
-
+import { NavLink, Route, Switch, Redirect } from "react-router-dom";
+import routes from "./routes";
+export default function Dashboard() {
   return (
-    <div className="grid grid-cols-4 gap-4">
-      <View
-        groups={groups}
-        tests={tests}
-        loading={loading}
-        formik={{
-          values: { ...formik.values },
-          errors: { ...formik.errors },
-          touched: { ...formik.touched },
-          isDisabled: !(formik.isValid && formik.dirty),
-        }}
-        handlers={{
-          submit: formik.handleSubmit,
-          change: formik.handleChange,
-          blur: formik.handleBlur,
-        }}
-      />
+    <div className="flex flex-row justify-center  ">
+      <nav className=" flex flex-col m-4 flex w-1/12    ">
+        {routes.map(route => {
+          return (
+            !route.invisible && (
+              <NavLink
+                key={route.name}
+                to={route.layout + route.path}
+                activeClassName=" rounded-md border bg-indigo-500 text-white   shadow-blue-2xl    "
+                className=" my-5  w-20 h-20   text-center  text-xl font-black flex justify-center items-center"
+              >
+                {route.name}
+              </NavLink>
+            )
+          );
+        })}
+      </nav>
+
+      <div className="w-11/12 ">
+        <div className="hidden sm:block pt-10 py-10">
+          <div className="flex flex-row justify-between">
+            <h2 className="text-3xl font-black">Report</h2>
+          </div>
+
+          <div className="border-t border-gray-200"></div>
+        </div>
+        <Switch>
+          {routes.map(route => (
+            <Route
+              exact={route.exact}
+              key={route.name}
+              path={route.layout + route.path}
+              component={route.component}
+            />
+          ))}
+          <Redirect to="report/group" />
+          {/* <Route component={NotFound} /> */}
+        </Switch>
+      </div>
     </div>
   );
 }
-
-export default withNotification(All);
