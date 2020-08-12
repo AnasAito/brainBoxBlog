@@ -3,7 +3,7 @@ import Input from "shared/components/Input";
 import ReactQuill from "react-quill";
 export default function View({ formik, handlers, onCancel }) {
   const {
-    values: { title, instructions },
+    values: { name, overview },
     errors,
     touched,
   } = formik;
@@ -13,10 +13,10 @@ export default function View({ formik, handlers, onCancel }) {
       <div>
         <div>
           <h3 className="text-lg leading-6 font-medium text-gray-900">
-            Test Information
+            Course Information
           </h3>
           <p className="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
-            You can edit the test title and instructions.
+            You can edit the Course name and overview.
           </p>
         </div>
         <div className="mt-6 sm:mt-5">
@@ -25,21 +25,21 @@ export default function View({ formik, handlers, onCancel }) {
               htmlFor="first_name"
               className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2"
             >
-              Title
+              Name
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <div className="max-w-lg relative rounded-md shadow-sm sm:max-w-xs">
                 <Input
-                  id="title"
+                  id="name"
                   type="text"
-                  name="title"
+                  name="name"
                   handleChange={change}
                   onBlur={blur}
-                  inputValue={title}
+                  inputValue={name}
                   inputState={
-                    touched.title
-                      ? errors.title
-                        ? errors.title
+                    touched.name
+                      ? errors.name
+                        ? errors.name
                         : "success"
                       : null
                   }
@@ -53,14 +53,14 @@ export default function View({ formik, handlers, onCancel }) {
               htmlFor="email"
               className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2"
             >
-              Instructions
+              Overview
             </label>
             <div className="col-span-2">
               <ReactQuill
                 theme="snow"
-                value={instructions}
-                onChange={(e) => change("instructions")(e)}
-                name="instructions"
+                value={overview}
+                onChange={(e) => change("overview")(e)}
+                name="overview"
               />
             </div>
           </div>

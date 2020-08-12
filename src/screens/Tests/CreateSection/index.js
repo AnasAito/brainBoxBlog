@@ -16,53 +16,50 @@ function All({ notification, store }) {
     return new URLSearchParams(useLocation().search);
   }
   const query = useQueryParams();
-  const sectionContainerId = query.get("sectionContainer");
-  const { data: placementTestTitle } = useQuery({
-    event: "test.get.one",
-    variables: { where: { sectionContainer: { id: sectionContainerId } } },
+  const courseId = query.get("courseId");
+  const { data: course } = useQuery({
+    event: "course.get.one",
+    variables: { where: { id: courseId } },
   });
 
-  const testTitle = get(placementTestTitle, "placementTest.title", "");
+  const courseTitle = get(course, "course.title", "");
 
   useEffect(() => {
-    store.set("testViewTitle", testTitle);
-  }, [testTitle, store]);
+    store.set("testViewTitle", courseTitle);
+  }, [courseTitle, store]);
 
   const { data } = useQueryPaginated({
-    event: "section.get.many",
+    event: "level.get.many",
     variables: {
-      where: { sectionContainer: { id: sectionContainerId } },
+      where: { course: { id: courseId } },
       withSelect: true,
-      like: {
-        name: `%${searchLike}%`,
-      },
     },
   });
 
-  const dataList = get(data, "sections.data", []);
+  const dataList = get(data, "levels.data", []);
 
   const { mutate } = useMutation({
-    event: "section.create",
+    event: "level.create",
     update: ({ data: newData }) => {
-      const newData1 = concatData(data, newData.createSection);
+      const newData1 = concatData(data, newData.createLevel);
       return {
-        event: "section.get.many",
+        event: "level.get.many",
         variables: {
-          where: { sectionContainer: { id: sectionContainerId } },
+          where: { course: { id: courseId } },
           withSelect: true,
         },
         data: newData1,
       };
     },
   });
-  const { mutate: deleteTest } = useMutation({
-    event: "section.delete",
+  const { mutate: deleteLevel } = useMutation({
+    event: "level.delete",
     update: ({ data: newData }) => {
-      const newData1 = removeData(data, newData.deleteSection);
+      const newData1 = removeData(data, newData.deleteLevel);
       return {
-        event: "section.get.many",
+        event: "level.get.many",
         variables: {
-          where: { sectionContainer: { id: sectionContainerId } },
+          where: { course: { id: courseId } },
           withSelect: true,
         },
         data: newData1,
@@ -73,18 +70,18 @@ function All({ notification, store }) {
   const submit = async (mutate) => {
     const result = await mutate({
       variables: {
-        data: { name: "", sectionContainer: { id: sectionContainerId } },
+        data: { name: "", course: { id: courseId } },
       },
     });
-    const sectionId = get(result, "data.createSection.id");
+    const levelId = get(result, "data.createLevel.id");
     history.push({
-      pathname: `sections/edit/${sectionId}`,
+      pathname: `levels/edit/${levelId}`,
     });
   };
-  const removeTest = async (mutate, id) => {
+  const removeLevel = async (mutate, id) => {
     mutate({ variables: { where: { id } } })
       .then((res) => {
-        if (get(res, "data.deleteSection.id")) {
+        if (get(res, "data.deleteLevel.id")) {
           notification.success("Delete Successful");
         } else {
           notification.error("Error");
@@ -96,7 +93,7 @@ function All({ notification, store }) {
     <List
       data={dataList}
       handleCreate={() => submit(mutate)}
-      handleDelete={(id) => removeTest(deleteTest, id)}
+      handleDelete={(id) => removeLevel(deleteLevel, id)}
     />
   );
 }

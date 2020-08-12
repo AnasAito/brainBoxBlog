@@ -21,8 +21,18 @@ export const COURSE_GET_MANY = gql`
     $where: CourseWhereInput
     $withSelect: Boolean
     $orderBy: [CourseWhereInput]
+    $take: Int
+    $skip: Int
+    $like: CourseWhereInput
   ) {
-    courses(where: $where, withSelect: $withSelect, orderBy: $orderBy) {
+    courses(
+      where: $where
+      withSelect: $withSelect
+      orderBy: $orderBy
+      like: $like
+      skip: $skip
+      take: $take
+    ) {
       count
       data {
         id
@@ -41,5 +51,5 @@ export const COURSE_GET_MANY = gql`
 
 export default {
   "course.get.one": COURSE_GET_ONE,
-  "course.get.many": COURSE_GET_MANY
+  "course.get.many": COURSE_GET_MANY,
 };

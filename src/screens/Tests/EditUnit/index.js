@@ -5,12 +5,11 @@ import { useFormik } from "formik";
 import { useQuery, useMutation } from "services/Client";
 import { useParams, useHistory } from "react-router-dom";
 import View from "./view";
-
 export default function All() {
   const { id } = useParams();
-  const history = useHistory();
+  let history = useHistory();
   const { data } = useQuery({
-    event: "course.get.one",
+    event: "unit.get.one",
     variables: {
       where: {
         id,
@@ -18,7 +17,7 @@ export default function All() {
     },
     skip: !id,
   });
-  const course = get(data, "course", { name: "", overview: "" });
+  const unit = get(data, "unit", { name: "", order: 0, overview: "" });
 
   const submit = async (mutate, values) => {
     await mutate({
@@ -27,6 +26,7 @@ export default function All() {
         data: {
           name: values.name,
           overview: values.overview,
+          order: values.order,
         },
       },
     });
@@ -34,24 +34,22 @@ export default function All() {
   };
 
   const { mutate } = useMutation({
-    event: "course.update",
+    event: "unit.update",
   });
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      name: course.name,
-      overview: course.overview,
+      name: unit.name,
+      order: unit.order,
+      overview: unit.overview,
     },
     validationSchema: object({
       name: string().min(5, "error").required("error"),
-      overview: string().min(5, "error").required("error"),
     }),
     onSubmit: (values) => {
       submit(mutate, values);
     },
   });
-
-  // console.log(formik.values.instructions)
 
   return (
     <View
@@ -65,7 +63,7 @@ export default function All() {
         change: formik.handleChange,
         blur: formik.handleBlur,
       }}
-      onCancel={() => history.goBack()}
+      onCancel={history.goBack}
     />
   );
 }

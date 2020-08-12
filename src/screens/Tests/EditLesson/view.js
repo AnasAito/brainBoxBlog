@@ -13,10 +13,10 @@ export default function View({ formik, handlers, onCancel }) {
       <div>
         <div>
           <h3 className="text-lg leading-6 font-medium text-gray-900">
-            Level Information
+            Lesson Information
           </h3>
           <p className="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
-            You can edit the level name and overview.
+            You can edit the lesson name and order.
           </p>
         </div>
         <div className="mt-6 sm:mt-5">
@@ -67,24 +67,6 @@ export default function View({ formik, handlers, onCancel }) {
                   inputValue={order}
                 />
               </div>
-            </div>
-          </div>
-        </div>
-        <div className="mt-6 sm:mt-5">
-          <div className="sm:grid sm:grid-cols-4 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-            <label
-              htmlFor="timeout"
-              className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2"
-            >
-              Overview
-            </label>
-            <div className="col-span-2">
-              <ReactQuill
-                theme="snow"
-                value={overview}
-                onChange={(e) => change("overview")(e)}
-                name="overview"
-              />
             </div>
           </div>
         </div>

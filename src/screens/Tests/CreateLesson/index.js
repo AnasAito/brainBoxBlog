@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import get from "lodash/get";
-import { useQuery, useMutation } from "services/Client";
+import { useQueryPaginated, useQuery, useMutation } from "services/Client";
 import { useHistory, useLocation } from "react-router-dom";
 import withNotification from "services/Notification";
 import withStore from "services/Store";
@@ -9,55 +9,57 @@ import concatData from "shared/helpers/concatData";
 
 import List from "./View";
 function All({ notification, store }) {
+  const {
+    data: { searchLike },
+  } = useQuery({ event: "searchLike" });
   function useQueryParams() {
     return new URLSearchParams(useLocation().search);
   }
   const query = useQueryParams();
-  const lessonId = query.get("lessonId");
-  console.log("lessonIdtoAct", lessonId);
-  const { data: lesson } = useQuery({
-    event: "lesson.get.one",
-    variables: { where: { id: lessonId } },
+  const unitId = query.get("unitId");
+  const { data: unit } = useQuery({
+    event: "unit.get.one",
+    variables: { where: { id: unitId } },
   });
 
-  const lessonTitle = get(lesson, "lesson.name", "");
+  const unitTitle = get(unit, "unit.name", "");
 
   useEffect(() => {
-    store.set("testViewTitle", lessonTitle);
-  }, [lessonTitle, store]);
+    store.set("testViewTitle", unitTitle);
+  }, [unitTitle, store]);
 
-  const { data } = useQuery({
-    event: "activity.get.many",
+  const { data } = useQueryPaginated({
+    event: "lesson.get.many",
     variables: {
-      where: { lesson: { id: lessonId } },
+      where: { unit: { id: unitId } },
       withSelect: true,
     },
   });
 
-  const dataList = get(data, "activities.data", []);
+  const dataList = get(data, "lessons.data", []);
 
   const { mutate } = useMutation({
-    event: "activity.create",
+    event: "lesson.create",
     update: ({ data: newData }) => {
-      const newData1 = concatData(data, newData.createActivity);
+      const newData1 = concatData(data, newData.createLesson);
       return {
-        event: "activity.get.many",
+        event: "lesson.get.many",
         variables: {
-          where: { lesson: { id: lessonId } },
+          where: { unit: { id: unitId } },
           withSelect: true,
         },
         data: newData1,
       };
     },
   });
-  const { mutate: deleteActivity } = useMutation({
-    event: "activity.delete",
+  const { mutate: deleteLesson } = useMutation({
+    event: "lesson.delete",
     update: ({ data: newData }) => {
-      const newData1 = removeData(data, newData.deleteActivity);
+      const newData1 = removeData(data, newData.deleteLesson);
       return {
-        event: "activity.get.many",
+        event: "lesson.get.many",
         variables: {
-          where: { lesson: { id: lessonId } },
+          where: { unit: { id: unitId } },
           withSelect: true,
         },
         data: newData1,
@@ -68,18 +70,19 @@ function All({ notification, store }) {
   const submit = async (mutate) => {
     const result = await mutate({
       variables: {
-        data: { name: "", template: "", lesson: { id: lessonId } },
+        data: { name: "", unit: { id: unitId } },
       },
     });
-    const activityId = get(result, "data.createActivity.id");
+    const lessonId = get(result, "data.createLesson.id");
+    // console.log("lessonId", lessonId);
     history.push({
-      pathname: `activities/edit/${activityId}`,
+      pathname: `lessons/edit/${lessonId}`,
     });
   };
-  const removeActivity = async (mutate, id) => {
+  const removeLesson = async (mutate, id) => {
     mutate({ variables: { where: { id } } })
       .then((res) => {
-        if (get(res, "data.deleteActivity.id")) {
+        if (get(res, "data.deleteLesson.id")) {
           notification.success("Delete Successful");
         } else {
           notification.error("Error");
@@ -91,7 +94,7 @@ function All({ notification, store }) {
     <List
       data={dataList}
       handleCreate={() => submit(mutate)}
-      handleDelete={(id) => removeActivity(deleteActivity, id)}
+      handleDelete={(id) => removeLesson(deleteLesson, id)}
     />
   );
 }

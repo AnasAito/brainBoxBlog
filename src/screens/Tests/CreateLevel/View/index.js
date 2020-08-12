@@ -24,7 +24,7 @@ export default function ListView({ data, handleCreate, handleDelete }) {
               onAdd={() =>
                 history.push({
                   pathname: `units`,
-                  search: `?level=${level.id}`,
+                  search: `?levelId=${level.id}`,
                 })
               }
             />

@@ -12,7 +12,7 @@ function Dashboard({ store }) {
 
   React.useEffect(() => {
     store.set("searchLike", "");
-    store.set("testViewTitle", "Tests")
+    store.set("testViewTitle", "Tests");
   }, [store]);
   return (
     <div>
@@ -35,7 +35,7 @@ function Dashboard({ store }) {
               component={route.component}
             />
           ))}
-          <Redirect to="tests/all?page=0&pageSize=7" />
+          <Redirect to="courses/all?page=0&pageSize=7" />
         </Switch>
       </div>
     </div>

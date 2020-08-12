@@ -13,10 +13,10 @@ export default function View({ formik, handlers, onCancel }) {
       <div>
         <div>
           <h3 className="text-lg leading-6 font-medium text-gray-900">
-            Level Information
+            Unit Information
           </h3>
           <p className="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
-            You can edit the level name and overview.
+            You can edit the Unit name and overview.
           </p>
         </div>
         <div className="mt-6 sm:mt-5">

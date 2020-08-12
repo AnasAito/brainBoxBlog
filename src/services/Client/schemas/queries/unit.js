@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
-export const LEVEL_GET_ONE = gql`
-  query level($where: LevelWhereInput, $withSelect: Boolean) {
-    level(where: $where, withSelect: $withSelect) {
+export const UNIT_GET_ONE = gql`
+  query unit($where: UnitWhereInput, $withSelect: Boolean) {
+    unit(where: $where, withSelect: $withSelect) {
       id
       name
       order
@@ -11,16 +11,16 @@ export const LEVEL_GET_ONE = gql`
   }
 `;
 
-export const LEVEL_GET_MANY = gql`
-  query levels(
-    $where: LevelWhereInput
+export const UNIT_GET_MANY = gql`
+  query units(
+    $where: UnitWhereInput
     $withSelect: Boolean
-    $orderBy: [LevelWhereInput]
+    $orderBy: [UnitWhereInput]
     $take: Int
     $skip: Int
-    $like: LevelWhereInput
+    $like: UnitWhereInput
   ) {
-    levels(
+    units(
       where: $where
       withSelect: $withSelect
       orderBy: $orderBy
@@ -40,6 +40,6 @@ export const LEVEL_GET_MANY = gql`
 `;
 
 export default {
-  "level.get.one": LEVEL_GET_ONE,
-  "level.get.many": LEVEL_GET_MANY,
+  "unit.get.one": UNIT_GET_ONE,
+  "unit.get.many": UNIT_GET_MANY,
 };

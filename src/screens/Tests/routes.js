@@ -1,52 +1,91 @@
-import CreateTests from "./CreateTests";
-import EditTest from "./EditTest";
-import CreateSection from "./CreateSection";
-import EditSection from "./EditSection";
+// course routes
+import CreateCourse from "./CreateCourse";
+import EditCourse from "./EditCourse";
+// level routes
+import CreateLevel from "./CreateLevel";
+import EditLevel from "./EditLevel";
+// unit routes
+import CreateUnit from "./CreateUnit";
+import EditUnit from "./EditUnit";
+// lesson routes
+import CreateLesson from "./CreateLesson";
+import EditLesson from "./EditLesson";
+//
 import CreateActivity from "./CreateActivity";
 import EditActivity from "./EditActivity";
 var indexRoutes = [
   {
-    path: "/tests/all",
+    path: "/courses/all",
     exact: true,
-    name: "All Tests",
-    component: CreateTests,
+    name: "All Courses",
+    component: CreateCourse,
     layout: "/admin",
   },
+
   {
-    path: "/tests/edit/:id",
-    exact:true,
-    name: "Edit Test",
-    component: EditTest,
-    layout: "/admin",
-  },
-  {
-    path: "/tests/sections",
+    path: "/courses/edit/:id",
     exact: true,
-    name: "Create Section",
-    component: CreateSection,
+    name: "Edit Course",
+    component: EditCourse,
+    layout: "/admin",
+  },
+
+  {
+    path: "/courses/levels",
+    exact: true,
+    name: "Create Level",
+    component: CreateLevel,
     layout: "/admin",
   },
   {
-    path: "/tests/sections/edit/:id",
-    exact:true,
-    name: "Edit Section",
-    component: EditSection,
+    path: "/courses/levels/edit/:id",
+    exact: true,
+    name: "Edit Level",
+    component: EditLevel,
     layout: "/admin",
   },
   {
-    path: "/tests/activities",
+    path: "/courses/units",
+    exact: true,
+    name: "Create Unit",
+    component: CreateUnit,
+    layout: "/admin",
+  },
+  {
+    path: "/courses/units/edit/:id",
+    exact: true,
+    name: "Edit Unit",
+    component: EditUnit,
+    layout: "/admin",
+  },
+  {
+    path: "/courses/lessons",
+    exact: true,
+    name: "Create Unit",
+    component: CreateLesson,
+    layout: "/admin",
+  },
+  {
+    path: "/courses/lessons/edit/:id",
+    exact: true,
+    name: "Edit Lesson",
+    component: EditLesson,
+    layout: "/admin",
+  },
+  {
+    path: "/courses/activities",
     exact: true,
     name: "Create Activities",
     component: CreateActivity,
     layout: "/admin",
   },
   {
-    path: "/tests/activities/edit/:id",
-    exact:true,
+    path: "/courses/activities/edit/:id",
+    exact: true,
     name: "Edit Activity",
     component: EditActivity,
     layout: "/admin",
-  }
+  },
 ];
 
 export default indexRoutes;

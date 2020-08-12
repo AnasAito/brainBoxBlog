@@ -10,21 +10,21 @@ export default function ListView({ data, handleCreate, handleDelete }) {
     <div className="flex flex-col">
       <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
         <div className="grid grid-cols-4 gap-5">
-          {data.map((level) => (
+          {data.map((unit) => (
             <Card
-              key={level.id}
-              title={level.name}
-              subTitle={`Order: ${level.order}`}
+              key={unit.id}
+              title={unit.name}
+              subTitle={`Order: ${unit.order}`}
               onEdit={() =>
                 history.push({
-                  pathname: `levels/edit/${level.id}`,
+                  pathname: `units/edit/${unit.id}`,
                 })
               }
-              onDelete={() => handleDelete(level.id)}
+              onDelete={() => handleDelete(unit.id)}
               onAdd={() =>
                 history.push({
-                  pathname: `units`,
-                  search: `?level=${level.id}`,
+                  pathname: `lessons`,
+                  search: `?unitId=${unit.id}`,
                 })
               }
             />

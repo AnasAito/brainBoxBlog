@@ -14,42 +14,42 @@ function All(props) {
     data: { searchLike },
   } = useQuery({ event: "searchLike" });
   const { data } = useQueryPaginated({
-    event: "test.get.many",
+    event: "course.get.many",
     variables: {
       withSelect: true,
       orderBy: { createdAt: "desc" },
-      like: {
-        title: `%${searchLike}%`,
-      },
     },
   });
+  console.log("courses", data);
+  const userData = get(data, "courses.data", []);
+  const count = get(data, "courses.count", []);
 
-  const userData = get(data, "placementTests.data", []);
-  const count = get(data, "placementTests.count", []);
-  const { clearCache } = useClearCache({ event: "test.get.many" });
+  const { clearCache } = useClearCache({ event: "course.get.many" });
 
-  const { mutate } = useMutation({
-    event: "test.create",
+  const { mutate: createCourse } = useMutation({
+    event: "course.create",
     update: () => {
       clearCache();
     },
   });
-  const { mutate: deleteTest } = useMutation({
-    event: "test.delete",
+  const { mutate: deleteCourse } = useMutation({
+    event: "course.delete",
     update: () => {
       clearCache();
     },
   });
   let history = useHistory();
   const submit = async (mutate) => {
-    const result = await mutate({ variables: { data: { title: "" } } });
-    const testId = get(result, "data.createPlacementTest.id");
-    history.push({ pathname: `edit/${testId}`, search: "?new=true" });
+    const result = await mutate({ variables: { data: { name: "" } } });
+
+    const courseId = get(result, "data.createCourse.id");
+    console.log("result ", courseId);
+    history.push({ pathname: `edit/${courseId}`, search: "?new=true" });
   };
-  const removeTest = async (mutate, id) => {
+  const removeCourse = async (mutate, id) => {
     mutate({ variables: { where: { id } } })
       .then((res) => {
-        if (get(res, "data.deletePlacementTest.id")) {
+        if (get(res, "data.deleteCourse.id")) {
           props.notification.success("Delete Successful");
         } else {
           props.notification.error("Error");
@@ -61,8 +61,8 @@ function All(props) {
     <List
       data={userData}
       count={count}
-      handleCreate={() => submit(mutate)}
-      handleDelete={(id) => removeTest(deleteTest, id)}
+      handleCreate={() => submit(createCourse)}
+      handleDelete={(id) => removeCourse(deleteCourse, id)}
     />
   );
 }

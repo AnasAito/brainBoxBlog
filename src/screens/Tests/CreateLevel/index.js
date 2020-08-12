@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import get from "lodash/get";
-import { useQuery, useMutation } from "services/Client";
+import { useQueryPaginated, useQuery, useMutation } from "services/Client";
 import { useHistory, useLocation } from "react-router-dom";
 import withNotification from "services/Notification";
 import withStore from "services/Store";
@@ -9,55 +9,57 @@ import concatData from "shared/helpers/concatData";
 
 import List from "./View";
 function All({ notification, store }) {
+  const {
+    data: { searchLike },
+  } = useQuery({ event: "searchLike" });
   function useQueryParams() {
     return new URLSearchParams(useLocation().search);
   }
   const query = useQueryParams();
-  const lessonId = query.get("lessonId");
-  console.log("lessonIdtoAct", lessonId);
-  const { data: lesson } = useQuery({
-    event: "lesson.get.one",
-    variables: { where: { id: lessonId } },
+  const courseId = query.get("courseId");
+  const { data: course } = useQuery({
+    event: "course.get.one",
+    variables: { where: { id: courseId } },
   });
 
-  const lessonTitle = get(lesson, "lesson.name", "");
+  const courseTitle = get(course, "course.name", "");
 
   useEffect(() => {
-    store.set("testViewTitle", lessonTitle);
-  }, [lessonTitle, store]);
+    store.set("testViewTitle", courseTitle);
+  }, [courseTitle, store]);
 
-  const { data } = useQuery({
-    event: "activity.get.many",
+  const { data } = useQueryPaginated({
+    event: "level.get.many",
     variables: {
-      where: { lesson: { id: lessonId } },
+      where: { course: { id: courseId } },
       withSelect: true,
     },
   });
 
-  const dataList = get(data, "activities.data", []);
+  const dataList = get(data, "levels.data", []);
 
   const { mutate } = useMutation({
-    event: "activity.create",
+    event: "level.create",
     update: ({ data: newData }) => {
-      const newData1 = concatData(data, newData.createActivity);
+      const newData1 = concatData(data, newData.createLevel);
       return {
-        event: "activity.get.many",
+        event: "level.get.many",
         variables: {
-          where: { lesson: { id: lessonId } },
+          where: { course: { id: courseId } },
           withSelect: true,
         },
         data: newData1,
       };
     },
   });
-  const { mutate: deleteActivity } = useMutation({
-    event: "activity.delete",
+  const { mutate: deleteLevel } = useMutation({
+    event: "level.delete",
     update: ({ data: newData }) => {
-      const newData1 = removeData(data, newData.deleteActivity);
+      const newData1 = removeData(data, newData.deleteLevel);
       return {
-        event: "activity.get.many",
+        event: "level.get.many",
         variables: {
-          where: { lesson: { id: lessonId } },
+          where: { course: { id: courseId } },
           withSelect: true,
         },
         data: newData1,
@@ -68,18 +70,18 @@ function All({ notification, store }) {
   const submit = async (mutate) => {
     const result = await mutate({
       variables: {
-        data: { name: "", template: "", lesson: { id: lessonId } },
+        data: { name: "", course: { id: courseId } },
       },
     });
-    const activityId = get(result, "data.createActivity.id");
+    const levelId = get(result, "data.createLevel.id");
     history.push({
-      pathname: `activities/edit/${activityId}`,
+      pathname: `levels/edit/${levelId}`,
     });
   };
-  const removeActivity = async (mutate, id) => {
+  const removeLevel = async (mutate, id) => {
     mutate({ variables: { where: { id } } })
       .then((res) => {
-        if (get(res, "data.deleteActivity.id")) {
+        if (get(res, "data.deleteLevel.id")) {
           notification.success("Delete Successful");
         } else {
           notification.error("Error");
@@ -91,7 +93,7 @@ function All({ notification, store }) {
     <List
       data={dataList}
       handleCreate={() => submit(mutate)}
-      handleDelete={(id) => removeActivity(deleteActivity, id)}
+      handleDelete={(id) => removeLevel(deleteLevel, id)}
     />
   );
 }

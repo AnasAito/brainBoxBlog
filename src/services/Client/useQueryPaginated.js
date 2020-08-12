@@ -9,6 +9,7 @@ function useQueryWrapper({ event, variables, skip }) {
     return new URLSearchParams(useLocation().search);
   }
   const query = useQueryParams();
+
   const pageIndex = parseInt(query.get("page"));
   const pageSize = parseInt(query.get("pageSize"));
 
@@ -18,7 +19,7 @@ function useQueryWrapper({ event, variables, skip }) {
     fetchPolicy,
     skip,
   });
-
+  console.log(data);
   if (error) return `Error, ${error.message}`;
 
   return { data, loading, pageSize };

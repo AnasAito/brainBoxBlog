@@ -18,6 +18,10 @@ import audio from "./audio";
 import image from "./image";
 import block from "./block";
 import report from "./report";
+import course from "./course";
+import level from "./level";
+import lesson from "./lesson";
+import unit from "./unit";
 export default {
   ...login,
   ...feedback,
@@ -38,5 +42,9 @@ export default {
   ...audio,
   ...image,
   ...block,
-  ...report
+  ...report,
+  ...level,
+  ...course,
+  ...lesson,
+  ...unit,
 };

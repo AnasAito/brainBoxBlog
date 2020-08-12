@@ -19,8 +19,8 @@ var indexRoutes = [
     layout: "/admin",
   },
   {
-    path: "/tests",
-    name: "Tests",
+    path: "/courses",
+    name: "Courses",
     component: Tests,
     layout: "/admin",
   },
