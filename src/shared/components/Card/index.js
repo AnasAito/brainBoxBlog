@@ -1,75 +1,113 @@
-import React from "react";
+import React, { useState } from "react";
 import Publish from "shared/components/ButtonIO";
-const Card = ({ title, subTitle, onEdit, onDelete, onAdd }) => (
-  <div>
-    <div className="bg-white rounded-lg shadow-lg">
-      <img
-        className="bg-blue-50  w-full rounded-t-lg"
-        alt="card"
-        src="https://images.unsplash.com/photo-1542744094-24638eff58bb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80"
-      />
-      <div className="px-2 py-4">
-        <div className="flex flex-row justify-between  ">
-          <p className=" text-lg leading-9 font-semibold text-gray-900 truncate">
-            {title}
-          </p>
-          <div className="flex items-center">
-            <Publish />
-          </div>
+import PopoverButton from "../PopOverButton/index";
+const Card = ({ title, subTitle, onEdit, onDelete, onAdd }) => {
+  const published = "true";
+  const [isShown, setIsShown] = useState(false);
+  return (
+    <div
+      className="relative cursor-pointer "
+      onMouseEnter={() => setIsShown(true)}
+      onMouseLeave={() => setIsShown(false)}
+    >
+      <div className="bg-white  rounded-sm  shadow-md" onClick={onAdd}>
+        <div className="w-full rounded-t-sm   inline-block  ">
+          <img
+            className="bg-blue-50   rounded-t-sm "
+            alt="card"
+            src="https://assetsds.cdnedge.bluemix.net/sites/default/files/styles/very_big_1/public/feature/images/what_you_need_to_know.jpg?itok=kK9rhbZ7"
+          ></img>
         </div>
-        <div className="flex flex-row justify-between ">
-          <p className="text-base leading-5 font-medium text-gray-500 truncate">
-            {subTitle}
-          </p>
-        </div>
-        <div className="flex flex-row justify-end ">
-          <div
-            className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
-            alt=""
-            onClick={onEdit}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              className="h-6 w-6 cursor-pointer text-indigo-600 hover:text-indigo-500"
-              fill="currentColor"
-            >
-              <path d="M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z" />
-            </svg>
+        <div className="px-2 py-4 ">
+          <div className="flex flex-row justify-between  ">
+            <p className=" text-lg leading-9 font-semibold text-gray-900 truncate">
+              {title}
+            </p>
           </div>
-          <div
-            className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
-            alt=""
-            onClick={onAdd}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              className="h-6 w-6 cursor-pointer text-green-600 hover:text-green-500"
-              fill="currentColor"
-            >
-              <path d="M11 9V5H9v4H5v2h4v4h2v-4h4V9h-4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20z" />
-            </svg>
+          <div className="flex flex-row justify-between ">
+            <p className="text-base leading-5 font-medium text-gray-500 truncate">
+              {subTitle}
+            </p>
           </div>
-          <div
-            className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
-            alt=""
-            onClick={onDelete}
-          >
-            <svg
-              id="Capa_1"
-              className="h-6 w-6 cursor-pointer text-red-600 hover:text-red-500"
-              viewBox="0 0 515.556 515.556"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="m64.444 451.111c0 35.526 28.902 64.444 64.444 64.444h257.778c35.542 0 64.444-28.918 64.444-64.444v-322.222h-386.666z" />
-              <path d="m322.222 32.222v-32.222h-128.889v32.222h-161.111v64.444h451.111v-64.444z" />
-            </svg>
-          </div>
+          <div className="flex flex-row justify-end "></div>
         </div>
       </div>
+      {isShown ? (
+        <div
+          className=" block ease-in-out   absolute z-1   top-0 right-0 m-2 "
+          role="dialog"
+          aria-modal="true"
+        >
+          <PopoverButton>
+            <div>
+              <div
+                className={
+                  "bg-white text-gray-600 opacity-75 font-semibold    uppercase "
+                }
+              >
+                <div class="  mt-2 w-56  shadow-lg">
+                  <div
+                    class=" bg-white shadow-xs"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="options-menu"
+                  >
+                    <div class="py-1">
+                      <a
+                        href="#"
+                        class="group flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                        role="menuitem"
+                        onClick={onEdit}
+                      >
+                        <svg
+                          class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                          <path
+                            fill-rule="evenodd"
+                            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        Edit
+                      </a>
+                    </div>
+                    <div class="border-t border-gray-100"></div>
+
+                    <div class="border-t border-gray-100"></div>
+                    <div class="py-1">
+                      <a
+                        href="#"
+                        class="group flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                        role="menuitem"
+                        onClick={onDelete}
+                      >
+                        <svg
+                          class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        Delete
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </PopoverButton>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
-  </div>
-);
+  );
+};
 export default Card;
