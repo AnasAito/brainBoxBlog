@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Publish from "shared/components/ButtonIO";
 import PopoverButton from "../PopOverButton/index";
-const Card = ({ title, subTitle, onEdit, onDelete, onAdd }) => {
+const Card = ({ title, subTitle, onEdit, onDelete, onAdd, image }) => {
   const published = "true";
   const [isShown, setIsShown] = useState(false);
   return (
@@ -13,9 +13,9 @@ const Card = ({ title, subTitle, onEdit, onDelete, onAdd }) => {
       <div className="bg-white  rounded-sm  shadow-md" onClick={onAdd}>
         <div className="w-full rounded-t-sm   inline-block  ">
           <img
-            className="bg-blue-50   rounded-t-sm "
+            className="bg-blue-50 bg-white object-cover h-48 w-full rounded-t-sm "
             alt="card"
-            src="https://assetsds.cdnedge.bluemix.net/sites/default/files/styles/very_big_1/public/feature/images/what_you_need_to_know.jpg?itok=kK9rhbZ7"
+            src={image}
           ></img>
         </div>
         <div className="px-2 py-4 ">

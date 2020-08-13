@@ -15,6 +15,11 @@ export default function ListView({ data, handleCreate, handleDelete }) {
               key={level.id}
               title={level.name}
               subTitle={`Order: ${level.order}`}
+              image={
+                level.imgOverview === null
+                  ? "https://assetsds.cdnedge.bluemix.net/sites/default/files/styles/very_big_1/public/feature/images/what_you_need_to_know.jpg?itok=kK9rhbZ7"
+                  : `https://res.cloudinary.com/geerd/image/upload/q_auto:eco/${level.imgOverview.cloudinaryId}.jpg`
+              }
               onEdit={() =>
                 history.push({
                   pathname: `levels/edit/${level.id}`,

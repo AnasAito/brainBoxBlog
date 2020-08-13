@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import get from "lodash/get";
 import { object, string } from "yup";
 import { useFormik } from "formik";
@@ -6,6 +6,7 @@ import { useQuery, useMutation } from "services/Client";
 import { useParams, useHistory } from "react-router-dom";
 import View from "./view";
 export default function All() {
+  const [loading, setLoading] = useState(false);
   const { id } = useParams();
   let history = useHistory();
   const { data } = useQuery({
@@ -17,8 +18,9 @@ export default function All() {
     },
     skip: !id,
   });
+
   const level = get(data, "level", { name: "", order: 0, overview: "" });
-  console.log(level);
+
   const submit = async (mutate, values) => {
     await mutate({
       variables: {
@@ -51,6 +53,35 @@ export default function All() {
     },
   });
 
+  const { mutate: createImage } = useMutation({ event: "image.create" });
+  const handleUpdateLevel = (mutate) => async (id, data) => {
+    if (id) {
+      const result = await mutate({
+        variables: { where: { id }, data },
+      });
+    }
+  };
+  const handleAddImage = async (file) => {
+    setLoading(true);
+
+    const result = await createImage({
+      variables: {
+        file,
+        data: { name: file.name },
+      },
+    });
+
+    const imageId = get(result, "data.createImage.id");
+    if (imageId) {
+      //  update course
+      console.log("imageId", imageId);
+      handleUpdateLevel(mutate)(id, {
+        imgOverview: { id: imageId },
+      });
+      setLoading(false);
+    }
+    // setFiles([]);
+  };
   return (
     <View
       formik={{
@@ -64,6 +95,8 @@ export default function All() {
         blur: formik.handleBlur,
       }}
       onCancel={history.goBack}
+      handleAddImage={handleAddImage}
+      loading={loading}
     />
   );
 }

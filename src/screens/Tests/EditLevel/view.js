@@ -1,7 +1,14 @@
 import React from "react";
 import Input from "shared/components/Input";
 import ReactQuill from "react-quill";
-export default function View({ formik, handlers, onCancel }) {
+import UploadImage from "shared/components/UploadImage";
+export default function View({
+  formik,
+  handlers,
+  onCancel,
+  handleAddImage,
+  loading,
+}) {
   const {
     values: { name, order, overview },
     errors,
@@ -86,6 +93,17 @@ export default function View({ formik, handlers, onCancel }) {
                 name="overview"
               />
             </div>
+          </div>
+        </div>
+        <div className="mt-6 sm:mt-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2"
+          >
+            Overview image
+          </label>
+          <div className="col-span-2">
+            <UploadImage handleSave={handleAddImage} loading={loading} />
           </div>
         </div>
       </div>

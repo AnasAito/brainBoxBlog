@@ -7,6 +7,9 @@ export const UNIT_GET_ONE = gql`
       name
       order
       overview
+      imgOverview {
+        cloudinaryId
+      }
     }
   }
 `;
@@ -34,6 +37,9 @@ export const UNIT_GET_MANY = gql`
         name
         order
         overview
+        imgOverview {
+          cloudinaryId
+        }
       }
     }
   }

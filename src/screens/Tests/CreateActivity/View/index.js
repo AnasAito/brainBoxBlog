@@ -15,6 +15,9 @@ export default function ListView({ data, handleCreate, handleDelete }) {
               key={activity.id}
               title={`${activity.order} - ${activity.name}`}
               subTitle={`Type: ${activity.type}`}
+              image={
+                "https://assetsds.cdnedge.bluemix.net/sites/default/files/styles/very_big_1/public/feature/images/what_you_need_to_know.jpg?itok=kK9rhbZ7"
+              }
               onEdit={() =>
                 history.push({
                   pathname: `activities/edit/${activity.id}`,
