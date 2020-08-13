@@ -33,6 +33,7 @@ function All({ notification, store }) {
     variables: {
       where: { course: { id: courseId } },
       withSelect: true,
+      like: { name: `%${searchLike}%` },
     },
   });
 

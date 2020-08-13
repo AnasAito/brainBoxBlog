@@ -33,6 +33,7 @@ function All({ notification, store }) {
     variables: {
       where: { unit: { id: unitId } },
       withSelect: true,
+      like: { name: `%${searchLike}%` },
     },
   });
 

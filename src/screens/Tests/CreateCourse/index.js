@@ -18,6 +18,7 @@ function All(props) {
     variables: {
       withSelect: true,
       orderBy: { createdAt: "desc" },
+      like: { name: `%${searchLike}%` },
     },
   });
   console.log("courses", data);
