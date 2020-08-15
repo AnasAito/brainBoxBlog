@@ -90,7 +90,7 @@ var indexRoutes = [
     layout: "/admin",
   },
   {
-    path: "/courses/templator",
+    path: "/courses/templator/:id",
     exact: true,
     name: "Templator",
     component: Templator,

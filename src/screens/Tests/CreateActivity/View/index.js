@@ -23,6 +23,11 @@ export default function ListView({ data, handleCreate, handleDelete }) {
                   pathname: `activities/edit/${activity.id}`,
                 })
               }
+              onAdd={() =>
+                history.push({
+                  pathname: `templator/${activity.id}`,
+                })
+              }
               onDelete={() => handleDelete(activity.id)}
             />
           ))}

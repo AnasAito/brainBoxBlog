@@ -31,7 +31,7 @@ export default function View({
               <AddButton
                 history={history}
                 activityId={activityId}
-                order={order}
+                position={`${order}-${isHalf ? "h" : "f"}`}
               />
             </div>
           </div>

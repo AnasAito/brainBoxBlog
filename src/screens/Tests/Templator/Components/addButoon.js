@@ -1,11 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import PopoverMenu from "./PopoverMenu";
-import { useHistory, useParams } from "react-router-dom";
 
-export default function AddButoon({ activityId, history, order }) {
-  //let history = useHistory();
-  //const { id } = useParams();
-  const [test, settest] = useState("");
+export default function AddButoon({ activityId, history, position }) {
   return (
     <PopoverMenu
       menuPlacement="right"
@@ -42,7 +38,7 @@ export default function AddButoon({ activityId, history, order }) {
               onClick: () =>
                 history.push({
                   pathname: `/admin/blocks/quiz`,
-                  search: `&attach=${activityId}&order=${order}&page=0&pageSize=7`,
+                  search: `&attach=${activityId}&order=${position}&page=0&pageSize=7`,
                 }),
             },
             {
@@ -77,7 +73,7 @@ export default function AddButoon({ activityId, history, order }) {
               onClick: () =>
                 history.push({
                   pathname: `/admin/blocks/text`,
-                  search: `&attach=${activityId}&order=${order}&page=0&pageSize=7`,
+                  search: `&attach=${activityId}&order=${position}&page=0&pageSize=7`,
                 }),
             },
             {
@@ -118,7 +114,7 @@ export default function AddButoon({ activityId, history, order }) {
               onClick: () =>
                 history.push({
                   pathname: `/admin/blocks/quiz`,
-                  search: `&attach=${activityId}&order=${order}&page=0&pageSize=7`,
+                  search: `&attach=${activityId}&order=${position}&page=0&pageSize=7`,
                 }),
             },
             {
@@ -198,7 +194,7 @@ export default function AddButoon({ activityId, history, order }) {
               onClick: () =>
                 history.push({
                   pathname: `/admin/blocks/image`,
-                  search: `&attach=${activityId}&order=${order}&page=0&pageSize=7`,
+                  search: `&attach=${activityId}&order=${position}&page=0&pageSize=7`,
                 }),
             },
           ],

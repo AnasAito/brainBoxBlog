@@ -55,7 +55,7 @@ const Card = ({ payload, type, onEdit, onDelete, notification }) => {
       notification.success("Block successfully attached to activity");
       console.log("success");
       // history.push(`/admin/tests/activities/edit/${activityID}`);
-      history.push(`/admin/courses/templator`);
+      history.push(`/admin/courses/templator/${attachBlock}`);
     } else {
       notification.success("Error");
       console.log("error");

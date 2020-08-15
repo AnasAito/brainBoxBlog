@@ -77,6 +77,7 @@ function All({ notification, store }) {
     });
   };
   const removeActivity = async (mutate, id) => {
+    console.log("id to delete ", id);
     mutate({ variables: { where: { id } } })
       .then((res) => {
         if (get(res, "data.deleteActivity.id")) {
