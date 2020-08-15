@@ -9,6 +9,7 @@ export const ACTIVITY_GET_ONE = gql`
       template
       type
       order
+      layout
       blocks {
         id
         name
@@ -33,6 +34,7 @@ export const ACTIVITY_GET_MANY = gql`
         template
         type
         order
+        layout
         blocks {
        name
        type

@@ -10,9 +10,12 @@ import EditUnit from "./EditUnit";
 // lesson routes
 import CreateLesson from "./CreateLesson";
 import EditLesson from "./EditLesson";
-//
+// activity routes
 import CreateActivity from "./CreateActivity";
 import EditActivity from "./EditActivity";
+
+// templator route
+import Templator from "./Templator";
 var indexRoutes = [
   {
     path: "/courses/all",
@@ -84,6 +87,13 @@ var indexRoutes = [
     exact: true,
     name: "Edit Activity",
     component: EditActivity,
+    layout: "/admin",
+  },
+  {
+    path: "/courses/templator",
+    exact: true,
+    name: "Templator",
+    component: Templator,
     layout: "/admin",
   },
 ];
