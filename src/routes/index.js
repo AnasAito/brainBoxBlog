@@ -24,6 +24,7 @@ var indexRoutes = [
     component: Tests,
     layout: "/admin",
   },
+
   { path: "/blocks", name: "Blocks", component: Blocks, layout: "/admin" },
   { path: "/grade", name: "Grade", component: Grade, layout: "/admin" },
   { path: "/report", name: "Report", component: Report, layout: "/admin" },
