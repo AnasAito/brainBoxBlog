@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import get from "lodash/get";
 import { useLocation, useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "services/Client";
-
+import omit from "lodash/omit";
 import withNotification from "services/Notification";
 const Card = ({ payload, type, onEdit, onDelete, notification }) => {
   function useQueryURL() {
@@ -11,9 +11,11 @@ const Card = ({ payload, type, onEdit, onDelete, notification }) => {
   const [layout, setLayout] = useState({});
   const query = useQueryURL();
   const attachBlock = query.get("attach");
+
   // get block view order
   const order = query.get("order");
-  //
+  const deleteBlock = query.get("delete");
+  console.log("toto", deleteBlock);
   let history = useHistory();
   const { data: activity } = useQuery({
     event: "activity.get.one",
@@ -41,17 +43,33 @@ const Card = ({ payload, type, onEdit, onDelete, notification }) => {
     console.log(result);
     const blockId = get(result, "data.createBlock.id");
     if (blockId) {
-      const activityUpdated = await updateLayout({
-        variables: {
-          where: { id: attachBlock },
-          data: {
-            layout: {
-              ...prevLayout,
-              [blockId]: order,
+      if (deleteBlock) {
+        console.log("deleteBlock", deleteBlock);
+        await updateLayout({
+          variables: {
+            where: { id: attachBlock },
+            data: {
+              layout: {
+                ...omit(prevLayout, [deleteBlock]),
+                [blockId]: order,
+              },
             },
           },
-        },
-      });
+        });
+      } else {
+        const activityUpdated = await updateLayout({
+          variables: {
+            where: { id: attachBlock },
+            data: {
+              layout: {
+                ...prevLayout,
+                [blockId]: order,
+              },
+            },
+          },
+        });
+      }
+
       notification.success("Block successfully attached to activity");
       console.log("success");
       // history.push(`/admin/tests/activities/edit/${activityID}`);

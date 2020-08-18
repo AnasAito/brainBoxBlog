@@ -21,7 +21,7 @@ export default function All() {
   const activity = get(data, "activity", {
     name: "",
     order: 0,
-    template: "template1",
+
     type: "",
     blocks: [],
   });
@@ -33,7 +33,7 @@ export default function All() {
         data: {
           name: values.title,
           order: values.order,
-          template: values.template,
+
           type: values.type,
         },
       },
@@ -48,7 +48,7 @@ export default function All() {
     initialValues: {
       title: activity.name,
       order: activity.order,
-      template: activity.template,
+
       type: activity.type,
     },
     validationSchema: object({
@@ -61,7 +61,6 @@ export default function All() {
 
   return (
     <View
-      blocks={activity.blocks}
       formik={{
         values: { ...formik.values },
         errors: { ...formik.errors },

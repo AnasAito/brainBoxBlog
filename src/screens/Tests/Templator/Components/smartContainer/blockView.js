@@ -6,9 +6,11 @@ import dataDefault from "./data";
 import Quiz from "../blocks/Quiz";
 import Image from "../blocks/Image";
 import Text from "../blocks/Text";
+import Audio from "../blocks/Audio";
 
 import withNotification from "services/Notification";
 import SmartContainer from "./index";
+import Global from "services/Global";
 const BlockView = ({ isFull, blockId, activityId, notification }) => {
   const [show, setShow] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
@@ -36,6 +38,7 @@ const BlockView = ({ isFull, blockId, activityId, notification }) => {
     const orderDel = get(activity, "activity.layout", {})[blockId].split(
       "-"
     )[0];
+    //  Global.set("deletedOrder", orderDel);
     const prevLayout = omit(get(activity, "activity.layout", {}), [blockId]);
 
     // delete block
@@ -44,12 +47,14 @@ const BlockView = ({ isFull, blockId, activityId, notification }) => {
         where: { id: blockId },
       },
     });
-    console.log(result);
-    const block = get(result, "data.deleteBlock.id");
+
+    const block = get(result, "data.deleteBlock.id", false);
 
     {
-      if (blockId) {
-        const activityUpdated = await updateLayout({
+      if (block) {
+        setIsDelete(orderDel);
+
+        await updateLayout({
           variables: {
             where: { id: activityId },
             data: {
@@ -57,28 +62,53 @@ const BlockView = ({ isFull, blockId, activityId, notification }) => {
             },
           },
         });
-        setIsDelete(orderDel);
+
         notification.success("Block successfully dettached to activity");
       } else {
         notification.success("Error");
       }
     }
   };
+  const deleteStaticBlock = async () => {
+    // create new layout
+
+    const orderDel = get(activity, "activity.layout", {})[blockId].split(
+      "-"
+    )[0];
+    const prevLayout = omit(get(activity, "activity.layout", {}), [blockId]);
+
+    {
+      /* const activityUpdated = await updateLayout({
+      variables: {
+        where: { id: activityId },
+        data: {
+          layout: prevLayout,
+        },
+      },
+    });*/
+    }
+    setIsDelete(orderDel);
+  };
 
   let quiz = get(data, "block.quiz", dataDefault);
   let image = get(data, "block.image.cloudinaryId", "");
   let text = get(data, "block.text.content", "");
-  const mapper = {
+  let audio = get(data, "block.audio.path", "");
+  const dynamicMapper = {
     image: <Image src={image} />,
     quiz: <Quiz quiz={quiz} />,
     text: <Text content={text} />,
+    audio: <Audio src={audio} />,
     default: <Text content={"no data"} />,
   };
+
   return (
     <>
       {isDelete ? (
         <SmartContainer
-          key={"delete"}
+          isDelete={true}
+          blockToDelete={blockId}
+          key={blockId}
           activityId={activityId}
           order={isDelete}
         />
@@ -112,11 +142,11 @@ const BlockView = ({ isFull, blockId, activityId, notification }) => {
                 Delete block
               </button>
             </span>
-            <div>{mapper[get(data, "block.type", "default")]}</div>
+            <div>{dynamicMapper[get(data, "block.type", "default")]}</div>
           </div>
         </div>
       )}
     </>
   );
 };
-export default withNotification(BlockView);
+export default React.memo(withNotification(BlockView));

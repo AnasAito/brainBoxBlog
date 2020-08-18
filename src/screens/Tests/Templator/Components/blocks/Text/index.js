@@ -5,11 +5,7 @@ function Text({ content }) {
   if (!content) {
     return "";
   }
-  return (
-    <div className=" m-auto p-5 rounded-lg shadow-lg">
-      <div>{ReactHtmlParser(content)}</div>
-    </div>
-  );
+  return <div className="    ">{ReactHtmlParser(content)}</div>;
 }
 
 export default Text;

@@ -17,6 +17,7 @@ export default function Editor() {
 
   const { data } = useQuery({
     event: "activity.get.one",
+
     variables: {
       where: {
         id,
@@ -26,7 +27,7 @@ export default function Editor() {
     skip: !id,
   });
   //default value if activity is empty
-  console.log(data);
+  console.log("test", data);
   const layout = get(data, "activity.layout", {});
 
   return (

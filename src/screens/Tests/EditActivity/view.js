@@ -1,23 +1,13 @@
 import React from "react";
 import Input from "shared/components/Input";
-import Wizard from "./Wizard"
-export default function View({ formik, blocks, handlers, onCancel }) {
+import Wizard from "./Wizard";
+export default function View({ formik, handlers, onCancel }) {
   const {
-    values: { title, order, template },
+    values: { title, order },
     errors,
     touched,
   } = formik;
   const { submit, change, blur } = handlers;
-
-  const activityTemplates = {
-    template1: { name: "Quiz Only", type: "quiz" },
-    template2: { name: "Text + Quiz", type: "quiz" },
-    template3: { name: "Text + Upload", type: "upload" },
-    template4: { name: "Audio + Image + Quiz", type: "quiz" },
-    template5: { name: "Text + Record", type: "speaking" },
-    template6: { name: "Text + Writing", type: "writing" },
-    mathQuizTemplate: { name: "Math Quiz", type: "quiz" },
-  };
 
   return (
     <form autoComplete="off" onSubmit={submit}>
@@ -79,45 +69,6 @@ export default function View({ formik, blocks, handlers, onCancel }) {
                 />
               </div>
             </div>
-          </div>
-        </div>
-        <div className="mt-6 sm:mt-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-          <label
-            htmlFor="template"
-            className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2"
-          >
-            Templates
-          </label>
-          <div className="mt-1 sm:mt-0 sm:col-span-2">
-            <div className="max-w-lg rounded-md shadow-sm sm:max-w-xs">
-              <select
-                id="template"
-                name="template"
-                onChange={(e) => {
-                  change("template")(e);
-                  change("type")(activityTemplates[e.target.value].type);
-                }}
-                value={template}
-                className="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-              >
-                {Object.keys(activityTemplates).map((e, i) => (
-                  <option value={e} key={i}>
-                    {activityTemplates[e].name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-        <div className="mt-6 sm:mt-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-          <label
-            htmlFor="template"
-            className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2"
-          >
-            Blocks
-          </label>
-          <div className="mt-1 sm:mt-0 sm:col-span-2">
-            <Wizard template={template} blocks={blocks}/>
           </div>
         </div>
       </div>
