@@ -1,9 +1,7 @@
 import React from "react";
 import SmartContainer from "./Components/smartContainer";
 import BlockView from "./Components/smartContainer/blockView";
-{
-  /**/
-}
+
 export default function View({ layout, activityId }) {
   console.log(layout);
   // add sort by order
@@ -12,7 +10,7 @@ export default function View({ layout, activityId }) {
   }
   const sortLayout = (layout) => {
     // place smart container for deleted block in order(get from cache) - activId
-    setIndex();
+
     const layoutValues = Object.values(layout).sort();
 
     return layoutValues.map((value) => getKeyByValue(layout, value));
