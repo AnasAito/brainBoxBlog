@@ -9,11 +9,15 @@ export default function View({ layout, activityId }) {
     return Object.keys(object).find((key) => object[key] === value);
   }
   const sortLayout = (layout) => {
-    // place smart container for deleted block in order(get from cache) - activId
-
     const layoutValues = Object.values(layout).sort();
 
     return layoutValues.map((value) => getKeyByValue(layout, value));
+  };
+  const getMaxOrder = (layout) => {
+    const layoutValues = Object.values(layout)
+      .map((value) => value.split("-")[0])
+      .sort();
+    return layoutValues.length == 0 ? 0 : layoutValues[layoutValues.length - 1];
   };
   return (
     <div className="w-screen  flex flex-wrap h-full    ">
@@ -48,7 +52,7 @@ export default function View({ layout, activityId }) {
       <SmartContainer
         key={"newBlock"}
         activityId={activityId}
-        order={Object.keys(layout).length}
+        order={parseFloat(getMaxOrder(layout)) + 1}
       />
     </div>
   );
