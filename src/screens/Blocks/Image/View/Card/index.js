@@ -3,6 +3,7 @@ import get from "lodash/get";
 import { useLocation, useHistory } from "react-router-dom";
 import withNotification from "services/Notification";
 import { useMutation, useQuery } from "services/Client";
+import omit from "lodash/omit";
 const Card = ({ payload, onDelete, notification }) => {
   function useQueryURL() {
     return new URLSearchParams(useLocation().search);
@@ -11,6 +12,9 @@ const Card = ({ payload, onDelete, notification }) => {
   const attachBlock = query.get("attach");
   // get block view order
   const order = query.get("order");
+  // get block id to delete
+  const deleteBlock = query.get("delete");
+
   let history = useHistory();
   const { data: activity } = useQuery({
     event: "activity.get.one",
@@ -36,17 +40,33 @@ const Card = ({ payload, onDelete, notification }) => {
     console.log(result);
     const blockId = get(result, "data.createBlock.id");
     if (blockId) {
-      const activityUpdated = await updateLayout({
-        variables: {
-          where: { id: attachBlock },
-          data: {
-            layout: {
-              ...prevLayout,
-              [blockId]: order,
+      if (deleteBlock) {
+        console.log("deleteBlock", deleteBlock);
+        await updateLayout({
+          variables: {
+            where: { id: attachBlock },
+            data: {
+              layout: {
+                ...omit(prevLayout, [deleteBlock]),
+                [blockId]: order,
+              },
             },
           },
-        },
-      });
+        });
+      } else {
+        await updateLayout({
+          variables: {
+            where: { id: attachBlock },
+            data: {
+              layout: {
+                ...prevLayout,
+                [blockId]: order,
+              },
+            },
+          },
+        });
+      }
+
       notification.success("Block successfully attached to activity");
       console.log("success");
       // history.push(`/admin/tests/activities/edit/${activityID}`);

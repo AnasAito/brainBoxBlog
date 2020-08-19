@@ -54,14 +54,16 @@ const BlockView = ({ isFull, blockId, activityId, notification }) => {
       if (block) {
         setIsDelete(orderDel);
 
-        await updateLayout({
+        {
+          /*  await updateLayout({
           variables: {
             where: { id: activityId },
             data: {
               layout: prevLayout,
             },
           },
-        });
+        })*/
+        }
 
         notification.success("Block successfully dettached to activity");
       } else {

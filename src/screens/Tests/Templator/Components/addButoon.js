@@ -168,10 +168,15 @@ export default function AddButoon({
                 </svg>
               ),
               onClick: () =>
-                history.push({
-                  pathname: `/admin/blocks/audio`,
-                  search: `&attach=${activityId}&order=${position}&page=0&pageSize=7`,
-                }),
+                isDelete
+                  ? history.push({
+                      pathname: `/admin/blocks/audio`,
+                      search: `&attach=${activityId}&order=${position}&delete=${blockToDelete}&page=0&pageSize=7`,
+                    })
+                  : history.push({
+                      pathname: `/admin/blocks/audio`,
+                      search: `&attach=${activityId}&order=${position}&page=0&pageSize=7`,
+                    }),
             },
             {
               title: (
@@ -209,14 +214,19 @@ export default function AddButoon({
                 </svg>
               ),
               onClick: () =>
-                history.push({
-                  pathname: `/admin/blocks/image`,
-                  search: `&attach=${activityId}&order=${position}&page=0&pageSize=7`,
-                }),
+                isDelete
+                  ? history.push({
+                      pathname: `/admin/blocks/image`,
+                      search: `&attach=${activityId}&order=${position}&delete=${blockToDelete}&page=0&pageSize=7`,
+                    })
+                  : history.push({
+                      pathname: `/admin/blocks/image`,
+                      search: `&attach=${activityId}&order=${position}&page=0&pageSize=7`,
+                    }),
             },
           ],
         },
-        {
+        /* {
           sectionTitle: "Static Blocks",
           sectionItems: [
             {
@@ -280,7 +290,7 @@ export default function AddButoon({
               //onClick: onDelete
             },
           ],
-        },
+        },*/
       ]}
       buttonContent={
         <svg
