@@ -24,7 +24,7 @@ export default function ListView({ data, count, handleCreate, handleDelete }) {
               onDelete={() => handleDelete(test.id)}
             />
           ))}
-          <AddButton handleClick={handleCreate} />
+          {data ? <AddButton handleClick={handleCreate} /> : <></>}
 
           {/* <AddButton handleClick={handleCreate} /> */}
         </div>

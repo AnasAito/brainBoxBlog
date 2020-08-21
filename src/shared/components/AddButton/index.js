@@ -2,7 +2,7 @@ import React from "react";
 
 export default function AddButton({ handleClick }) {
   return (
-    <div className="rounded-sm hover:bg-gray-300  border-gray-300 border  min-h-full  flex justify-center items-center">
+    <div className="rounded-sm hover:bg-gray-300  border-gray-300 border    flex justify-center items-center">
       <svg
         onClick={handleClick}
         version="1.1"

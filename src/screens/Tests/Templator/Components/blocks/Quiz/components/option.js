@@ -9,7 +9,7 @@ export default function QuizOption({
   setObj,
   questionId,
   isRight,
-  obj
+  obj,
 }) {
   const color = cor
     ? correct
@@ -26,14 +26,7 @@ export default function QuizOption({
       : ""
     : "";
   return (
-    <div
-      className="flex  hover:shadow-lg cursor-pointer   ml-2 mr-2 mb-3"
-      onClick={() => {
-        !cor
-          ? setObj({ ...obj, ...{ questionId, answerId: option.id, isRight } })
-          : console.log("you finshed");
-      }}
-    >
+    <div className="flex  hover:shadow-lg cursor-pointer   ml-2 mr-2 mb-3">
       <div className="flex flex-row my-3  ">
         <div
           className={` text-xs rounded-full border border-gray-300 hover:bg-blue-400 cursor-pointer h-8 w-8 flex items-center justify-center mx-2 ${color}${falsec}`}
