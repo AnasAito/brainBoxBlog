@@ -9,6 +9,7 @@ export const ACTIVITY_CREATE = gql`
         template
         type
         order
+        layout
         blocks {
        name
        type
@@ -22,20 +23,21 @@ export const ACTIVITY_CREATE = gql`
 `;
 
 export const ACTIVITY_UPDATE = gql`
-  mutation updateActivity($data: ActivityWhereInput,$where: ActivityWhereInput) {
-    updateActivity(data: $data, where:$where) {
+  mutation updateActivity(
+    $data: ActivityWhereInput
+    $where: ActivityWhereInput
+  ) {
+    updateActivity(data: $data, where: $where) {
       id
+      name
+      template
+      type
+      order
+      layout
+      blocks {
+        id
         name
-        template
         type
-        order
-        blocks {
-       name
-       type
-       ${quiz}
-       ${image}
-       ${text}
-       ${audio}
       }
     }
   }
@@ -49,6 +51,7 @@ export const ACTIVITY_DELETE = gql`
       template
       type
       order
+      layout
       blocks {
        name
        type

@@ -26,6 +26,7 @@ const BlockView = ({ isFull, blockId, activityId, notification }) => {
   });
   const { data: activity } = useQuery({
     event: "activity.get.one",
+
     variables: { where: { id: activityId }, withSelect: true },
     skip: !activityId,
   });
@@ -33,23 +34,35 @@ const BlockView = ({ isFull, blockId, activityId, notification }) => {
   const { mutate } = useMutation({ event: "block.delete" });
   const { mutate: updateLayout } = useMutation({
     event: "activity.update",
+    update: ({ data }) => {
+      return {
+        event: "activity.get.one",
+        variables: {
+          where: { id: activityId },
+        },
+        data: data.updateActivity,
+      };
+    },
   });
 
   const updateWidth = async (mutate) => {
     let prevLayout = get(activity, "activity.layout", {});
     let position = prevLayout[blockId].split("-")[0];
+
     //console.log("pos", `${position}-${half ? "h" : "f"}`);
-    await mutate({
+
+    const newLayout = await mutate({
       variables: {
         where: { id: activityId },
         data: {
           layout: {
-            ...prevLayout,
+            ...omit(get(activity, "activity.layout", {}), [blockId]),
             [blockId]: `${position}-${!half ? "h" : "f"}`,
           },
         },
       },
     });
+    console.log("new layout ", newLayout.data.updateActivity.layout);
     setHalf(!half);
   };
   const changeBlock = async (mutate) => {
