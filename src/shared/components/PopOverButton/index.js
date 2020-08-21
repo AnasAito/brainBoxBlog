@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Popper from "popper.js";
 
 const PopoverButton = ({ children }) => {

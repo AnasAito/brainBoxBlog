@@ -8,16 +8,6 @@ function Quiz({ quiz, onAnswer, answers = {} }) {
   const [index, setIndex] = useState(0);
   const [cor, setcor] = useState(false);
 
-  /*const {
-    data: { blocksLoading }
-  } = useQuery({ event: "blocksLoading" });
-  */
-
-  {
-    /* if (blocksLoading) {
-    return "loading";
-  }*/
-  }
   const questions = quiz.questions;
   //console.log(data);
   const question = questions[index];
@@ -30,22 +20,17 @@ function Quiz({ quiz, onAnswer, answers = {} }) {
     setcor(true);
   };
   return (
-    <>
-      <View
-        question={question}
-        setIndex={setIndex}
-        index={index}
-        length={length}
-        setObj={onAnswer}
-        obj={answers}
-        cor={cor}
-        onfinish={onfinish}
-        reset={reset}
-      />
-      {/*  <div className="mt-5 flex justify-center">
-        <Timer initialTime={30} />
-  </div>*/}
-    </>
+    <View
+      question={question}
+      setIndex={setIndex}
+      index={index}
+      length={length}
+      setObj={onAnswer}
+      obj={answers}
+      cor={cor}
+      onfinish={onfinish}
+      reset={reset}
+    />
   );
 }
 export default Quiz;

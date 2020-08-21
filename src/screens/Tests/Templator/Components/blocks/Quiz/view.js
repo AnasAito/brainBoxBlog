@@ -3,7 +3,7 @@ import Option from "./components/option";
 import NavButton from "./components/nav";
 //import BlockWrapper from "components/blockWrapper";
 
-const BlockWrapper = ({ children, blockName, reset, onfinish }) => {
+const BlockWrapper = ({ children, blockName }) => {
   return (
     <div className="m-auto  p-3 h-full w-full  bg-gray-50 rounded-lg overflow-hidden shadow-lg shadow-cool-gray-lg ">
       <div className=" flex flex-row justify-between m-4 items-center ">
@@ -12,7 +12,6 @@ const BlockWrapper = ({ children, blockName, reset, onfinish }) => {
           <span className="inline-flex rounded-md shadow-sm">
             <button
               type="button"
-              onClick={reset}
               className="inline-flex mr-1 items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150"
             >
               Reset
@@ -32,7 +31,6 @@ const BlockWrapper = ({ children, blockName, reset, onfinish }) => {
           <span className="inline-flex rounded-md shadow-sm">
             <button
               type="button"
-              onClick={onfinish}
               className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150"
             >
               Check Answers
@@ -67,7 +65,7 @@ export default function View(props) {
     obj,
     cor,
     reset,
-    onfinish
+    onfinish,
   } = props;
   return (
     <BlockWrapper reset={reset} onfinish={onfinish} blockName="Quiz">

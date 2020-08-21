@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Popper from "popper.js";
 
 const PopoverMenu = ({
   menuSections,
   buttonContent,
   menuPlacement,
-  buttonStyle
+  buttonStyle,
 }) => {
   // const menuItems = menuItems.items
   const [popoverShow, setPopoverShow] = React.useState(false);
@@ -14,7 +14,7 @@ const PopoverMenu = ({
 
   const openPopover = () => {
     new Popper(btnRef.current, popoverRef.current, {
-      placement: menuPlacement
+      placement: menuPlacement,
     });
     setPopoverShow(true);
   };
@@ -49,13 +49,13 @@ const PopoverMenu = ({
               }
             >
               <div class="  mt-2 min-w-full   ">
-                {menuSections.map(element => (
+                {menuSections.map((element) => (
                   <div class=" bg-white  ">
-                    <p className="bg-white text-left text-black ml-5  pt-4 normal-case text-gray-500 font-normal  ">
+                    <p className="bg-white text-left ml-5  pt-4 normal-case text-gray-500 font-normal  ">
                       {element.sectionTitle}
                     </p>
                     <div class="border-t border-gray-100 " />
-                    {element.sectionItems.map(item => (
+                    {element.sectionItems.map((item) => (
                       <>
                         {" "}
                         <div class="py-1">

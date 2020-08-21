@@ -109,7 +109,7 @@ const Card = ({ payload, subTitle, onEdit, onDelete, notification }) => {
             </p>
             {!!attachBlock && (
               <div
-                className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
+                className=" h-8 w-8 rounded-full ml-2  flex justify-center items-center"
                 alt=""
                 onClick={() => submitBlock(createBlock, attachBlock)}
               >
@@ -131,7 +131,7 @@ const Card = ({ payload, subTitle, onEdit, onDelete, notification }) => {
           </div>
           <div className="flex flex-row justify-end ">
             <div
-              className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
+              className="h-8 w-8 rounded-full ml-2  flex justify-center items-center"
               alt=""
               onClick={onEdit}
             >
@@ -145,7 +145,7 @@ const Card = ({ payload, subTitle, onEdit, onDelete, notification }) => {
               </svg>
             </div>
             <div
-              className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
+              className="h-8 w-8 rounded-full ml-2  flex justify-center items-center"
               alt=""
               onClick={onDelete}
             >

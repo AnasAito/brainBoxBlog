@@ -13,7 +13,7 @@ const Card = ({ title, subTitle, onEdit, onDelete, onAdd, image }) => {
       <div className="bg-white  rounded-sm  shadow-md" onClick={onAdd}>
         <div className="w-full rounded-t-sm   inline-block  ">
           <img
-            className="bg-blue-50 bg-white object-cover h-48 w-full rounded-t-sm "
+            className="bg-blue-50  object-cover h-48 w-full rounded-t-sm "
             alt="card"
             src={image}
           ></img>

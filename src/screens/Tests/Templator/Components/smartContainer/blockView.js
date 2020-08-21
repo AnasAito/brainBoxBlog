@@ -10,7 +10,7 @@ import Audio from "../blocks/Audio";
 
 import withNotification from "services/Notification";
 import SmartContainer from "./index";
-import Global from "services/Global";
+
 const BlockView = ({ isFull, blockId, activityId, notification }) => {
   const [show, setShow] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
@@ -72,7 +72,7 @@ const BlockView = ({ isFull, blockId, activityId, notification }) => {
       "-"
     )[0];
     //  Global.set("deletedOrder", orderDel);
-    const prevLayout = omit(get(activity, "activity.layout", {}), [blockId]);
+    //const prevLayout = omit(get(activity, "activity.layout", {}), [blockId]);
 
     // delete block
     const result = await mutate({

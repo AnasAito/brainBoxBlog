@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import get from "lodash/get";
 import { useLocation, useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "services/Client";
@@ -8,7 +8,7 @@ const Card = ({ payload, type, onEdit, onDelete, notification }) => {
   function useQueryURL() {
     return new URLSearchParams(useLocation().search);
   }
-  const [layout, setLayout] = useState({});
+
   const query = useQueryURL();
   const attachBlock = query.get("attach");
 
@@ -57,7 +57,7 @@ const Card = ({ payload, type, onEdit, onDelete, notification }) => {
           },
         });
       } else {
-        const activityUpdated = await updateLayout({
+        await updateLayout({
           variables: {
             where: { id: attachBlock },
             data: {

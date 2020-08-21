@@ -117,7 +117,7 @@ const Card = ({ payload, onDelete, notification }) => {
             </p>
             {!!attachBlock && (
               <div
-                className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
+                className=" h-8 w-8 rounded-full ml-2  flex justify-center items-center"
                 alt=""
                 onClick={() => submitBlock(createBlock, attachBlock)}
               >
@@ -133,22 +133,8 @@ const Card = ({ payload, onDelete, notification }) => {
             )}
           </div>
           <div className="flex flex-row justify-end ">
-            {/* <div
-            className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
-            alt=""
-            onClick={onEdit}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              className="h-6 w-6 cursor-pointer text-blue-700 hover:text-indigo-500"
-              fill="currentColor"
-            >
-              <path d="M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z" />
-            </svg>
-          </div> */}
             <div
-              className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
+              className=" h-8 w-8 rounded-full ml-2  flex justify-center items-center"
               alt=""
               onClick={onDelete}
             >

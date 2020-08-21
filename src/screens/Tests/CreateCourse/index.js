@@ -9,7 +9,7 @@ import {
 import { useHistory } from "react-router-dom";
 import withNotification from "services/Notification";
 import List from "./View";
-import Upload from "shared/components/Upload";
+
 function All(props) {
   const {
     data: { searchLike },
