@@ -108,7 +108,7 @@ const Card = ({ payload, type, onEdit, onDelete, notification }) => {
     <div className="bg-white rounded-lg shadow-lg flex flex-row ">
       <div className="bg-blue-50 rounded-l-lg  w-1/4"></div>
 
-      <div className="flex flex-row justify-between  m-2  ">
+      <div className="flex flex-row justify-between  m-2  w-1/2 ">
         <p className=" text-md  justify-center  font-semibold text-gray-900  flex flex-wrap">
           {payload.title}
         </p>
