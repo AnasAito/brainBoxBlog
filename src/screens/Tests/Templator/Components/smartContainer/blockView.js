@@ -62,7 +62,7 @@ const BlockView = ({ isFull, blockId, activityId, notification }) => {
         },
       },
     });
-    console.log("new layout ", newLayout.data.updateActivity.layout);
+    console.log("new layout ", newLayout.data.updateActivity);
     setHalf(!half);
   };
   const changeBlock = async (mutate) => {

@@ -105,18 +105,18 @@ const Card = ({ payload, type, onEdit, onDelete, notification }) => {
     },
   });
   return (
-    <div className="bg-white rounded-lg shadow-lg flex flex-row">
+    <div className="bg-white rounded-lg shadow-lg flex flex-row ">
       <div className="bg-blue-50 rounded-l-lg  w-1/4"></div>
 
-      <div className="flex flex-row justify-between  m-2 w-1/2 ">
-        <p className=" text-md flex justify-center  font-semibold text-gray-900  flex flex-wrap">
+      <div className="flex flex-row justify-between  m-2  ">
+        <p className=" text-md  justify-center  font-semibold text-gray-900  flex flex-wrap">
           {payload.title}
         </p>
       </div>
-      <div className="  flex flex-row justify-end">
-        <div className=" flex flex-col  w-1/4  ">
+      <div className="  flex flex-row    w-1/4 justify-end ">
+        <div className=" flex flex-col   ">
           <div
-            className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
+            className=" h-8 w-8 rounded-full ml-2  flex justify-center items-center"
             alt=""
             onClick={
               attachBlock
@@ -141,7 +141,7 @@ const Card = ({ payload, type, onEdit, onDelete, notification }) => {
           </div>
 
           <div
-            className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
+            className=" h-8 w-8 rounded-full ml-2  flex justify-center items-center"
             alt=""
             onClick={
               !attachBlock
@@ -166,7 +166,7 @@ const Card = ({ payload, type, onEdit, onDelete, notification }) => {
             </svg>
           </div>
           <div
-            className="inline-block h-8 w-8 rounded-full ml-2  flex justify-center items-center"
+            className=" h-8 w-8 rounded-full ml-2  flex justify-center items-center"
             alt=""
             onClick={
               !attachBlock

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 //import { useQuery } from "services/Client";
 //import Loading from "components/Loading";
 import View from "./view";
-import data from "./data";
+
 //import Timer from "./components/timer";
 function Quiz({ quiz, onAnswer, answers = {} }) {
   const [index, setIndex] = useState(0);
