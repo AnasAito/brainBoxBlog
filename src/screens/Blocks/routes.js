@@ -4,7 +4,8 @@ import Text from "screens/Blocks/Text";
 import EditText from "screens/Blocks/EditText";
 import Audio from "screens/Blocks/Audio";
 import Image from "screens/Blocks/Image";
-
+import Scrambled from "screens/Blocks/Scrambled";
+import EditScrambled from "screens/Blocks/EditScrambled";
 var indexRoutes = [
   {
     path: "/blocks/quiz",
@@ -47,6 +48,21 @@ var indexRoutes = [
     exact: true,
     name: "Image",
     component: Image,
+    layout: "/admin",
+  },
+  {
+    path: "/blocks/scramble",
+    exact: true,
+    name: "Scrambled sentences",
+    component: Scrambled,
+    layout: "/admin",
+  },
+  {
+    path: "/blocks/scrambled/:id",
+    invisible: true,
+    exact: true,
+    name: "Edit scrambled",
+    component: EditScrambled,
     layout: "/admin",
   },
 ];

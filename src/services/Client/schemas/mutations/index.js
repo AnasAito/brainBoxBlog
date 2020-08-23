@@ -22,6 +22,7 @@ import course from "./course";
 import level from "./level";
 import lesson from "./lesson";
 import unit from "./unit";
+import scrambledSentence from "./scrambledSentence";
 export default {
   ...login,
   ...feedback,
@@ -47,4 +48,5 @@ export default {
   ...course,
   ...lesson,
   ...unit,
+  ...scrambledSentence,
 };

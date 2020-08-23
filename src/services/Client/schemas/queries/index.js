@@ -21,6 +21,7 @@ import dnd from "./dnd";
 import level from "./level";
 import lesson from "./lesson";
 import unit from "./unit";
+import scrambledSentences from "./scrambledSentences";
 export default {
   ...course,
   ...userGroup,
@@ -45,4 +46,5 @@ export default {
   ...level,
   ...unit,
   ...lesson,
+  ...scrambledSentences,
 };
