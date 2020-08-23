@@ -21,12 +21,6 @@ export default function ListView({ data, count, handleCreate, handleDelete }) {
                 })
               }
               onDelete={() => handleDelete(test.id)}
-              onAdd={() =>
-                history.push({
-                  pathname: `questions`,
-                  search: `?quiz=${test.id}&page=0&pageSize=7`,
-                })
-              }
             />
           ))}
           <AddButton handleClick={handleCreate} />
