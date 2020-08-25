@@ -29,7 +29,7 @@ function All(props) {
   }, [page, pageSize, history]);
 
   const { data } = useQueryPaginated({
-    event: "scrambled.sentence.get.many",
+    event: "fillBlank.get.many",
     variables: {
       withSelect: true,
       orderBy: { createdAt: "desc" },
@@ -39,32 +39,32 @@ function All(props) {
     },
   });
 
-  const userData = get(data, "scrambledsentences.data", []);
-  const count = get(data, "scrambledsentences.count", []);
+  const userData = get(data, "fillBlanks.data", []);
+  const count = get(data, "fillBlank.count", []);
   const { clearCache } = useClearCache({
-    event: "scrambled.sentence.get.many",
+    event: "fillBlank.get.many",
   });
 
   const { mutate } = useMutation({
-    event: "scrambled.sentence.create",
+    event: "fillBlank.create",
     update: () => {
       clearCache();
     },
   });
   const { mutate: deleteTest } = useMutation({
-    event: "scrambled.sentence.delete",
+    event: "fillBlank.delete",
     update: () => {
       clearCache();
     },
   });
   const submit = async (mutate) => {
     const result = await mutate({
-      variables: { data: { title: "new Sramble" } },
+      variables: { data: { title: "newfillBlanks" } },
     });
-    const testId = get(result, "data.createScrambledSentence.id");
+    const testId = get(result, "data.createFillBlank.id");
     console.log(result);
     if (testId) {
-      history.push({ pathname: `scrambled/${testId}`, search: "?new=true" });
+      history.push({ pathname: `fillblank/${testId}`, search: "?new=true" });
     } else {
       props.notification.error("Error");
     }
@@ -72,7 +72,7 @@ function All(props) {
   const removeTest = async (mutate, id) => {
     mutate({ variables: { where: { id } } })
       .then((res) => {
-        if (get(res, "data.deleteScrambledSentence.id")) {
+        if (get(res, "data.deleteFillBlank.id")) {
           props.notification.success("Delete Successful");
         } else {
           props.notification.error("Error");

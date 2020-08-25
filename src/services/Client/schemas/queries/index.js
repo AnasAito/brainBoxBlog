@@ -22,6 +22,8 @@ import level from "./level";
 import lesson from "./lesson";
 import unit from "./unit";
 import scrambledSentences from "./scrambledSentences";
+import fillBlank from "./fillBlank";
+
 export default {
   ...course,
   ...userGroup,
@@ -47,4 +49,5 @@ export default {
   ...unit,
   ...lesson,
   ...scrambledSentences,
+  ...fillBlank,
 };

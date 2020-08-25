@@ -6,6 +6,8 @@ import Audio from "screens/Blocks/Audio";
 import Image from "screens/Blocks/Image";
 import Scrambled from "screens/Blocks/Scrambled";
 import EditScrambled from "screens/Blocks/EditScrambled";
+import FillBlank from "screens/Blocks/FillBlank";
+import EditFillBlank from "screens/Blocks/EditFillBlank";
 var indexRoutes = [
   {
     path: "/blocks/quiz",
@@ -63,6 +65,21 @@ var indexRoutes = [
     exact: true,
     name: "Edit scrambled",
     component: EditScrambled,
+    layout: "/admin",
+  },
+  {
+    path: "/blocks/fillblank",
+    exact: true,
+    name: "Fill blanks",
+    component: FillBlank,
+    layout: "/admin",
+  },
+  {
+    path: "/blocks/fillblank/:id",
+    invisible: true,
+    exact: true,
+    name: "Edit fillBlank",
+    component: EditFillBlank,
     layout: "/admin",
   },
 ];
