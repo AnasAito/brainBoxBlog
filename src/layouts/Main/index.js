@@ -1,5 +1,169 @@
-import React from "react";
+import React, { useState } from "react";
 
-export default function index() {
-  return <div>main page</div>;
-}
+import { Container, ContentWithPaddingXl } from "./components/layouts";
+import tw from "twin.macro";
+import styled from "styled-components";
+import { css } from "styled-components/macro";
+import Header from "./components/header";
+import Footer from "./components/footer";
+import { SectionHeading } from "./components/headings";
+import { PrimaryButton } from "./components/buttons";
+const StyledDiv = tw.div` min-h-screen text-gray-500  p-8 overflow-hidden`;
+
+const HeadingRow = tw.div`flex`;
+const Heading = tw(SectionHeading)`text-gray-900`;
+const Posts = tw.div`mt-6 sm:-mr-8 flex flex-wrap`;
+const PostContainer = styled.div`
+  ${tw`mt-10 w-full sm:w-1/2 lg:w-1/3 sm:pr-8`}
+`;
+const FeatPostContainer = styled.div`
+  ${tw` w-full mt-10 sm:pr-8`}
+`;
+const FeatPost = tw.div` flex flex-row  h-full sm:pr-4 rounded-r-lg`;
+const FeatInfo = tw.div`  py-8  sm:-mr-4 sm:pl-8 sm:flex-1  rounded-r-lg  `;
+const FeatDescription = tw.div`text-sm mt-3 leading-loose text-gray-600 font-medium`;
+const Post = tw.div`cursor-pointer flex flex-col rounded-lg`;
+const FeatImage = styled.div`
+  ${(props) =>
+    css`
+      background-image: url("${props.imageSrc}");
+    `}
+  ${tw`  sm:min-h-full sm:w-1/2 lg:w-2/3 sm:rounded-t-none sm:rounded-l-lg`}
+`;
+const Image = styled.div`
+  ${(props) =>
+    css`
+      background-image: url("${props.imageSrc}");
+    `}
+  ${tw`h-64 w-full bg-cover bg-center rounded-t-lg`}
+`;
+const Info = tw.div`p-8  rounded-lg rounded-t-none`;
+const Category = tw.div`uppercase text-purple-500 text-xs font-bold tracking-widest leading-loose after:content after:block after:border-b-2 after:border-purple-500 after:w-8`;
+const CreationDate = tw.div`mt-4 uppercase text-gray-600 italic font-semibold text-xs`;
+const Title = tw.div`mt-1 font-black text-2xl text-gray-900 group-hover:text-purple-500 transition duration-300`;
+const Description = tw.div``;
+
+const ButtonContainer = tw.div`flex justify-center`;
+const LoadMoreButton = tw(PrimaryButton)`mt-16 mx-auto`;
+
+export default ({
+  headingText = "Blog Posts",
+  posts = [
+    {
+      imageSrc:
+        "https://images.unsplash.com/photo-1472235008642-bb3ce23994ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
+      category: "Control theory ",
+      date: "Today",
+      title: "Full state estimation -  motivation ",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      url: "https://timerse.com",
+      featured: true,
+    },
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+    getPlaceholderPost(),
+  ],
+}) => {
+  const [visible, setVisible] = useState(7);
+  const onLoadMoreClick = () => {
+    setVisible((v) => v + 6);
+  };
+  return (
+    <StyledDiv className="bg-gray-200">
+      <Header />
+      <Container>
+        <ContentWithPaddingXl>
+          <HeadingRow>
+            <Heading>{headingText}</Heading>
+          </HeadingRow>
+          <Posts>
+            {posts.slice(0, visible).map((post, index) => (
+              <>
+                {" "}
+                {post.featured ? (
+                  <FeatPostContainer key={index} featured={post.featured}>
+                    <FeatPost
+                      className="nm-flat-gray-200 group"
+                      as="a"
+                      href={post.url}
+                    >
+                      <FeatImage
+                        className="object-scale-down sm:h-96"
+                        imageSrc={post.imageSrc}
+                      />
+                      <FeatInfo className=" rounded-r-lg ">
+                        <Category>{post.category}</Category>
+                        <CreationDate>{post.date}</CreationDate>
+                        <Title>{post.title}</Title>
+                        {post.featured && post.description && (
+                          <FeatDescription>{post.description}</FeatDescription>
+                        )}
+                      </FeatInfo>
+                    </FeatPost>
+                  </FeatPostContainer>
+                ) : (
+                  <PostContainer key={index} featured={post.featured}>
+                    <Post
+                      className="group"
+                      as="a"
+                      href={post.url}
+                      className="nm-flat-gray-200"
+                    >
+                      <Image imageSrc={post.imageSrc} />
+                      <Info>
+                        <Category>{post.category}</Category>
+                        <CreationDate>{post.date}</CreationDate>
+                        <Title>{post.title}</Title>
+                        {post.featured && post.description && (
+                          <Description>{post.description}</Description>
+                        )}
+                      </Info>
+                    </Post>
+                  </PostContainer>
+                )}
+              </>
+            ))}
+          </Posts>
+          {visible < posts.length && (
+            <ButtonContainer className="">
+              <LoadMoreButton
+                className="rounded-full nm-flat-gray-200 hover:nm-flat-gray-200-lg leading-5 px-8 py-4 uppercase font-bold tracking-widest transition duration-200 ease-in-out transform hover:scale-110"
+                onClick={onLoadMoreClick}
+              >
+                Load More
+              </LoadMoreButton>
+            </ButtonContainer>
+          )}
+        </ContentWithPaddingXl>
+      </Container>
+      <Footer />
+    </StyledDiv>
+  );
+};
+
+const getPlaceholderPost = () => ({
+  imageSrc:
+    "https://images.unsplash.com/photo-1581089778245-3ce67677f718?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
+  category: "Statistical learning",
+  date: "June 19, 2020",
+  title: "discover the basics of linear regression",
+  description:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  url: "https://reddit.com",
+});
