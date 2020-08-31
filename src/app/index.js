@@ -15,7 +15,7 @@ import "react-quill/dist/quill.snow.css";
 import { Route, Switch, Redirect } from "react-router";
 
 const Main = lazy(() => import("layouts/Main"));
-
+const Article = lazy(() => import("layouts/Article"));
 const App = () => {
   return (
     <Fragment>
@@ -24,6 +24,7 @@ const App = () => {
       <Suspense fallback={<Loading />}>
         <Switch>
           <Route path="/main" component={Main} />
+          <Route path="/article/:id" component={Article} />
 
           <Redirect from="/" to="/main" exact />
 
