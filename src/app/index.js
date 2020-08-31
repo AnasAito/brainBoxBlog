@@ -14,10 +14,8 @@ import "react-quill/dist/quill.snow.css";
 
 import { Route, Switch, Redirect } from "react-router";
 
-const Auth = lazy(() => import("layouts/Auth"));
-const Admin = lazy(() => import("layouts/Admin"));
-
-
+const Main = lazy(() => import("layouts/Main"));
+const Article = lazy(() => import("layouts/Article"));
 const App = () => {
   return (
     <Fragment>
@@ -25,10 +23,10 @@ const App = () => {
       {/* <Modal /> */}
       <Suspense fallback={<Loading />}>
         <Switch>
-          <Route path="/auth" component={Auth} />
-          <Route path="/admin" component={Admin} />
-          <Route path="/logout" component={Logout} />
-          <Redirect from="/" to="/admin" exact/>
+          <Route path="/main" component={Main} />
+          <Route path="/article/:id" component={Article} />
+
+          <Redirect from="/" to="/main" exact />
 
           {/* <Route component={NotFound} /> */}
         </Switch>
@@ -37,4 +35,4 @@ const App = () => {
     </Fragment>
   );
 };
-export default addHocs(App, [Security, Router, Apollo]);
+export default addHocs(App, [Router, Apollo]);
