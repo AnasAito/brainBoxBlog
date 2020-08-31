@@ -9,7 +9,7 @@ import useAnimatedNavToggler from "./useAnimatedNavToggler";
 import logo from "myAssets/logo.svg";
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
-
+import { useHistory } from "react-router-dom";
 const Header = tw.header`
   flex justify-between items-center
   max-w-screen-xl mx-auto
@@ -63,6 +63,7 @@ export default ({
   className,
   collapseBreakpointClass = "lg",
 }) => {
+  let history = useHistory();
   /*
    * This header component accepts an optionals "links" prop that specifies the links to render in the navbar.
    * This links props should be an array of "NavLinks" components which is exported from this file.
@@ -78,15 +79,19 @@ export default ({
    */
   const defaultLinks = [
     <NavLinks key={1}>
-      <NavLink href="/#">Colaborate</NavLink>
-      <NavLink href="/#">Github</NavLink>
-      <NavLink href="/#">About</NavLink>
+      <NavLink href="https://github.com/AnasAito">Colaborate</NavLink>
+      <NavLink href="https://github.com/AnasAito">Github</NavLink>
+      <NavLink href="/">Contact us</NavLink>
 
       <PrimaryLink
-        className="rounded-full nm-flat-gray-200 hover:nm-flat-gray-200-lg leading-5 px-8 py-4 uppercase font-bold tracking-widest transition duration-200 ease-in-out transform hover:scale-110"
-        href="/#"
+        className="rounded-full nm-flat-gray-200  cursor-pointer hover:nm-flat-gray-200-lg leading-5 px-8 py-4 uppercase font-bold tracking-widest transition duration-200 ease-in-out transform hover:scale-110"
+        onClick={() =>
+          history.push({
+            pathname: `/about`,
+          })
+        }
       >
-        Contact us
+        About
       </PrimaryLink>
     </NavLinks>,
   ];

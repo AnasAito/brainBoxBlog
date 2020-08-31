@@ -16,6 +16,7 @@ import { Route, Switch, Redirect } from "react-router";
 
 const Main = lazy(() => import("layouts/Main"));
 const Article = lazy(() => import("layouts/Article"));
+const About = lazy(() => import("layouts/About"));
 const App = () => {
   return (
     <Fragment>
@@ -25,7 +26,7 @@ const App = () => {
         <Switch>
           <Route path="/main" component={Main} />
           <Route path="/article/:id" component={Article} />
-
+          <Route path="/about" component={About} />
           <Redirect from="/" to="/main" exact />
 
           {/* <Route component={NotFound} /> */}

@@ -48,7 +48,7 @@ const Description = tw.div``;
 const ButtonContainer = tw.div`flex justify-center`;
 const LoadMoreButton = tw(PrimaryButton)`mt-16 mx-auto`;
 
-export default ({ headingText = "Blog Posts" }) => {
+export default ({ headingText = "Sketchnotes" }) => {
   let history = useHistory();
   const [visible, setVisible] = useState(7);
   const [entries, setEntries] = useState([]);
