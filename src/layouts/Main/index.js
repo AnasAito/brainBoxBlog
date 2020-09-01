@@ -10,6 +10,7 @@ import { SectionHeading } from "./components/headings";
 import { PrimaryButton } from "./components/buttons";
 import { getEntries } from "api/index";
 import { useHistory } from "react-router-dom";
+import { isMobile } from "react-device-detect";
 const StyledDiv = tw.div` min-h-screen text-gray-500  p-8 overflow-hidden`;
 
 const HeadingRow = tw.div`flex`;
@@ -58,7 +59,7 @@ export default ({ headingText = "Sketchnotes" }) => {
   const onLoadMoreClick = () => {
     setVisible((v) => v + 6);
   };
-  console.log(entries);
+
   return (
     <StyledDiv className="bg-gray-200">
       <Header />
@@ -72,34 +73,65 @@ export default ({ headingText = "Sketchnotes" }) => {
               <>
                 {" "}
                 {post.featured ? (
-                  <FeatPostContainer
-                    key={post.id}
-                    featured={post.featured}
-                    onClick={() =>
-                      history.push({
-                        pathname: `article/${post.id}`,
-                      })
-                    }
-                  >
-                    <FeatPost
-                      className="nm-flat-gray-200 group  "
-                      as="a"
-                      href={post.url}
+                  !isMobile ? (
+                    <FeatPostContainer
+                      key={post.id}
+                      featured={post.featured}
+                      onClick={() =>
+                        history.push({
+                          pathname: `article/${post.id}`,
+                        })
+                      }
                     >
-                      <img
-                        className=" sm:h-96  sm:min-h-full sm:w-1/2 lg:w-2/3 sm:rounded-t-none sm:rounded-l-lg"
-                        src={post.imageSrc}
-                      />
-                      <FeatInfo className=" rounded-r-lg ">
-                        <Category>{post.category}</Category>
-                        <CreationDate>{post.date}</CreationDate>
-                        <Title>{post.title}</Title>
-                        {post.featured && post.description && (
-                          <FeatDescription>{post.description}</FeatDescription>
-                        )}
-                      </FeatInfo>
-                    </FeatPost>
-                  </FeatPostContainer>
+                      <FeatPost
+                        className="nm-flat-gray-200 group  "
+                        as="a"
+                        href={post.url}
+                      >
+                        <img
+                          className=" sm:h-96  sm:min-h-full sm:w-1/2 lg:w-2/3 sm:rounded-t-none sm:rounded-l-lg"
+                          src={post.imageSrc}
+                        />
+                        <FeatInfo className=" rounded-r-lg ">
+                          <Category>{post.category}</Category>
+                          <CreationDate>{post.date}</CreationDate>
+                          <Title>{post.title}</Title>
+                          {post.featured && post.description && (
+                            <FeatDescription>
+                              {post.description}
+                            </FeatDescription>
+                          )}
+                        </FeatInfo>
+                      </FeatPost>
+                    </FeatPostContainer>
+                  ) : (
+                    <PostContainer
+                      key={index}
+                      featured={post.featured}
+                      onClick={() =>
+                        history.push({
+                          pathname: `article/${post.id}`,
+                        })
+                      }
+                    >
+                      <Post
+                        className="group"
+                        as="a"
+                        href={post.url}
+                        className=" transition duration-500 ease-in-out nm-flat-gray-200 transform hover:-translate-y-1 hover:scale-105"
+                      >
+                        <Image imageSrc={post.imageSrc} />
+                        <Info>
+                          <Category>{post.category}</Category>
+                          <CreationDate>{post.date}</CreationDate>
+                          <Title>{post.title}</Title>
+                          {post.featured && post.description && (
+                            <Description>{post.description}</Description>
+                          )}
+                        </Info>
+                      </Post>
+                    </PostContainer>
+                  )
                 ) : (
                   <PostContainer
                     key={index}
