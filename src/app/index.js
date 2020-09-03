@@ -8,12 +8,11 @@ import Loading from "services/Loading";
 
 import Router from "./services/Router";
 import Apollo from "./services/Apollo";
-import Security from "./services/Security";
-import Logout from "./services/Logout";
+
 import "react-quill/dist/quill.snow.css";
 
 import { Route, Switch, Redirect } from "react-router";
-
+const Home = lazy(() => import("layouts/Home"));
 const Main = lazy(() => import("layouts/Main"));
 const Article = lazy(() => import("layouts/Article"));
 const About = lazy(() => import("layouts/About"));
@@ -24,10 +23,11 @@ const App = () => {
       {/* <Modal /> */}
       <Suspense fallback={<Loading />}>
         <Switch>
-          <Route path="/main" component={Main} />
+          <Route path="/home" component={Home} />
+          <Route path="/main/:id" component={Main} />
           <Route path="/article/:id" component={Article} />
           <Route path="/about" component={About} />
-          <Redirect from="/" to="/main" exact />
+          <Redirect from="/" to="/home" exact />
 
           {/* <Route component={NotFound} /> */}
         </Switch>
