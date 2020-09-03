@@ -8,9 +8,10 @@ import Header from "./components/header";
 import Footer from "./components/footer";
 import { SectionHeading } from "./components/headings";
 import { PrimaryButton } from "./components/buttons";
-import { getEntries } from "api/index";
+import { getCategories, getEntryByCat } from "api/index";
 import { useHistory } from "react-router-dom";
 import { isMobile } from "react-device-detect";
+import { useParams } from "react-router-dom";
 const StyledDiv = tw.div` min-h-screen text-gray-500  p-8 overflow-hidden`;
 
 const HeadingRow = tw.div`flex`;
@@ -50,15 +51,19 @@ const ButtonContainer = tw.div`flex justify-center`;
 const LoadMoreButton = tw(PrimaryButton)`mt-16 mx-auto`;
 
 export default ({ headingText = "Sketchnotes" }) => {
+  const { id } = useParams();
   let history = useHistory();
   const [visible, setVisible] = useState(7);
   const [entries, setEntries] = useState([]);
   useEffect(() => {
-    getEntries(setEntries);
+    getEntryByCat(id, setEntries);
+    // getCategories();
   }, []);
   const onLoadMoreClick = () => {
     setVisible((v) => v + 6);
   };
+  const jsUcfirst = (string) =>
+    string.charAt(0).toUpperCase() + string.slice(1);
 
   return (
     <StyledDiv className="bg-gray-200">
@@ -66,7 +71,7 @@ export default ({ headingText = "Sketchnotes" }) => {
       <Container>
         <ContentWithPaddingXl>
           <HeadingRow>
-            <Heading>{headingText}</Heading>
+            <Heading>{jsUcfirst(id).split("-").join(" ")}</Heading>
           </HeadingRow>
           <Posts>
             {entries.slice(0, visible).map((post, index) => (
@@ -79,12 +84,12 @@ export default ({ headingText = "Sketchnotes" }) => {
                       featured={post.featured}
                       onClick={() =>
                         history.push({
-                          pathname: `article/${post.id}`,
+                          pathname: `/article/${post.id}`,
                         })
                       }
                     >
                       <FeatPost
-                        className="nm-flat-gray-200 group  "
+                        className="nm-flat-gray-200 group rounded-lg  "
                         as="a"
                         href={post.url}
                       >
@@ -110,7 +115,7 @@ export default ({ headingText = "Sketchnotes" }) => {
                       featured={post.featured}
                       onClick={() =>
                         history.push({
-                          pathname: `article/${post.id}`,
+                          pathname: `/article/${post.id}`,
                         })
                       }
                     >
@@ -138,7 +143,7 @@ export default ({ headingText = "Sketchnotes" }) => {
                     featured={post.featured}
                     onClick={() =>
                       history.push({
-                        pathname: `article/${post.id}`,
+                        pathname: `/article/${post.id}`,
                       })
                     }
                   >
